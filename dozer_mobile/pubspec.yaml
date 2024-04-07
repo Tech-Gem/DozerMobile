@@ -42,6 +42,12 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   dartz: ^0.10.1
   fluttertoast: ^8.2.4
+  validators: ^3.0.0
+  get: ^4.6.6
+  iconsax: ^0.0.8
+  flutter_countdown_timer: ^4.1.0
+  pinput: ^4.0.0
+  otp_pin_field: ^1.2.2
 
 dev_dependencies:
   flutter_test:
