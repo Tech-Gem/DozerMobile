@@ -3,4 +3,5 @@ class RoutesName {
   static const String signUp = '/sign_up';
   static const String otp = '/otp';
   static const String home = '/home';
+  static const String login = '/login';
   }
