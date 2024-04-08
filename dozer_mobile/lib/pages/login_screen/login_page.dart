@@ -1,3 +1,4 @@
+import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/pages/login_screen/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,6 +95,19 @@ class LoginPage extends StatelessWidget {
                               'Login',
                               style: TextStyle(color: Colors.white),
                             )),
+                    ),
+                    const SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed(RoutesName.forgotPassword);
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),

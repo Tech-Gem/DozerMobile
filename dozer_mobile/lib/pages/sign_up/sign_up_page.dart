@@ -103,9 +103,9 @@ class SignUpPage extends StatelessWidget {
                       ),
                       child: Obx(() => signUpController.status.value ==
                               Status.loading
-                          ?  CircularProgressIndicator(
-                            color: AppColors.white,
-                          ) // Show circular progress indicator when loading
+                          ? CircularProgressIndicator(
+                              color: AppColors.white,
+                            ) // Show circular progress indicator when loading
                           : const Text(
                               'Sign Up',
                               style: TextStyle(color: Colors.white),

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class VerifyOtpController extends GetxController {
   final AuthenticationRepository _repository = AuthenticationRepository();
   final Rx<Status> verificationStatus = Status.completed.obs;
-  final SignUpController signUpController = Get.find();
+  final SignUpController signUpController = SignUpController();
 
   // Method to verify OTP
   Future<void> verifyOtp(String code) async {
@@ -29,8 +29,10 @@ class VerifyOtpController extends GetxController {
   Future<void> registerUser() async {
     try {
       verificationStatus(Status.loading);
-      debugPrint('Full Name: ${signUpController.fullNameController.text.trim()}');
-      debugPrint('********************************************************************');
+      debugPrint(
+          'Full Name: ${signUpController.fullNameController.text.trim()}');
+      debugPrint(
+          '********************************************************************');
       final bool isRegistered = await _repository.registerUser(
         signUpController.fullNameController.text
             .trim(), // Example fullName from
@@ -51,19 +53,22 @@ class VerifyOtpController extends GetxController {
     }
   }
 
-  // Method to resend OTP
-  // void resendOtp(String phoneNumber) async {
-  //   try {
-  //     verificationStatus.value = ApiResponse.loading();
-  //     final bool isResent = await _repository.resendOtp(phoneNumber);
-  //     if (isResent) {
-  //       verificationStatus.value =
-  //           ApiResponse.completed('OTP resent successfully');
-  //     } else {
-  //       verificationStatus.value = ApiResponse.error('Failed to resend OTP');
-  //     }
-  //   } catch (e) {
-  //     verificationStatus.value = ApiResponse.error('Error: $e');
-  //   }
-  // }
+  Future<void> resendOtp() async {
+    try {
+      verificationStatus(Status.loading);
+      final bool isResent = await _repository
+          .resendOtp(signUpController.phoneNumberController.text.trim());
+      if (isResent) {
+        verificationStatus(Status.completed);
+        Get.snackbar('Resend', 'Code resent successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      } else {
+        Get.snackbar('Error', 'Failed to resend OTP');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to resend OTP: $e');
+    }
+  }
 }

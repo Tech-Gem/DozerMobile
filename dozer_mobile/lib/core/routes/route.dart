@@ -3,7 +3,7 @@ import 'package:dozer_mobile/pages/home/home_page.dart';
 import 'package:dozer_mobile/pages/login_screen/login_page.dart';
 import 'package:dozer_mobile/pages/sign_up/sign_up_page.dart';
 import 'package:dozer_mobile/pages/verify_otp/bindings/verify_otp_bindings.dart';
-import 'package:dozer_mobile/pages/verify_otp/pages/verify_otp_screen.dart';
+import 'package:dozer_mobile/pages/verify_otp/verify_otp_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
