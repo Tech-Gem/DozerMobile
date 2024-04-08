@@ -3,7 +3,7 @@ import 'package:dozer_mobile/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/pages/sign_up/controllers/sign_up_controller.dart';
 import 'package:dozer_mobile/pages/sign_up/screen_widgets/password_text_field.dart';
-import 'package:dozer_mobile/pages/widgets/text_field.dart';
+import 'package:dozer_mobile/core/utils/widgets/text_field.dart';
 import 'package:get/get.dart';
 
 class SignUpPage extends StatelessWidget {

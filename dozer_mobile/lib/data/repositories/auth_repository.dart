@@ -76,4 +76,21 @@ class AuthenticationRepository {
       return false;
     }
   }
+
+  Future<bool> login(String phoneNumber, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.login),
+        body: {'phoneNumber': phoneNumber, 'password': password},
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error logging in: $e');
+      return false;
+    }
+  }
 }
