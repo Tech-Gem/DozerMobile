@@ -15,6 +15,7 @@ class VerifyOtpController extends GetxController {
     try {
       verificationStatus(Status.loading);
       final bool isVerified = await _repository.verifyOtp(code);
+      debugPrint('isVerified: $isVerified');
       if (isVerified) {
         registerUser();
       } else {
@@ -43,7 +44,7 @@ class VerifyOtpController extends GetxController {
       );
       if (isRegistered) {
         // Navigate to the next screen or perform any other action
-        Get.toNamed(RoutesName.home);
+        Get.toNamed(RoutesName.pickImage);
         verificationStatus(Status.completed);
       } else {
         Get.snackbar('Error', 'failed to register user');
