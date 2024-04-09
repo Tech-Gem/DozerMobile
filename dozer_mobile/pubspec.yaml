@@ -48,6 +48,8 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   pinput: ^4.0.0
   otp_pin_field: ^1.2.2
+  http: ^1.2.1
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

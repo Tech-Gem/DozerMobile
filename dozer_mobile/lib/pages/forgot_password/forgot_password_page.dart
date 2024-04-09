@@ -1,15 +1,15 @@
 import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:dozer_mobile/data/apis/api_response_status.dart';
-import 'package:dozer_mobile/dozer_exports.dart';
-import 'package:dozer_mobile/pages/sign_up/controllers/sign_up_controller.dart';
+import 'package:dozer_mobile/pages/forgot_password/controllers/forgot_password_controller.dart';
 import 'package:dozer_mobile/pages/sign_up/screen_widgets/password_text_field.dart';
-import 'package:dozer_mobile/core/utils/widgets/text_field.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUpPage extends StatelessWidget {
-  final SignUpController signUpController = Get.put(SignUpController());
+class ResetPasswordPage extends StatelessWidget {
+  final ResetPasswordController _resetPasswordController =
+      Get.put(ResetPasswordController());
 
-  SignUpPage({Key? key}) : super(key: key);
+  ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SignUpPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Create Account",
+          "Reset Password",
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -29,7 +29,7 @@ class SignUpPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -38,76 +38,63 @@ class SignUpPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Let's create your account",
+                      "Enter New Password",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 20,
                         color: AppColors.primaryColor,
                       ),
                     ),
-                    SizedBox(
-                      height: 10.h,
+                    const SizedBox(
+                      height: 10,
                     ),
                     Text(
-                      "Tell us about yourself so that we get to know you.",
+                      "Please enter your new password.",
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey.shade500,
                       ),
                     ),
-                    SizedBox(
-                      height: 20.h,
+                    const SizedBox(
+                      height: 20,
                     ),
                     Obx(
-                      () => CustomTextField(
-                        controller: signUpController.fullNameController,
-                        errorText: signUpController.fullNameError.value,
-                        labelText: 'Full Name',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => CustomTextField(
-                        controller: signUpController.emailController,
-                        errorText: signUpController.emailError.value,
-                        labelText: 'Email',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => CustomTextField(
-                        controller: signUpController.phoneNumberController,
-                        errorText: signUpController.phoneNumberError.value,
-                        labelText: 'Phone Number',
+                      () => PasswordField(
+                        errorText: _resetPasswordController.passwordError.value,
+                        labelText: 'Password',
+                        controller: _resetPasswordController.passwordController,
+                        isPasswordVisible:
+                            _resetPasswordController.passwordVisibility.value,
+                        onTap: () => _resetPasswordController.togglePasswordVisibility(),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Obx(
                       () => PasswordField(
-                        errorText: signUpController.passwordError.value,
-                        labelText: 'Password',
-                        controller: signUpController.passwordController,
+                        errorText: _resetPasswordController.confirmPasswordError.value,
+                        labelText: 'Confirm Password',
+                        controller: _resetPasswordController.confirmPasswordController,
                         isPasswordVisible:
-                            signUpController.passwordVisibility.value,
-                        onTap: signUpController.togglePasswordVisibility,
+                            _resetPasswordController.confirmPasswordVisibility.value,
+                        onTap: () => _resetPasswordController.toggleConfirmPasswordVisibility(),
                       ),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: signUpController.signUp,
+                      onPressed: _resetPasswordController.resetPassword,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Obx(() => signUpController.status.value ==
+                      child: Obx(() => _resetPasswordController.status.value ==
                               Status.loading
                           ? CircularProgressIndicator(
                               color: AppColors.white,
                             ) // Show circular progress indicator when loading
                           : const Text(
-                              'Sign Up',
+                              'Reset Password',
                               style: TextStyle(color: Colors.white),
                             )),
                     ),

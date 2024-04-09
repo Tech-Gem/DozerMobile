@@ -1,12 +1,13 @@
-import 'package:dozer_mobile/pages/verify_otp/controllers/verify_otp_controller.dart';
+import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
+import 'package:dozer_mobile/pages/verify_otp/controllers/verify_otp_controller.dart';
 
 class VerifyOtpPage extends StatelessWidget {
   final VerifyOtpController _controller = Get.put(VerifyOtpController());
 
-  VerifyOtpPage({Key? key}); // Register the controller
+  VerifyOtpPage({superKey, Key? key}); // Register the controller
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class VerifyOtpPage extends StatelessWidget {
                   height: 20,
                 ),
                 const Text(
-                  'Enter A 6 digit number that was sent to contact',
+                  'Enter a 6-digit number that was sent to your contact',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
@@ -80,7 +81,7 @@ class VerifyOtpPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (enteredOtp.value.length != 6) {
-                            Get.snackbar('Error', 'Please enter 6 digit OTP');
+                            Get.snackbar('Error', 'Please enter a 6-digit OTP');
                           } else {
                             _controller.verifyOtp(enteredOtp
                                 .value); // Call verifyOtp method of the controller with entered OTP
@@ -100,6 +101,31 @@ class VerifyOtpPage extends StatelessWidget {
                             style:
                                 TextStyle(color: Colors.black, fontSize: 16.0),
                           ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      GestureDetector(
+                        onTap: () {
+                          _controller.resendOtp();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Could not receive the code? ',
+                              style: TextStyle(
+                                color: AppColors.black,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                            const Text(
+                              'Resend',
+                              style: TextStyle(
+                                color: AppColors.primaryColor,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
