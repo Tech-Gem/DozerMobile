@@ -7,4 +7,5 @@ class RoutesName {
   static const String forgotPassword = '/forgot_password';
   static const String resetPassword = '/reset_password';
   static const String pickImage = '/pick_image';
+  static const String payment = '/payment';
   }
