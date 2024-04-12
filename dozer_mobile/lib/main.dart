@@ -9,6 +9,7 @@ import 'core/routes/routes_name.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'dozer',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 

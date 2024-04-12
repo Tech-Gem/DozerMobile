@@ -1,4 +1,4 @@
-package com.example.dozer_mobile
+package com.dozer
 
 import io.flutter.embedding.android.FlutterActivity
 
