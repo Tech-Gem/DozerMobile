@@ -1,16 +1,26 @@
-// import 'package:dozer_mobile/core/routes/route.dart';
 import 'package:dozer_mobile/core/routes/route.dart';
-import 'package:dozer_mobile/core/routes/routes_name.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'dozer_exports.dart';
+import 'firebase_options.dart';
+import 'core/routes/routes_name.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Initialize Firebase Messaging and get the FCM token
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  String? fcmToken = await messaging.getToken();
+  print('***********************************************');
+  print('FCM Token: $fcmToken');
+
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

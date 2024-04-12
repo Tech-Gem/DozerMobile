@@ -1,9 +1,10 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/pages/add_profile_photo/profile_photo_page.dart';
+import 'package:dozer_mobile/pages/create_euipment/create_equipment_page.dart';
+import 'package:dozer_mobile/pages/create_euipment/pick_images.dart';
 import 'package:dozer_mobile/pages/forgot_password/forgot_password_page.dart';
 import 'package:dozer_mobile/pages/home/home_page.dart';
 import 'package:dozer_mobile/pages/login_screen/login_page.dart';
-import 'package:dozer_mobile/pages/payment/payment_page.dart';
 import 'package:dozer_mobile/pages/sign_up/sign_up_page.dart';
 import 'package:dozer_mobile/pages/verify_otp/bindings/verify_otp_bindings.dart';
 import 'package:dozer_mobile/pages/verify_otp/verify_otp_screen.dart';
@@ -13,10 +14,10 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-    GetPage(
-      name: RoutesName.intial,
-      page: () =>  PaymentPage(),
-    ),
+    // GetPage(
+    //   name: RoutesName.intial,
+    //   page: () =>  CreateEquipmentPage(),
+    // ),
     GetPage(
       name: RoutesName.intial,
       page: () => SignUpPage(),
@@ -42,9 +43,9 @@ class AppPages {
       name: RoutesName.forgotPassword,
       page: () => PickImagePage(),
     ),
-    GetPage(
-      name: RoutesName.payment,
-      page: () => const PaymentPage(),
-    ),
+    // GetPage(
+    //   name: RoutesName.payment,
+    //   page: () => const PaymentPage(),
+    // ),
   ];
 }
