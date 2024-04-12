@@ -1,11 +1,13 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
-import 'package:dozer_mobile/pages/add_profile_photo/profile_photo_page.dart';
-import 'package:dozer_mobile/pages/forgot_password/forgot_password_page.dart';
-import 'package:dozer_mobile/pages/home/home_page.dart';
-import 'package:dozer_mobile/pages/login_screen/login_page.dart';
-import 'package:dozer_mobile/pages/sign_up/sign_up_page.dart';
-import 'package:dozer_mobile/pages/verify_otp/bindings/verify_otp_bindings.dart';
-import 'package:dozer_mobile/pages/verify_otp/verify_otp_screen.dart';
+import 'package:dozer_mobile/presentation/add_profile_photo/profile_photo_page.dart';
+import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
+import 'package:dozer_mobile/presentation/equipment_list/home_screen.dart';
+import 'package:dozer_mobile/presentation/forgot_password/forgot_password_page.dart';
+
+import 'package:dozer_mobile/presentation/login_screen/login_page.dart';
+import 'package:dozer_mobile/presentation/sign_up/sign_up_page.dart';
+import 'package:dozer_mobile/presentation/verify_otp/bindings/verify_otp_bindings.dart';
+import 'package:dozer_mobile/presentation/verify_otp/verify_otp_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
@@ -14,13 +16,13 @@ class AppPages {
   static final routes = [
     GetPage(
       name: RoutesName.intial,
-      page: () => SignUpPage(),
+      page: () => HomeScreen(),
     ),
 
-    GetPage(
-      name: RoutesName.intial,
-      page: () => SignUpPage(),
-    ),
+    // GetPage(
+    //   name: RoutesName.intial,
+    //   page: () => SignUpPage(),
+    // ),
 
     GetPage(
       name: RoutesName.otp,
@@ -35,7 +37,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.home,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
     ),
 
     GetPage(

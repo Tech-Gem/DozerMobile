@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:dozer_mobile/data/apis/api_end_points.dart';
-import 'package:dozer_mobile/pages/sign_up/controllers/sign_up_controller.dart';
+import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
