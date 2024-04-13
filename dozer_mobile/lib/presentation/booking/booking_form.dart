@@ -1,225 +1,228 @@
-import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/core/utils/app_strings.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
+import 'package:dozer_mobile/presentation/booking/screen_widgets/notify_owner_button.dart';
+import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:signature/signature.dart';
-import 'package:geocoding/geocoding.dart' show Placemark, placemarkFromCoordinates;
 
-import 'controllers/booking_controller.dart';
+class BookingForm extends StatefulWidget {
+  final int availability;
+  final String imageUrl;
+  final String equipmentName;
 
-class BookingForm extends StatelessWidget {
-  final BookingController controller = Get.put(BookingController());
+  const BookingForm({
+    Key? key,
+    required this.availability,
+    required this.imageUrl,
+    required this.equipmentName,
+  }) : super(key: key);
 
-  Widget buildLocationField(String label) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: controller.locationController,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    hintText: 'Select $label',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              SizedBox(width: 8.0),
-              ElevatedButton(
-                onPressed: () async {
-                  await controller.getCurrentLocation();
-                },
-                child: Icon(Icons.gps_fixed),
-              ),
-              SizedBox(width: 8.0),
-              ElevatedButton(
-                onPressed: () async {
-                  await controller.showPredefinedLocationsDialog();
-                },
-                child: Icon(Icons.location_on),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+  @override
+  _BookingFormState createState() => _BookingFormState();
+}
+
+class _BookingFormState extends State<BookingForm> {
+  late TextEditingController _amountController;
+  late TextEditingController _availabilityController;
+  late String _selectedSubCity;
+  late DateTime _startDate; // Initialize with current date
+  late DateTime _endDate; // Initialize with current date
+  List<String> _subCities = ['SubCity A', 'SubCity B', 'SubCity C'];
+
+  @override
+  void initState() {
+    super.initState();
+    _amountController = TextEditingController();
+    _availabilityController = TextEditingController(text: '1'); // Initialize with 1
+    _selectedSubCity = _subCities.first;
+    _startDate = DateTime.now(); // Initialize with current date
+    _endDate = DateTime.now(); // Initialize with current date
   }
 
-  Widget buildDateField(String label, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label),
-          TextField(
-            controller: controller,
-            readOnly: true,
-            onTap: () async {
-              DateTime? pickedDate = await showDatePicker(
-                context: Get.context!,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2101),
-              );
-
-              if (pickedDate != null && pickedDate != DateTime.now()) {
-                controller.text = "${pickedDate.toLocal()}".split(' ')[0];
-              }
-            },
-            decoration: InputDecoration(
-              hintText: 'Select $label',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildDateFieldsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: buildDateField("Start Date", controller.startDateController),
-        ),
-        SizedBox(width: 16.0),
-        Expanded(
-          child: buildDateField("End Date", controller.endDateController),
-        ),
-      ],
-    );
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _availabilityController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Booking Form'),
-        backgroundColor: primaryColor,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            buildDateFieldsRow(),
-            buildLocationField("Renter's Location"),
-            buildAgreementText(),
-            buildSignatureField("Sign Board", controller.signBoardSignatureController),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    controller.confirmBooking();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(),
+        body: Padding(
+          padding: EdgeInsets.only(top: 10.h),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 40),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Equipment Picture and Name
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                      child: Image.network(
+                        widget.imageUrl,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    minimumSize: Size(double.infinity, 50.0),
-                  ),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white),
+                    SizedBox(height: 10),
+                    Text(
+                      widget.equipmentName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20), // Spacing
+                InkWell(
+                  onTap: () => _selectStartDate(context),
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: AppStringsEnglish.startDateLabel,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text('${_startDate.day}/${_startDate.month}/${_startDate.year}'),
                   ),
                 ),
-              ),
+                SizedBox(height: 10.0),
+                InkWell(
+                  onTap: () => _selectEndDate(context),
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: AppStringsEnglish.endDateLabel,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text('${_endDate.day}/${_endDate.month}/${_endDate.year}'),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                DropdownButtonFormField<String>(
+                  value: _selectedSubCity,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedSubCity = newValue!;
+                    });
+                  },
+                  items: _subCities.map((subCity) {
+                    return DropdownMenuItem<String>(
+                      value: subCity,
+                      child: Text(subCity),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: AppStringsEnglish.subCityLabel,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _availabilityController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: AppStringsEnglish.amountLabel,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        readOnly: true,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_drop_up),
+                      onPressed: () {
+                        int currentAvailability = int.parse(_availabilityController.text);
+                        if (currentAvailability < widget.availability) {
+                          setState(() {
+                            _availabilityController.text = (currentAvailability + 1).toString();
+                          });
+                        }
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_drop_down),
+                      onPressed: () {
+                        int currentAvailability = int.parse(_availabilityController.text);
+                        if (currentAvailability > 1) {
+                          setState(() {
+                            _availabilityController.text = (currentAvailability - 1).toString();
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                NotifyOwnerButton(
+                  text: AppStringsEnglish.notifyOwnerButtonText,
+                  onPressed: () {},
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildAgreementText() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'By proceeding, you agree to the rental terms and conditions.',
-            style: TextStyle(
-              fontSize: 16.0,
-            ),
-          ),
-          SizedBox(height: 8.0),
-          InkWell(
-            onTap: () {
-              Get.dialog(
-                AlertDialog(
-                  title: Text('Terms of Agreement'),
-                  content: SingleChildScrollView(
-                    child: Text(
-                      'Add your terms and conditions here.',
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Text('Close'),
-                    ),
-                  ],
-                ),
-              );
-            },
-            child: Text(
-              'View Terms of Agreement',
-              style: TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
-        ],
-      ),
+  Future<void> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedStartDate = await showDatePicker(
+      context: context,
+      initialDate: _startDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
     );
+
+    if (pickedStartDate != null && pickedStartDate != _startDate) {
+      setState(() {
+        _startDate = pickedStartDate;
+        if (_endDate.isBefore(_startDate)) {
+          // If end date is before start date, reset end date to start date
+          _endDate = _startDate;
+        }
+      });
+    }
   }
 
-  Widget buildSignatureField(String label, SignatureController? controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label),
-              ElevatedButton(
-                onPressed: () {
-                  controller?.clear();
-                },
-                child: Text('Clear Signature'),
-              ),
-            ],
-          ),
-          Container(
-            height: 120,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-            ),
-            child: Signature(
-              controller: controller ?? SignatureController(),
-              height: 120,
-              width: double.infinity,
-            ),
-          ),
-        ],
-      ),
+  Future<void> _selectEndDate(BuildContext context) async {
+    final DateTime? pickedEndDate = await showDatePicker(
+      context: context,
+      initialDate: _endDate,
+      firstDate: _startDate,
+      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
     );
+
+    if (pickedEndDate != null && pickedEndDate != _endDate) {
+      setState(() {
+        _endDate = pickedEndDate;
+      });
+    }
   }
 }
