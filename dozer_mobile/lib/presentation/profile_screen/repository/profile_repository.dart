@@ -4,7 +4,7 @@ import 'package:dozer_mobile/data/network/network_api_service.dart';
 import 'package:dozer_mobile/presentation/profile_screen/models/profile_model.dart';
 
 class ProfileRepository {
-  final String apiUrl = 'https://dozer_mobile-backend-tech-gem.onrender.com/api/v1/';
+  final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1';
   final NetworkApiService _apiService = NetworkApiService();
 
   Future<Profile> getProfile(String id) async {

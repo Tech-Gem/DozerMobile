@@ -379,7 +379,7 @@ final controller = Get.put(BookingController());
           ElevatedButton(
             onPressed: () {
               // Handle booking 
-              Get.to(BookingForm());
+              Get.to(BookingForm(availability:constructionMachine.quantity,equipmentName: constructionMachine.name,imageUrl: constructionMachine.image,));
             },
             style: ElevatedButton.styleFrom(
               primary: primaryColor,

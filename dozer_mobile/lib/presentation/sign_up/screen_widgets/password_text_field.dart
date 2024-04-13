@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PasswordField extends StatelessWidget {
   const PasswordField({
-    super.key,
+  
     required this.isPasswordVisible,
     required this.onTap,
     required this.controller,

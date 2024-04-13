@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SwitchCard extends StatefulWidget {
-  const SwitchCard({super.key});
+  const SwitchCard();
 
   @override
   State<SwitchCard> createState() => _SwitchCardState();
