@@ -11,7 +11,7 @@ class Profile {
   final String? email;
   final String? phoneNumber;
   final bool? phoneNumberVerified;
-  final String? role;
+  final Enum? role;
 
   Profile({
     this.id,

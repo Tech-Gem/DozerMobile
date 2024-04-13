@@ -8,7 +8,7 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     required this.iconPath,
     required this.labelText,
-    super.key,
+    
   });
 
   final String iconPath;

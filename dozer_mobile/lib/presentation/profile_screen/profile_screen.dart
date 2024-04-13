@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
-  ProfileScreen({super.key});
+  ProfileScreen();
   final controller = Get.put(ProfileController());
 
   @override

@@ -1,6 +1,7 @@
 import 'package:dozer_mobile/presentation/details_screen.dart/details_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/controllers/construction_controller.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/circle_icon_button.dart';
+import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -16,6 +17,10 @@ class EquipmentListPage extends StatelessWidget {
       body: Column(
         children: [
           // Categories List
+          Padding(
+           padding: const EdgeInsets.all(8.0),
+           child: SearchInput(),
+         ),
           Container(
             height: 70, // Increased height
             child: Obx(
@@ -28,6 +33,7 @@ class EquipmentListPage extends StatelessWidget {
                   return ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
+                      
                       SectionContainer(
                         sectionName: "CompactEquipment",
                         initialSelected: true,
@@ -64,19 +70,7 @@ class EquipmentListPage extends StatelessWidget {
           ),
 
           // Search Bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search Equipment...',
-                prefixIcon: Icon(Icons.search),
-              ),
-              onChanged: (value) {
-                // Implement search functionality here
-                // You may need to update the controller or perform filtering based on the search value
-              },
-            ),
-          ),
+         
           SizedBox(height: 10),
 
           // Equipment List

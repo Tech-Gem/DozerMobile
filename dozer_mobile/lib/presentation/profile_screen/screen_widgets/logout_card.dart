@@ -7,7 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LogoutCard extends StatelessWidget {
-  const LogoutCard({super.key});
+  const LogoutCard();
 
   @override
   Widget build(BuildContext context) {

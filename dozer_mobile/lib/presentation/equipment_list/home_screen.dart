@@ -1,8 +1,10 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
+import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recent_bids.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recommended_house.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/welcome_text.dart';
@@ -32,11 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   WelcomeText(),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30.0, right: 30),
-                    child: SearchInput(),
+                    padding: EdgeInsets.only(left: 5.0, right : 5.0,),
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      child: SearchInput()),
                   ),
+                  SizedBox(height: 5.h,),
                   CategoriesWidget(),
                   RecommendedHouse(),
+                  RecentBidsWidget()
                 ],
               ),
             ),
@@ -45,10 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.add_event,
+          backgroundColor: primaryColor,
           overlayColor: Colors.transparent,
           children: [
             SpeedDialChild(
-              child: Icon(Icons.add_circle_outline),
+              child: Icon(Icons.garage_outlined),
               backgroundColor: primaryColor,
               label: 'Add Equipment',
               onTap: () {
@@ -56,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             SpeedDialChild(
-              child: Icon(Icons.create_outlined),
+              child: Icon(Icons.gavel_rounded,),
               backgroundColor: primaryColor,
               label: 'Create Bid',
               onTap: () {
@@ -73,9 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.grey, // Customize the inactive color
           items: [
             TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.gavel, title: 'All Equipment'),
+            TabItem(icon: Icons.garage_outlined, title: 'All Equipment'),
             TabItem(icon: Icons.book, title: 'Bookings'),
-            TabItem(icon: Icons.apps, title: 'Bid'),
+            TabItem(icon: Icons.gavel, title: 'Bid'),
           ],
           initialActiveIndex: _currentIndex,
           onTap: (index) {
