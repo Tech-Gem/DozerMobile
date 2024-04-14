@@ -1,5 +1,4 @@
 // ignore_for_file: inference_failure_on_instance_creation
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 class LocationCard extends StatelessWidget {
