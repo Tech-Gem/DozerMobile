@@ -1,8 +1,4 @@
-// ignore_for_file: avoid_print
-
 import 'package:dozer_mobile/data/apis/api_end_points.dart';
-import 'package:dozer_mobile/pages/sign_up/controllers/sign_up_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationRepository {
@@ -20,28 +16,23 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error sending OTP: $e');
       return false;
     }
   }
 
-  Future<bool> verifyOtp(String otp) async {
+  Future<bool> verifyOtp(String phoneNumber, String code) async {
     try {
-      debugPrint(
-          'phone numberrrrrrrr: $SignUpController.phoneNumberController.text.trim()');
       final response = await http.post(
-          Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.verifyOtp),
-          body: {'code': otp});
-      debugPrint('response: ${response.statusCode}');
-      debugPrint('*********************************************');
-      debugPrint('response: ${response.body}');
+        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.verifyOtp),
+        body: {'phoneNumber': phoneNumber, 'code': code},
+      );
+
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print('Error verifying OTP: $e');
       return false;
     }
   }
@@ -57,13 +48,12 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error resending OTP: $e');
       return false;
     }
   }
 
-  Future<bool> registerUser(String fullName, String email, String phoneNumber,
-      String password) async {
+  Future<bool> registerUser(String phoneNumber, String email, String password,
+      String fullName) async {
     try {
       final response = await http.post(
           Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.registerUser),
@@ -73,13 +63,12 @@ class AuthenticationRepository {
             'password': password,
             'fullName': fullName,
           });
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print('Error registering user: $e');
       return false;
     }
   }
@@ -96,7 +85,6 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error logging in: $e');
       return false;
     }
   }
@@ -113,7 +101,6 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error resetting password: $e');
       return false;
     }
   }

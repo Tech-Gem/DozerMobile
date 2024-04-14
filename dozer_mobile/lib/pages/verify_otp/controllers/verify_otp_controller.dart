@@ -8,14 +8,16 @@ import 'package:get/get.dart';
 class VerifyOtpController extends GetxController {
   final AuthenticationRepository _repository = AuthenticationRepository();
   final Rx<Status> verificationStatus = Status.completed.obs;
-  final SignUpController signUpController = SignUpController();
+  final SignUpController signUpController = Get.find<SignUpController>();
 
   // Method to verify OTP
-  Future<void> verifyOtp(String code) async {
+  Future<void> verifyOtp(String phoneNumber, String code) async {
     try {
       verificationStatus(Status.loading);
-      final bool isVerified = await _repository.verifyOtp(code);
-      debugPrint('isVerified: $isVerified');
+      debugPrint(phoneNumber);
+      debugPrint(code);
+      final bool isVerified = await _repository.verifyOtp(phoneNumber, code);
+
       if (isVerified) {
         registerUser();
       } else {
@@ -30,17 +32,11 @@ class VerifyOtpController extends GetxController {
   Future<void> registerUser() async {
     try {
       verificationStatus(Status.loading);
-      debugPrint(
-          'Full Name: ${signUpController.fullNameController.text.trim()}');
-      debugPrint(
-          '********************************************************************');
       final bool isRegistered = await _repository.registerUser(
-        signUpController.fullNameController.text
-            .trim(), // Example fullName from
-        signUpController.emailController.text.trim(), // Example email
-        signUpController.phoneNumberController.text
-            .trim(), // Example phone number
-        signUpController.passwordController.text.trim(), // Example password
+        signUpController.phoneNumberController.value.text, // Example fullName from
+        signUpController.emailController.value.text, // Example email
+        signUpController.passwordController.value.text, // Example phone number
+        signUpController.fullNameController.value.text, // Example password
       );
       if (isRegistered) {
         // Navigate to the next screen or perform any other action
@@ -58,7 +54,7 @@ class VerifyOtpController extends GetxController {
     try {
       verificationStatus(Status.loading);
       final bool isResent = await _repository
-          .resendOtp(signUpController.phoneNumberController.text.trim());
+          .resendOtp(signUpController.phoneNumberController.value.text.trim());
       if (isResent) {
         verificationStatus(Status.completed);
         Get.snackbar('Resend', 'Code resent successfully',
