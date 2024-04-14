@@ -4,14 +4,14 @@ import 'package:dozer_mobile/presentation/announcement_screen/controller/announc
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/core/utils/widgets/announcement_card.dart';
 import 'package:dozer_mobile/presentation/announcement_screen/controller/announcement_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 class AnnouncementScreen extends GetView<AnnouncementController> {
   AnnouncementScreen({super.key});

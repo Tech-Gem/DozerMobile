@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
 
 class LogoutCard extends StatelessWidget {
   const LogoutCard();

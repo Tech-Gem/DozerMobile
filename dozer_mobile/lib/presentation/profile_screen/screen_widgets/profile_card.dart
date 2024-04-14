@@ -1,8 +1,8 @@
 import 'package:dozer_mobile/presentation/profile_screen/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'package:dozer_mobile/dozer_exports.dart';
 class ProfileCard extends StatelessWidget {
   final Profile profile;
 

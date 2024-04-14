@@ -4,7 +4,7 @@ import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/circle_i
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
 
 class EquipmentListPage extends StatelessWidget {
   final ConstructionMachineController controller = Get.put(ConstructionMachineController());
@@ -113,7 +113,7 @@ class EquipmentListPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     image: DecorationImage(
-                                      image: NetworkImage(constructionMachine.image),
+                                      image: NetworkImage(constructionMachine.image[0]),
                                       fit: BoxFit.cover,
                                     ),
                                   ),

@@ -42,12 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 5.h,),
                   CategoriesWidget(),
-                  RecommendedHouse(),
-                  RecentBidsWidget()
+                  
+                    RecommendedHouse(),
+                  // RecentBidsWidget()
                 ],
               ),
             ),
-            EquipmentListPage(),
+            // EquipmentListPage(),
           ],
         ),
         floatingActionButton: SpeedDial(

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 
+import 'package:dozer_mobile/dozer_exports.dart';
 class AnnouncementCard extends StatelessWidget {
 
   const AnnouncementCard({required this.title, required this.description, super.key, this.imageUrl});

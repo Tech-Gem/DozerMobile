@@ -1,12 +1,12 @@
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
-
+import 'package:dozer_mobile/dozer_exports.dart';
 
 import 'package:flutter/material.dart';
 import 'package:dozer_mobile/presentation/equipment_list/models/construction_machine.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 class DetailScreen extends StatelessWidget {
   final ConstructionMachineModel constructionMachine;
@@ -68,7 +68,7 @@ final controller = Get.put(BookingController());
                         height: 250,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(constructionMachine.image),
+                            image: NetworkImage(constructionMachine.image[0]),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -379,7 +379,7 @@ final controller = Get.put(BookingController());
           ElevatedButton(
             onPressed: () {
               // Handle booking 
-              Get.to(BookingForm(availability:constructionMachine.quantity,equipmentName: constructionMachine.name,imageUrl: constructionMachine.image,));
+              Get.to(BookingForm(availability:constructionMachine.quantity,equipmentName: constructionMachine.name,imageUrl: constructionMachine.image[0],));
             },
             style: ElevatedButton.styleFrom(
               primary: primaryColor,

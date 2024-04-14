@@ -1,18 +1,18 @@
+import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/details_screen.dart/details_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/controllers/construction_controller.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/circle_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 class RecommendedHouse extends StatelessWidget {
   final ConstructionMachineController controller = Get.put(ConstructionMachineController());
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: EdgeInsets.all(1.h),
-      // height: controller.recommendedList.isEmpty ? 0 : 40.h,
+    return SizedBox(
+      height: 40.h, // Set a fixed height based on the screen size
       child: Obx(
         () {
           if (controller.status.value == Status.loading) {
@@ -21,7 +21,6 @@ class RecommendedHouse extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-              
                 Center(child: Text('Error loading machines. Please try again.')),
               ],
             );
@@ -39,8 +38,9 @@ class RecommendedHouse extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 35.h,
-                  padding: EdgeInsets.all(2.h),
+                  width: 300,
+                  height: 1000, // Adjust the height of the Container
+                  margin: EdgeInsets.symmetric(horizontal: 10), // Add margin for spacing between items
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
@@ -52,10 +52,12 @@ class RecommendedHouse extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(
                             image: NetworkImage(
-                              controller.recommendedList[index].image,
+                              controller.recommendedList[index].image.isNotEmpty
+                                  ? controller.recommendedList[index].image[0]
+                                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg",
                             ),
                             fit: BoxFit.cover,
-                          )
+                          ),
                         ),
                       ),
                       Positioned(
@@ -82,34 +84,33 @@ class RecommendedHouse extends StatelessWidget {
                                   Text(
                                     controller.recommendedList[index].name,
                                     style: Theme.of(context).textTheme.headline1!.copyWith(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text(
                                     controller.recommendedList[index].location,
                                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text(
                                     'Renters Name: ${controller.recommendedList[index].name}',
                                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text(
                                     'Available Amount: ${controller.recommendedList[index].quantity.toString()}',
                                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
-                           
                             ],
                           ),
                         ),
@@ -119,7 +120,7 @@ class RecommendedHouse extends StatelessWidget {
                 ),
               ),
               itemCount: controller.recommendedList.length,
-              separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 15),
+              separatorBuilder: (BuildContext context, int index) => SizedBox(width: 10), // Adjust the width of the separator
             );
           }
         },
