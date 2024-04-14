@@ -6,7 +6,7 @@ class ConstructionMachineModel {
   final String location;
   final String description;
   final String category;
-  final String image;
+  final List<String> image;
   final String capacity;
   final String model;
   final List<String> specifications;
@@ -34,6 +34,11 @@ class ConstructionMachineModel {
   });
 
   factory ConstructionMachineModel.fromJson(Map<String, dynamic>? json) {
+    var imageList = <String>[];
+    var imageJson = json?['image'] as List<dynamic>?;
+    if (imageJson != null) {
+      imageList = imageJson.map((item) => item as String).toList();
+    }
     return ConstructionMachineModel(
       id: json?['id'] as String? ?? '',
       name: json?['name'] as String? ?? '',
@@ -42,7 +47,7 @@ class ConstructionMachineModel {
       location: json?['location'] as String? ?? '',
       description: json?['description'] as String? ?? '',
       category: json?['category'] as String? ?? '',
-      image: json?['image'] as String? ?? '',
+      image: imageList,
       capacity: json?['capacity'] as String? ?? '',
       model: json?['model'] as String? ?? '',
       specifications: (json?['specifications'] as List<dynamic>?)?.cast<String>() ?? [],

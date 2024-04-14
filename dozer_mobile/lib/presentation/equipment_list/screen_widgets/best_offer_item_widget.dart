@@ -38,7 +38,7 @@ class BestOfferItemWidget extends StatelessWidget {
                   width: 150,
                   height: 80,
                   decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(machine.image), fit: BoxFit.cover),
+                    image: DecorationImage(image: AssetImage(machine.image[0]), fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),

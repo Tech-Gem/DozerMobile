@@ -5,8 +5,8 @@ import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/logout_c
 import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/profile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'package:dozer_mobile/dozer_exports.dart';
 class ProfileScreen extends GetView<ProfileController> {
   ProfileScreen();
   final controller = Get.put(ProfileController());

@@ -2,8 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'package:dozer_mobile/dozer_exports.dart';
 class SwitchCard extends StatefulWidget {
   const SwitchCard();
 
