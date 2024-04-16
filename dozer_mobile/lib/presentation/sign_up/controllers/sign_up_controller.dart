@@ -7,24 +7,24 @@ import 'package:get/get.dart';
 class SignUpController extends GetxController {
   final AuthenticationRepository _repository = AuthenticationRepository();
 
-  final fullNameController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final fullNameController = TextEditingController().obs;
+  final phoneNumberController = TextEditingController().obs;
+  final emailController = TextEditingController().obs;
+  final passwordController = TextEditingController().obs;
 
   final fullNameError = RxString('');
   final phoneNumberError = RxString('');
   final emailError = RxString('');
   final passwordError = RxString('');
-  final Rx<Status> status = Status.completed.obs;
 
+  final Rx<Status> status = Status.completed.obs;
   final RxBool passwordVisibility = false.obs;
 
   Future<void> signUp() async {
-    final fullName = fullNameController.text.trim();
-    final phoneNumber = phoneNumberController.text.trim();
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
+    final fullName = fullNameController.value.text.trim();
+    final phoneNumber = phoneNumberController.value.text.trim();
+    final email = emailController.value.text.trim();
+    final password = passwordController.value.text.trim();
 
     if (validateFields(fullName, phoneNumber, email, password)) {
       try {
@@ -100,10 +100,10 @@ class SignUpController extends GetxController {
   @override
   void onClose() {
     // Clean up the text controllers when the controller is closed
-    fullNameController.dispose();
-    phoneNumberController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
+    fullNameController.value.dispose();
+    phoneNumberController.value.dispose();
+    emailController.value.dispose();
+    passwordController.value.dispose();
     super.onClose();
   }
 }

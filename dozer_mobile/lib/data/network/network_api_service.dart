@@ -18,10 +18,9 @@ class NetworkApiService extends BaseApiService {
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization':
-          //     "Bearer ${GetStorageHelper.getValue(GetStorageKeys.keyToken) ?? ""}",
           'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBlNTFlMzkxLThiYjItNGIwNy1iMDc3LWE4NWU5MTMwNTA3NyIsImlhdCI6MTcwNjM4MzkwNCwiZXhwIjoxNzE0MTU5OTA0fQ.sdMNBsmp9V1wSyE_sNrtCwCz_aMW-bZ9Xyqh6j0stq8'
+              "Bearer ${GetStorageHelper.getValue("token") ?? ""}",
+          
         },
       );
       Logger.log('STATUS CODE: ${response.statusCode}');

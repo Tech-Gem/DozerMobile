@@ -1,5 +1,7 @@
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/data/network/network_api_service.dart';
 import 'package:dozer_mobile/presentation/booking/models/booking_form_model.dart';
+import 'package:dozer_mobile/presentation/booking/repository/booking_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +12,7 @@ import 'package:signature/signature.dart';
 
 class BookingController extends GetxController {
   final NetworkApiService _apiService = NetworkApiService();
+  final BookingRepository _bookingRepository = BookingRepository();
 
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
@@ -77,7 +80,7 @@ class BookingController extends GetxController {
 
       final BookingModel booking = BookingModel(
         equipmentId: "", // Replace with actual equipment ID
-        name: "Chrisitina Solomon",
+        name: GetStorageHelper.getValue('userName'),
         email: "hayat1911@gmail.com",
         startDate: startDateController.text,
         endDate: endDateController.text,
@@ -86,17 +89,8 @@ class BookingController extends GetxController {
         signature: " ",
         termsAndConditions: true, // You can modify this based on your logic
       );
-      final String apiUrl = 'https://dozer_mobile-backend-tech-gem.onrender.com/api/v1/';
-
-      final dynamic response = await _apiService.postResponse('${apiUrl}bookings', booking.toJson());
-
-      if (response != null) {
-        // Handle success, e.g., navigate to a success screen
-        print('Booking confirmed successfully!');
-      } else {
-        // Handle failure, e.g., show an error message
-        print('Failed to confirm booking');
-      }
+      _bookingRepository.confirmBooking(booking);
+   
     } catch (error) {
       // Handle any unexpected errors
       print('Error confirming booking: $error');

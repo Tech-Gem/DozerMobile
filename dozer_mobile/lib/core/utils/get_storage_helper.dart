@@ -2,7 +2,7 @@
 import 'package:get_storage/get_storage.dart';
 
 class GetStorageKeys {
-  static const String keyToken = 'Token';
+  static const String keyToken = 'token';
   static const String userData = 'User';
   static const String keyUserRole = 'keyUserRole';
 }

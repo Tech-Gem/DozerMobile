@@ -1,9 +1,7 @@
-// ignore_for_file: avoid_print
-
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/data/apis/api_end_points.dart';
-import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+  import 'dart:convert'; // Make sure to import this for JSON parsing
 
 class AuthenticationRepository {
   Future<bool> sendOtp(String phoneNumber) async {
@@ -20,28 +18,23 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error sending OTP: $e');
       return false;
     }
   }
 
-  Future<bool> verifyOtp(String otp) async {
+  Future<bool> verifyOtp(String phoneNumber, String code) async {
     try {
-      debugPrint(
-          'phone numberrrrrrrr: $SignUpController.phoneNumberController.text.trim()');
       final response = await http.post(
-          Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.verifyOtp),
-          body: {'code': otp});
-      debugPrint('response: ${response.statusCode}');
-      debugPrint('*********************************************');
-      debugPrint('response: ${response.body}');
+        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.verifyOtp),
+        body: {'phoneNumber': phoneNumber, 'code': code},
+      );
+
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print('Error verifying OTP: $e');
       return false;
     }
   }
@@ -57,32 +50,48 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error resending OTP: $e');
       return false;
     }
   }
 
-  Future<bool> registerUser(String fullName, String email, String phoneNumber,
-      String password) async {
-    try {
-      final response = await http.post(
-          Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.registerUser),
-          body: {
-            'phoneNumber': phoneNumber,
-            'email': email,
-            'password': password,
-            'fullName': fullName,
-          });
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print('Error registering user: $e');
+
+
+Future<bool> registerUser(String phoneNumber, String email, String password, String fullName) async {
+  try {
+    final response = await http.post(
+      Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.registerUser),
+      body: {
+        'phoneNumber': phoneNumber,
+        'email': email,
+        'password': password,
+        'fullName': fullName,
+      },
+    );
+    
+    if (response.statusCode == 201) {
+      // Parse the JSON response
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      
+      // Access the token, email, and name from the parsed response
+      String token = jsonResponse["token"];
+      String userEmail = jsonResponse["user"]["email"];
+      String userName = jsonResponse["userProfile"]["fullName"];
+      
+      // Store the token using GetStorageHelper or perform any other operations
+      GetStorageHelper.addValue("token", token);
+        GetStorageHelper.addValue("email", userEmail);
+          GetStorageHelper.addValue("userName", userName);
+      
+      return true;
+    } else {
+      print(response.body);
       return false;
     }
+  } catch (e) {
+    print(e.toString());
+    return false;
   }
+}
 
   Future<bool> login(String phoneNumber, String password) async {
     try {
@@ -96,7 +105,6 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error logging in: $e');
       return false;
     }
   }
@@ -113,7 +121,6 @@ class AuthenticationRepository {
         return false;
       }
     } catch (e) {
-      print('Error resetting password: $e');
       return false;
     }
   }

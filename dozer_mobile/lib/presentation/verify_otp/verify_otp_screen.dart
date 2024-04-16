@@ -1,4 +1,7 @@
+
+
 import 'package:dozer_mobile/core/theme/colors.dart';
+import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
@@ -6,6 +9,7 @@ import 'package:dozer_mobile/presentation/verify_otp/controllers/verify_otp_cont
 
 class VerifyOtpPage extends StatelessWidget {
   final VerifyOtpController _controller = Get.put(VerifyOtpController());
+  final SignUpController signupController = Get.find<SignUpController>();
 
   VerifyOtpPage({superKey, Key? key}); // Register the controller
 
@@ -34,7 +38,7 @@ class VerifyOtpPage extends StatelessWidget {
                   height: 20,
                 ),
                 const Text(
-                  'Enter a 6-digit number that was sent to your contact',
+                  'Enter your phone number and the 6-digit code sent to you',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
@@ -42,7 +46,7 @@ class VerifyOtpPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 Container(
                   margin:
@@ -83,8 +87,10 @@ class VerifyOtpPage extends StatelessWidget {
                           if (enteredOtp.value.length != 6) {
                             Get.snackbar('Error', 'Please enter a 6-digit OTP');
                           } else {
-                            _controller.verifyOtp(enteredOtp
-                                .value); // Call verifyOtp method of the controller with entered OTP
+                            _controller.verifyOtp(
+                                signupController
+                                    .phoneNumberController.value.text,
+                                enteredOtp.value);
                           }
                         },
                         child: Container(

@@ -1,4 +1,3 @@
-import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:dozer_mobile/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
@@ -61,7 +60,7 @@ class SignUpPage extends StatelessWidget {
                     ),
                     Obx(
                       () => CustomTextField(
-                        controller: signUpController.fullNameController,
+                        controller: signUpController.fullNameController.value,
                         errorText: signUpController.fullNameError.value,
                         labelText: 'Full Name',
                       ),
@@ -69,7 +68,7 @@ class SignUpPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Obx(
                       () => CustomTextField(
-                        controller: signUpController.emailController,
+                        controller: signUpController.emailController.value,
                         errorText: signUpController.emailError.value,
                         labelText: 'Email',
                       ),
@@ -77,7 +76,7 @@ class SignUpPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Obx(
                       () => CustomTextField(
-                        controller: signUpController.phoneNumberController,
+                        controller: signUpController.phoneNumberController.value,
                         errorText: signUpController.phoneNumberError.value,
                         labelText: 'Phone Number',
                       ),
@@ -87,7 +86,7 @@ class SignUpPage extends StatelessWidget {
                       () => PasswordField(
                         errorText: signUpController.passwordError.value,
                         labelText: 'Password',
-                        controller: signUpController.passwordController,
+                        controller: signUpController.passwordController.value,
                         isPasswordVisible:
                             signUpController.passwordVisibility.value,
                         onTap: signUpController.togglePasswordVisibility,

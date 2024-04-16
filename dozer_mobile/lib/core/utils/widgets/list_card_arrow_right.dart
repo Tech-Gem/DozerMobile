@@ -1,8 +1,5 @@
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:dozer_mobile/dozer_exports.dart';
 class ListCardArrowRight extends StatelessWidget {
   const ListCardArrowRight({
