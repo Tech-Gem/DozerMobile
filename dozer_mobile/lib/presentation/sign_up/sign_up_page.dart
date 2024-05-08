@@ -60,9 +60,17 @@ class SignUpPage extends StatelessWidget {
                     ),
                     Obx(
                       () => CustomTextField(
-                        controller: signUpController.fullNameController.value,
+                        controller: signUpController.firstNameController.value,
                         errorText: signUpController.fullNameError.value,
-                        labelText: 'Full Name',
+                        labelText: 'First Name',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Obx(
+                      () => CustomTextField(
+                        controller: signUpController.lastNameController.value,
+                        errorText: signUpController.fullNameError.value,
+                        labelText: 'Last Name',
                       ),
                     ),
                     const SizedBox(height: 16),

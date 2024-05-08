@@ -19,7 +19,7 @@ class BookingController extends GetxController {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final SignatureController signBoardSignatureController = SignatureController();
-
+  
   Future<void> getCurrentLocation() async {
     var status = await Permission.location.request();
     if (status.isGranted) {

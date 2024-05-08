@@ -1,5 +1,6 @@
 
 
+import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class VerifyOtpPage extends StatelessWidget {
                             _controller.verifyOtp(
                                 signupController
                                     .phoneNumberController.value.text,
-                                enteredOtp.value);
+                                enteredOtp.value).then((value) => Get.toNamed(RoutesName.home));
                           }
                         },
                         child: Container(

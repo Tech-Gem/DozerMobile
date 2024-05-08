@@ -36,8 +36,10 @@ class VerifyOtpController extends GetxController {
         signUpController.phoneNumberController.value.text, // Example fullName from
         signUpController.emailController.value.text, // Example email
         signUpController.passwordController.value.text, // Example phone number
-        signUpController.fullNameController.value.text, // Example password
+        signUpController.firstNameController.value.text, // Example password
+         signUpController.lastNameController.value.text, // Example password
       );
+     
       if (isRegistered) {
         // Navigate to the next screen or perform any other action
         Get.toNamed(RoutesName.home);

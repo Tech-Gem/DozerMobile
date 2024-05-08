@@ -1,3 +1,4 @@
+import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/details_screen.dart/details_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/controllers/construction_controller.dart';
@@ -38,9 +39,9 @@ class RecommendedHouse extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 300,
+                  width: 200,
                   height: 1000, // Adjust the height of the Container
-                  margin: EdgeInsets.symmetric(horizontal: 10), // Add margin for spacing between items
+                  margin: EdgeInsets.symmetric(horizontal: 3.w ,vertical: 10.h), // Add margin for spacing between items
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
@@ -53,7 +54,7 @@ class RecommendedHouse extends StatelessWidget {
                           image: DecorationImage(
                             image: NetworkImage(
                               controller.recommendedList[index].image.isNotEmpty
-                                  ? controller.recommendedList[index].image[0]
+                                  ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg"
                                   : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg",
                             ),
                             fit: BoxFit.cover,
@@ -61,11 +62,11 @@ class RecommendedHouse extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        right: 15,
-                        top: 15,
+                        right: 10,
+                        top: 10,
                         child: CircleIconButton(
                           iconUrl: 'assets/icons/mark.svg',
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: primaryColor,
                         ),
                       ),
                       Positioned(

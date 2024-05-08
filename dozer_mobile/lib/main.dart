@@ -1,15 +1,19 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/routes/route.dart';
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  // await GetStorageHelper.addValue('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWE1N2ZjLWZkNzAtNGY5Yi1hYTU0LTkzNGUyMjg0OTMzZiIsImlhdCI6MTcxNDE1ODM2NywiZXhwIjoxNzIxOTM0MzY3fQ.pg8I_5TI1unyjqmqWRWWn9bdnRM5vKdV7ejOvzyOz_E');
+  await GetStorageHelper.clearAll();
+  // // // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

@@ -212,38 +212,41 @@ class _BookingFormState extends State<BookingForm> {
   }
 
   Future<void> _selectStartDate(BuildContext context) async {
-    final DateTime? pickedStartDate = await showDatePicker(
-      context: context,
-      initialDate: _startDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
-    );
+  final DateTime? pickedStartDate = await showDatePicker(
+    context: context,
+    initialDate: _startDate,
+    firstDate: DateTime.now(),
+    lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
+  );
 
-    if (pickedStartDate != null && pickedStartDate != _startDate) {
-      setState(() {
-        _startDate = pickedStartDate;
-        if (_endDate.isBefore(_startDate)) {
-          // If end date is before start date, reset end date to start date
-          _endDate = _startDate;
-        }
-      });
+  if (pickedStartDate != null && pickedStartDate != _startDate) {
+    if (_endDate.isBefore(pickedStartDate)) {
+      // If end date is before the picked start date, reset end date to start date
+      _endDate = pickedStartDate;
+      _endDateController.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
     }
+    setState(() {
+      _startDate = pickedStartDate;
+      _startDateController.text = '${_startDate.day}/${_startDate.month}/${_startDate.year}';
+    });
   }
+}
 
-  Future<void> _selectEndDate(BuildContext context) async {
-    final DateTime? pickedEndDate = await showDatePicker(
-      context: context,
-      initialDate: _endDate,
-      firstDate: _startDate,
-      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
-    );
+Future<void> _selectEndDate(BuildContext context) async {
+  final DateTime? pickedEndDate = await showDatePicker(
+    context: context,
+    initialDate: _endDate,
+    firstDate: _startDate, // Set minimum date as the selected start date
+    lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
+  );
 
-    if (pickedEndDate != null && pickedEndDate != _endDate) {
-      setState(() {
-        _endDate = pickedEndDate;
-      });
-    }
+  if (pickedEndDate != null && pickedEndDate != _endDate) {
+    setState(() {
+      _endDate = pickedEndDate;
+      _endDateController.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
+    });
   }
+}
 
   // Method to get the appropriate string based on the current language
   String _getCurrentLanguageString(String englishString, String amharicString) {

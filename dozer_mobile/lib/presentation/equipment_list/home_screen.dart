@@ -42,8 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 5.h,),
                   CategoriesWidget(),
-                  
-                    RecommendedHouse(),
+                          
+                    Container(
+                      height: 300.h,
+                      child: RecommendedHouse()),
                   // RecentBidsWidget()
                 ],
               ),

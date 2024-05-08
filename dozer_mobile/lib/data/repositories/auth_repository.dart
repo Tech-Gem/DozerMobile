@@ -56,7 +56,7 @@ class AuthenticationRepository {
 
 
 
-Future<bool> registerUser(String phoneNumber, String email, String password, String fullName) async {
+Future<bool> registerUser(String phoneNumber, String email, String password, String firstName,String lastName) async {
   try {
     final response = await http.post(
       Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.registerUser),
@@ -64,7 +64,8 @@ Future<bool> registerUser(String phoneNumber, String email, String password, Str
         'phoneNumber': phoneNumber,
         'email': email,
         'password': password,
-        'fullName': fullName,
+        'firstName': firstName,
+        'lastName': lastName
       },
     );
     
@@ -75,12 +76,12 @@ Future<bool> registerUser(String phoneNumber, String email, String password, Str
       // Access the token, email, and name from the parsed response
       String token = jsonResponse["token"];
       String userEmail = jsonResponse["user"]["email"];
-      String userName = jsonResponse["userProfile"]["fullName"];
+      String userName = jsonResponse["userProfile"]["firstName"];
       
       // Store the token using GetStorageHelper or perform any other operations
-      GetStorageHelper.addValue("token", token);
-        GetStorageHelper.addValue("email", userEmail);
-          GetStorageHelper.addValue("userName", userName);
+      await GetStorageHelper.addValue("token", token);
+      await   GetStorageHelper.addValue("email", userEmail);
+        await  GetStorageHelper.addValue("userName", userName);
       
       return true;
     } else {
