@@ -4,7 +4,7 @@ import 'package:dozer_mobile/presentation/booking/models/booking_form_model.dart
 
 class BookingRepository {
   final NetworkApiService _apiService = NetworkApiService();
- final String apiUrl = 'https://dozer_mobile-backend-tech-gem.onrender.com/api/v1/';
+ final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1/';
 
   Future<bool> confirmBooking(BookingModel booking) async {
     try {

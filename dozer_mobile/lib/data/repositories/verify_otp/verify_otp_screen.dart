@@ -1,9 +1,10 @@
 import 'package:dozer_mobile/core/theme/colors.dart';
-import 'package:dozer_mobile/pages/sign_up/controllers/sign_up_controller.dart';
+import 'package:dozer_mobile/data/repositories/verify_otp/controllers/verify_otp_controller.dart';
+import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
-import 'package:dozer_mobile/pages/verify_otp/controllers/verify_otp_controller.dart';
 
 class VerifyOtpPage extends StatelessWidget {
   final VerifyOtpController _controller = Get.put(VerifyOtpController());

@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 class SignUpController extends GetxController {
   final AuthenticationRepository _repository = AuthenticationRepository();
 
-  final fullNameController = TextEditingController().obs;
+  final firstNameController = TextEditingController().obs;
+  final lastNameController = TextEditingController().obs;
   final phoneNumberController = TextEditingController().obs;
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
@@ -21,12 +22,13 @@ class SignUpController extends GetxController {
   final RxBool passwordVisibility = false.obs;
 
   Future<void> signUp() async {
-    final fullName = fullNameController.value.text.trim();
+    final firstName = firstNameController.value.text.trim();
+     final lastName = firstNameController.value.text.trim();
     final phoneNumber = phoneNumberController.value.text.trim();
     final email = emailController.value.text.trim();
     final password = passwordController.value.text.trim();
 
-    if (validateFields(fullName, phoneNumber, email, password)) {
+    if (validateFields(firstName,lastName, phoneNumber, email, password)) {
       try {
         status(Status.loading);
         final isOtpSent = await _repository.sendOtp(phoneNumber);
@@ -43,12 +45,18 @@ class SignUpController extends GetxController {
     }
   }
 
-  bool validateFields(
-      String fullName, String phoneNumber, String email, String password) {
+  bool validateFields( String firstName,
+      String lastName, String phoneNumber, String email, String password) {
     bool isValid = true;
 
-    if (fullName.isEmpty) {
-      fullNameError.value = 'Please enter your full name';
+    if (firstName.isEmpty) {
+      fullNameError.value = 'Please enter your first name';
+      isValid = false;
+    } else {
+      fullNameError.value = '';
+    }
+     if (firstName.isEmpty) {
+      fullNameError.value = 'Please enter your last name';
       isValid = false;
     } else {
       fullNameError.value = '';
@@ -100,7 +108,8 @@ class SignUpController extends GetxController {
   @override
   void onClose() {
     // Clean up the text controllers when the controller is closed
-    fullNameController.value.dispose();
+    firstNameController.value.dispose();
+    lastNameController.value.dispose();
     phoneNumberController.value.dispose();
     emailController.value.dispose();
     passwordController.value.dispose();
