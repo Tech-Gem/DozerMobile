@@ -1,5 +1,5 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/core/theme/colors.dart';
-import 'package:dozer_mobile/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/presentation/forgot_password/controllers/forgot_password_controller.dart';
 import 'package:dozer_mobile/presentation/sign_up/screen_widgets/password_text_field.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
+import 'package:dozer_mobile/core/data/network/network_api_service.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
-import 'package:dozer_mobile/data/network/network_api_service.dart';
 import 'package:dozer_mobile/presentation/booking/models/booking_form_model.dart';
 import 'package:dozer_mobile/presentation/booking/repository/booking_repository.dart';
 import 'package:flutter/material.dart';

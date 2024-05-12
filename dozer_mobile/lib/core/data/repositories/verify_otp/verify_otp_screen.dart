@@ -1,5 +1,5 @@
+import 'package:dozer_mobile/core/data/repositories/verify_otp/controllers/verify_otp_controller.dart';
 import 'package:dozer_mobile/core/theme/colors.dart';
-import 'package:dozer_mobile/data/repositories/verify_otp/controllers/verify_otp_controller.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 
 import 'package:flutter/material.dart';

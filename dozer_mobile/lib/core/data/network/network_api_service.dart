@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:dozer_mobile/core/data/apis/base_api_service.dart';
+import 'package:dozer_mobile/core/data/network/api_exceptions.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/core/utils/logger.dart';
-import 'package:dozer_mobile/data/network/api_exceptions.dart';
-import 'package:dozer_mobile/data/network/base_api_service.dart';
-
 import 'package:http/http.dart' as http;
 
 class NetworkApiService extends BaseApiService {

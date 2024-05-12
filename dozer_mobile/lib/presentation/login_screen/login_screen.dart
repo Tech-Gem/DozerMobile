@@ -1,9 +1,9 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/presentation/login_screen/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dozer_mobile/core/theme/colors.dart';
-import 'package:dozer_mobile/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/presentation/sign_up/screen_widgets/password_text_field.dart';
 import 'package:dozer_mobile/core/utils/widgets/text_field.dart';
 

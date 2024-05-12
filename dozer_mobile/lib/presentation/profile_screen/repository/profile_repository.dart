@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:dozer_mobile/data/network/network_api_service.dart';
+import 'package:dozer_mobile/core/data/network/network_api_service.dart';
 import 'package:dozer_mobile/presentation/profile_screen/models/profile_model.dart';
 
 class ProfileRepository {
