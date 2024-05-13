@@ -7,6 +7,7 @@ class BookingRepository {
  final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1/';
 
   Future<bool> confirmBooking(BookingModel booking) async {
+    print(booking.toJson());
     try {
       final dynamic response = await _apiService.postResponse('${apiUrl}bookings',booking.toJson());
 

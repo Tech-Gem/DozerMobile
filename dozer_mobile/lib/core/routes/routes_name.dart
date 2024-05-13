@@ -8,4 +8,5 @@ class RoutesName {
   static const String resetPassword = '/reset_password';
   static const String pickImage = '/pick_image';
     static const String bookingForm = '/booking-form';
+    static const String detailsPage = 'equipments/detail';
   }

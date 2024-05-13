@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookingForm extends StatefulWidget {
+  final String? equipmentId;
   final int? availability;
   final String?imageUrl;
   final String? equipmentName;
 
   const BookingForm({
     Key? key,
+    this .equipmentId,
      this.availability,
 this.imageUrl,
    this.equipmentName,
@@ -23,10 +25,6 @@ this.imageUrl,
 }
 
 class _BookingFormState extends State<BookingForm> {
-  late TextEditingController _amountController;
-  late TextEditingController _startDateController;
-  late TextEditingController _endDateController;
-  late TextEditingController _subCityController;
 
   late String _selectedSubCity;
   late DateTime _startDate; // Initialize with current date
@@ -38,24 +36,16 @@ class _BookingFormState extends State<BookingForm> {
   @override
   void initState() {
     super.initState();
-    _amountController = TextEditingController();
-    _startDateController = TextEditingController();
-    _endDateController = TextEditingController();
-    _subCityController = TextEditingController(text: _subCities.first); // Set default value
+    
     _selectedSubCity = _subCities.first;
     _startDate = DateTime.now(); // Initialize with current date
     _endDate = DateTime.now(); // Initialize with current date
 
-    _startDateController.text = '${_startDate.day}/${_startDate.month}/${_startDate.year}';
-    _endDateController.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
   }
 
   @override
   void dispose() {
-    _amountController.dispose();
-    _startDateController.dispose();
-    _endDateController.dispose();
-    _subCityController.dispose();
+
     super.dispose();
   }
 
@@ -85,15 +75,15 @@ class _BookingFormState extends State<BookingForm> {
                   // Equipment Picture and Name
                   Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          widget.imageUrl![0]!,
-                          width: double.infinity,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.circular(10.0),
+                      //   child: Image.network(
+                      //     widget.imageUrl![0]!,
+                      //     width: double.infinity,
+                      //     height: 200,
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
                       SizedBox(height: 10),
                       Text(
                         widget.equipmentName!,
@@ -108,15 +98,17 @@ class _BookingFormState extends State<BookingForm> {
 
                   // InkWell for Start Date
                   SizedBox(height: 10.0),
-                  InkWell(
+                  GestureDetector(
                     onTap: () => _selectStartDate(context),
-                    child: TextFormField(
-                      controller: controller.startDateController,
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: _getCurrentLanguageString(AppStringsEnglish.startDateLabel, AppStringsAmharic.startDateLabel),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: controller.startDateController.value,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: _getCurrentLanguageString(AppStringsEnglish.startDateLabel, AppStringsAmharic.startDateLabel),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
                       ),
                     ),
@@ -124,15 +116,17 @@ class _BookingFormState extends State<BookingForm> {
 
                   // InkWell for End Date
                   SizedBox(height: 10.0),
-                  InkWell(
+                  GestureDetector(
                     onTap: () => _selectEndDate(context),
-                    child: TextFormField(
-                      controller: controller.endDateController,
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: _getCurrentLanguageString(AppStringsEnglish.endDateLabel, AppStringsAmharic.endDateLabel),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: controller.endDateController.value,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: _getCurrentLanguageString(AppStringsEnglish.endDateLabel, AppStringsAmharic.endDateLabel),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
                       ),
                     ),
@@ -144,8 +138,7 @@ class _BookingFormState extends State<BookingForm> {
                     value: _selectedSubCity,
                     onChanged: (newValue) {
                       setState(() {
-                       
-                        controller.locationController.text = newValue!;
+                        controller.locationController.value.text = newValue!;
                       });
                     },
                     items: _subCities.map((subCity) {
@@ -162,45 +155,44 @@ class _BookingFormState extends State<BookingForm> {
                     ),
                   ),
 
-                  // TextFormField for Amount
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: controller.quantityController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            labelText: _getCurrentLanguageString(AppStringsEnglish.amountLabel, AppStringsAmharic.amountLabel),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          readOnly: true,
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_drop_up),
-                        onPressed: () {
-                          _incrementAmount();
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_drop_down),
-                        onPressed: () {
-                          _decrementAmount();
-                        },
-                      ),
-                    ],
-                  ),
+                 // TextFormField for Amount
+SizedBox(height: 10.0),
+Row(
+  children: [
+    Expanded(
+      child: TextFormField(
+        controller: controller.quantityController.value, // Update controller here
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: _getCurrentLanguageString(AppStringsEnglish.amountLabel, AppStringsAmharic.amountLabel),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        readOnly: true,
+      ),
+    ),
+    IconButton(
+      icon: Icon(Icons.arrow_drop_up),
+      onPressed: () {
+        _incrementAmount();
+      },
+    ),
+    IconButton(
+      icon: Icon(Icons.arrow_drop_down),
+      onPressed: () {
+        _decrementAmount();
+      },
+    ),
+  ],
+),
 
                   // NotifyOwnerButton
                   SizedBox(height: 10),
                   NotifyOwnerButton(
                     text: _getCurrentLanguageString(AppStringsEnglish.notifyOwnerButtonText, AppStringsAmharic.notifyOwnerButtonText),
                     onPressed: () {
-
-                      controller.confirmBooking();
+                      controller.confirmBooking(widget.equipmentId!);
                     },
                   ),
                   SizedBox(height: 10),
@@ -212,41 +204,43 @@ class _BookingFormState extends State<BookingForm> {
   }
 
   Future<void> _selectStartDate(BuildContext context) async {
-  final DateTime? pickedStartDate = await showDatePicker(
-    context: context,
-    initialDate: _startDate,
-    firstDate: DateTime.now(),
-    lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
-  );
+    final DateTime? pickedStartDate = await showDatePicker(
+      context: context,
+      initialDate: _startDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
+    );
 
-  if (pickedStartDate != null && pickedStartDate != _startDate) {
-    if (_endDate.isBefore(pickedStartDate)) {
-      // If end date is before the picked start date, reset end date to start date
-      _endDate = pickedStartDate;
-      _endDateController.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
+    if (pickedStartDate != null && pickedStartDate != _startDate) {
+      if (_endDate.isBefore(pickedStartDate)) {
+        // If end date is before the picked start date, reset end date to start date
+        _endDate = pickedStartDate;
+        setState(() {
+          controller.endDateController.value.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
+        });
+      }
+      setState(() {
+        _startDate = pickedStartDate;
+        controller.startDateController.value.text = '${_startDate.day}/${_startDate.month}/${_startDate.year}';
+      });
     }
-    setState(() {
-      _startDate = pickedStartDate;
-      _startDateController.text = '${_startDate.day}/${_startDate.month}/${_startDate.year}';
-    });
   }
-}
 
-Future<void> _selectEndDate(BuildContext context) async {
-  final DateTime? pickedEndDate = await showDatePicker(
-    context: context,
-    initialDate: _endDate,
-    firstDate: _startDate, // Set minimum date as the selected start date
-    lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
-  );
+  Future<void> _selectEndDate(BuildContext context) async {
+    final DateTime? pickedEndDate = await showDatePicker(
+      context: context,
+      initialDate: _endDate,
+      firstDate: _startDate,
+      lastDate: _startDate.add(Duration(days: 365)), // Limit selection to one year from the start date
+    );
 
-  if (pickedEndDate != null && pickedEndDate != _endDate) {
-    setState(() {
-      _endDate = pickedEndDate;
-      _endDateController.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
-    });
+    if (pickedEndDate != null && pickedEndDate != _endDate) {
+      setState(() {
+        _endDate = pickedEndDate;
+        controller.endDateController.value.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
+      });
+    }
   }
-}
 
   // Method to get the appropriate string based on the current language
   String _getCurrentLanguageString(String englishString, String amharicString) {
@@ -256,22 +250,22 @@ Future<void> _selectEndDate(BuildContext context) async {
       return englishString;
     }
   }
+// Method to increment the amount
+void _incrementAmount() {
+  setState(() {
+    final currentAmount = int.tryParse(controller.quantityController.value.text) ?? 0;
+    final newAmount = (currentAmount < widget.availability!) ? currentAmount + 1 : currentAmount;
+    controller.quantityController.value.text = newAmount.toString();
+  });
+}
 
-  // Method to increment the amount
-  void _incrementAmount() {
-    setState(() {
-      final currentAmount = int.tryParse(_amountController.text) ?? 0;
-      final newAmount = (currentAmount < widget.availability!) ? currentAmount + 1 : currentAmount;
-      _amountController.text = newAmount.toString();
-    });
-  }
 
   // Method to decrement the amount
   void _decrementAmount() {
     setState(() {
-      final currentAmount = int.tryParse(_amountController.text) ?? 0;
+      final currentAmount = int.tryParse(controller.quantityController.value.text) ?? 0;
       final newAmount = (currentAmount > 1) ? currentAmount - 1 : currentAmount;
-      _amountController.text = newAmount.toString();
+      controller.quantityController.value.text = newAmount.toString();
     });
   }
 }

@@ -16,18 +16,18 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-  //   GetPage(
-  //     name: RoutesName.intial,
-  //     // page: () => BookingForm(availability: 5,imageUrl: 'https://www.deere.co.in/assets/images/region-1/products/tractors/tractor-3d-experience-banner.jpg',equipmentName: 'Tractor',),
-  // //  page: () => HomePage(),
-  // page:() => HomeScreen()
-   
-  //   ),
-
     GetPage(
       name: RoutesName.intial,
-      page: () => SignUpPage(),
+      // page: () => BookingForm(availability: 5,imageUrl: 'https://www.deere.co.in/assets/images/region-1/products/tractors/tractor-3d-experience-banner.jpg',equipmentName: 'Tractor',),
+  //  page: () => HomePage(),
+  page:() => HomeScreen()
+   
     ),
+
+    // GetPage(
+    //   name: RoutesName.intial,
+    //   page: () => SignUpPage(),
+    // ),
 GetPage(name: RoutesName.bookingForm, page: BookingForm.new),
     GetPage(
       name: RoutesName.otp,

@@ -13,12 +13,11 @@ import 'package:signature/signature.dart';
 class BookingController extends GetxController {
   final NetworkApiService _apiService = NetworkApiService();
   final BookingRepository _bookingRepository = BookingRepository();
-
-  final TextEditingController startDateController = TextEditingController();
-  final TextEditingController endDateController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController();
-  final SignatureController signBoardSignatureController = SignatureController();
+ final Rx<TextEditingController> startDateController = TextEditingController().obs;
+  final Rx<TextEditingController> endDateController = TextEditingController().obs;
+  final Rx<TextEditingController> locationController = TextEditingController().obs;
+  final Rx<TextEditingController> quantityController = TextEditingController().obs;
+  final Rx<SignatureController> signBoardSignatureController = Rx<SignatureController>(SignatureController());
   
   Future<void> getCurrentLocation() async {
     var status = await Permission.location.request();
@@ -34,13 +33,13 @@ class BookingController extends GetxController {
         );
 
         if (placemarks.isNotEmpty) {
-          locationController.text = placemarks[0].name ?? 'Location not available';
+          locationController.value.text = placemarks[0].name ?? 'Location not available';
         } else {
-          locationController.text = 'Location not available';
+          locationController.value.text = 'Location not available';
         }
       } catch (e) {
         print('Error getting location: $e');
-        locationController.text = 'Location not available';
+        locationController.value.text = 'Location not available';
       }
     } else if (status.isDenied) {
       print('Location permission denied by the user.');
@@ -70,25 +69,34 @@ class BookingController extends GetxController {
     );
 
     if (selectedLocation != null) {
-      locationController.text = selectedLocation;
+      locationController.value.text = selectedLocation;
     }
   }
 
-  Future<void> confirmBooking() async {
+  Future<void> confirmBooking(String equipmentId) async {
     try {
       // Perform validations here if needed
 
       final BookingModel booking = BookingModel(
-        equipmentId: "", // Replace with actual equipment ID
-        name: GetStorageHelper.getValue('userName'),
+        equipmentId:equipmentId,  // Replace with actual equipment ID
+      
         email: "hayat1911@gmail.com",
-        startDate: startDateController.text,
-        endDate: endDateController.text,
-        location: locationController.text,
-        quantity: int.tryParse(quantityController.text) ?? 0,
-        signature: " ",
+        startDate: startDateController.value.text,
+        endDate: endDateController.value.text,
+        location: locationController.value.text,
+        quantity: int.tryParse(quantityController.value.text) ?? 0,
+        signature: "jfldjfd",
         termsAndConditions: true, // You can modify this based on your logic
       );
+      print(booking.startDate);
+      print(booking.endDate);
+      print(booking.location);
+      print(booking.email);
+      print(booking.signature);
+      print(booking.location);
+      print(booking.quantity);
+      print(booking.termsAndConditions);
+      print(booking.equipmentId);
       _bookingRepository.confirmBooking(booking);
    
     } catch (error) {
