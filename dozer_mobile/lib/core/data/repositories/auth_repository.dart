@@ -2,12 +2,15 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dozer_mobile/core/data/apis/api_end_points.dart';
+import 'package:dozer_mobile/core/data/network/network_api_service.dart';
 import 'package:dozer_mobile/core/errors/exceptions.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthenticationRepository {
+  final NetworkApiService _apiService = NetworkApiService();
+
   Future<bool> sendOtp(String phoneNumber) async {
     try {
       // debugPrint('phone number: $phoneNumber');
@@ -61,9 +64,9 @@ class AuthenticationRepository {
   Future<bool> registerUser(String phoneNumber, String email, String password,
       String firstName, String lastName) async {
     try {
-      final response = await http.post(
-        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.registerUser),
-        body: {
+      final dynamic response = await _apiService.postResponse(
+        ApiEndPoints.baseUrl + ApiEndPoints.registerUser,
+        {
           'phoneNumber': phoneNumber,
           'email': email,
           'password': password,
@@ -72,28 +75,27 @@ class AuthenticationRepository {
         },
       );
 
+      final dynamic responseBody = response is String ? jsonDecode(response) : response;
+
       if (response.statusCode == 201) {
         // Parse the JSON response
         Map<String, dynamic> jsonResponse = json.decode(response.body);
-
         // Access the token, email, and name from the parsed response
         String token = jsonResponse["token"];
         String userEmail = jsonResponse["user"]["email"];
         String userName = jsonResponse["userProfile"]["firstName"];
-
         // Store the token using GetStorageHelper or perform any other operations
         await GetStorageHelper.addValue("token", token);
         await GetStorageHelper.addValue("email", userEmail);
         await GetStorageHelper.addValue("userName", userName);
 
         return true;
+
       } else {
-        print(response.body);
-        return false;
+        throw Exception('Failed to register user. Status: ${responseBody['status']}');
       }
-    } catch (e) {
-      print(e.toString());
-      return false;
+    } catch (error) {
+      throw Exception('Failed to register user $error');
     }
   }
 

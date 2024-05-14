@@ -26,7 +26,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.intial,
-      page: () => LoginPage(),
+      page: () => SignUpPage(),
     ),
     GetPage(name: RoutesName.bookingForm, page: BookingForm.new),
     GetPage(
