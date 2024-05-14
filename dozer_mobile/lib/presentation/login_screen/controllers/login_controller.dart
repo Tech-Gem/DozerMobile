@@ -40,7 +40,7 @@ class LoginController extends GetxController {
   void validatePassword(String value) {
     if (value.isEmpty) {
       passwordError.value = 'Password cannot be empty';
-    }  else {
+    } else {
       passwordError.value = '';
     }
   }
@@ -68,12 +68,7 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 4),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        'Error', 'An error occurred: $e',
       );
     } finally {
       status(Status.completed);
