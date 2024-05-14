@@ -1,5 +1,6 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/presentation/add_profile_photo/profile_photo_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/home_screen.dart';
@@ -20,6 +21,7 @@ class AppPages {
       name: RoutesName.intial,
       // page: () => BookingForm(availability: 5,imageUrl: 'https://www.deere.co.in/assets/images/region-1/products/tractors/tractor-3d-experience-banner.jpg',equipmentName: 'Tractor',),
   //  page: () => HomePage(),
+  // page:() => QuickBidPage()
   page:() => HomeScreen()
    
     ),

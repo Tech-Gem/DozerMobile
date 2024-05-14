@@ -50,14 +50,14 @@ class BestOfferItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       machine.name,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 16.0, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10.0,
                     ),
                     Text(
                       machine.location,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 12.0),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0),
                     ),
                   ],
                 ),

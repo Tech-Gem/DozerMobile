@@ -36,7 +36,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             child: Text(
               categoriesList[index],
               style: TextStyle(
-                color: currentSelect == index ? Theme.of(context).primaryColor : Theme.of(context).textTheme.bodyText1!.color,
+                color: currentSelect == index ? Theme.of(context).primaryColor : Theme.of(context).textTheme.bodyLarge!.color,
                 fontSize: currentSelect == index ? 16 : 14,
                 fontWeight: currentSelect == index ? FontWeight.bold : FontWeight.normal,
               ),

@@ -54,7 +54,7 @@ class RecommendedHouse extends StatelessWidget {
                           image: DecorationImage(
                             image: NetworkImage(
                               controller.recommendedList[index].image.isNotEmpty
-                                  ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg"
+                                  ?                               controller.recommendedList[index].image[0]
                                   : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg",
                             ),
                             fit: BoxFit.cover,
@@ -84,28 +84,28 @@ class RecommendedHouse extends StatelessWidget {
                                 children: [
                                   Text(
                                     controller.recommendedList[index].name,
-                                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     controller.recommendedList[index].location,
-                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     'Renters Name: ${controller.recommendedList[index].name}',
-                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     'Available Amount: ${controller.recommendedList[index].quantity.toString()}',
-                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),

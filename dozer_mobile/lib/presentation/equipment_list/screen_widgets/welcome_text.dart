@@ -12,7 +12,7 @@ class WelcomeText extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             'Welcome to Dozer',
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
           )
         ],
       ),

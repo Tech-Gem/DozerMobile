@@ -88,8 +88,7 @@ class SearchInput extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                primary: primaryColor,
+                                ), backgroundColor: primaryColor,
                               ),
                               child: Text(
                                 'Apply',

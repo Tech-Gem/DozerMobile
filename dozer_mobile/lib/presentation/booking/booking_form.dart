@@ -75,15 +75,15 @@ class _BookingFormState extends State<BookingForm> {
                   // Equipment Picture and Name
                   Column(
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.circular(10.0),
-                      //   child: Image.network(
-                      //     widget.imageUrl![0]!,
-                      //     width: double.infinity,
-                      //     height: 200,
-                      //     fit: BoxFit.cover,
-                      //   ),
-                      // ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                          widget.imageUrl!,
+                          width: double.infinity,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       SizedBox(height: 10),
                       Text(
                         widget.equipmentName!,
