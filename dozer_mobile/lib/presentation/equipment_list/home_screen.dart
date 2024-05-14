@@ -1,4 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
@@ -10,6 +11,7 @@ import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_i
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/welcome_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -63,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: primaryColor,
               label: 'Add Equipment',
               onTap: () {
-                // Handle add equipment action
+                Get.offNamed(RoutesName.createEquipment);
               },
             ),
             SpeedDialChild(
