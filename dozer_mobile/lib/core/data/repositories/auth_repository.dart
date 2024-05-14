@@ -64,9 +64,11 @@ class AuthenticationRepository {
   Future<bool> registerUser(String phoneNumber, String email, String password,
       String firstName, String lastName) async {
     try {
-      final dynamic response = await _apiService.postResponse(
-        ApiEndPoints.baseUrl + ApiEndPoints.registerUser,
-        {
+      String url = ApiEndPoints.baseUrl + ApiEndPoints.registerUser;
+
+      final dynamic response = await http.post(
+        Uri.parse(url),
+        body: {
           'phoneNumber': phoneNumber,
           'email': email,
           'password': password,
@@ -75,7 +77,8 @@ class AuthenticationRepository {
         },
       );
 
-      final dynamic responseBody = response is String ? jsonDecode(response) : response;
+      final dynamic responseBody =
+          response is String ? jsonDecode(response) : response;
 
       if (response.statusCode == 201) {
         // Parse the JSON response
@@ -90,9 +93,9 @@ class AuthenticationRepository {
         await GetStorageHelper.addValue("userName", userName);
 
         return true;
-
       } else {
-        throw Exception('Failed to register user. Status: ${responseBody['status']}');
+        throw Exception(
+            'Failed to register user. Status: ${responseBody['status']}');
       }
     } catch (error) {
       throw Exception('Failed to register user $error');
