@@ -1,6 +1,6 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
+import 'package:dozer_mobile/core/data/repositories/auth_repository.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
-import 'package:dozer_mobile/data/apis/api_response_status.dart';
-import 'package:dozer_mobile/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

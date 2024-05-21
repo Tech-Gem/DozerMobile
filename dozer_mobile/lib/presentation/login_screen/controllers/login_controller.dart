@@ -1,6 +1,6 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
+import 'package:dozer_mobile/core/data/repositories/auth_repository.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
-import 'package:dozer_mobile/data/apis/api_response_status.dart';
-import 'package:dozer_mobile/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,8 +40,6 @@ class LoginController extends GetxController {
   void validatePassword(String value) {
     if (value.isEmpty) {
       passwordError.value = 'Password cannot be empty';
-    } else if (value.length < 6) {
-      passwordError.value = 'Password must be at least 6 characters';
     } else {
       passwordError.value = '';
     }
@@ -49,15 +47,19 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     try {
+      print('1111111111');
       if (!isLoginEnabled) return;
-
+      print('222222222222222');
       status(Status.loading);
+      print(phoneNumberController.text.trim());
+      print(passwordController.text.trim());
 
       final response = await _authRepository.login(
         phoneNumberController.text.trim(),
         passwordController.text.trim(),
       );
-
+      print(response);
+      print('333333333');
       if (response) {
         Get.toNamed(RoutesName.home);
       } else {
@@ -66,12 +68,7 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 4),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        'Error', 'An error occurred: $e',
       );
     } finally {
       status(Status.completed);

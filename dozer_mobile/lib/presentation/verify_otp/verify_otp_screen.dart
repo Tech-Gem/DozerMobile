@@ -1,5 +1,3 @@
-
-
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
@@ -91,7 +89,7 @@ class VerifyOtpPage extends StatelessWidget {
                             _controller.verifyOtp(
                                 signupController
                                     .phoneNumberController.value.text,
-                                enteredOtp.value).then((value) => Get.toNamed(RoutesName.home));
+                                enteredOtp.value);
                           }
                         },
                         child: Container(

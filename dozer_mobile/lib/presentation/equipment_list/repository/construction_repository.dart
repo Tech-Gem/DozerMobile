@@ -1,5 +1,5 @@
-import 'package:dozer_mobile/data/network/api_exceptions.dart';
-import 'package:dozer_mobile/data/network/network_api_service.dart';
+import 'package:dozer_mobile/core/data/network/api_exceptions.dart';
+import 'package:dozer_mobile/core/data/network/network_api_service.dart';
 import 'package:dozer_mobile/presentation/equipment_list/models/construction_machine.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

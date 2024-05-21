@@ -382,7 +382,7 @@ final controller = Get.put(BookingController());
               Get.to(BookingForm(availability: constructionMachine.quantity,imageUrl: constructionMachine.image[0],equipmentName: constructionMachine.name,));
             },
             style: ElevatedButton.styleFrom(
-              primary: primaryColor,
+              backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

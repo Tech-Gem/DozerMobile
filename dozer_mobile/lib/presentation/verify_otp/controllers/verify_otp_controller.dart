@@ -1,6 +1,6 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
+import 'package:dozer_mobile/core/data/repositories/auth_repository.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
-import 'package:dozer_mobile/data/apis/api_response_status.dart';
-import 'package:dozer_mobile/data/repositories/auth_repository.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,8 +19,10 @@ class VerifyOtpController extends GetxController {
       final bool isVerified = await _repository.verifyOtp(phoneNumber, code);
 
       if (isVerified) {
+        print('OTP verified successfully $isVerified');
         registerUser();
       } else {
+        print('Failed to verify OTP');
         Get.snackbar('Error', 'Failed to verify OTP');
       }
     } catch (e) {
@@ -32,23 +34,26 @@ class VerifyOtpController extends GetxController {
   Future<void> registerUser() async {
     try {
       verificationStatus(Status.loading);
-      final bool isRegistered = await _repository.registerUser(
-        signUpController.phoneNumberController.value.text, // Example fullName from
-        signUpController.emailController.value.text, // Example email
-        signUpController.passwordController.value.text, // Example phone number
-        signUpController.firstNameController.value.text, // Example password
-         signUpController.lastNameController.value.text, // Example password
+
+      final registered = await _repository.registerUser(
+        signUpController.phoneNumberController.value.text,
+        signUpController.emailController.value.text,
+        signUpController.passwordController.value.text,
+        signUpController.firstNameController.value.text,
+        signUpController.lastNameController.value.text,
       );
-     
-      if (isRegistered) {
-        // Navigate to the next screen or perform any other action
-        Get.toNamed(RoutesName.home);
+
+      if (registered) {
         verificationStatus(Status.completed);
+        Get.offNamed(RoutesName.home);
       } else {
-        Get.snackbar('Error', 'failed to register user');
+        verificationStatus(Status.error);
+        Get.snackbar('Error', 'Failed to register user');
       }
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to verify OTP: $e');
+    } catch (error) {
+      verificationStatus(Status.error);
+      Get.snackbar('Error', 'Failed to register user: $error');
+      print('Error registering user: $error');
     }
   }
 
