@@ -138,28 +138,28 @@ class EquipmentListPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         constructionMachine.name,
-                                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
                                       Text(
                                         constructionMachine.location,
-                                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
                                       Text(
                                         'Renters Name: ${constructionMachine.name}',
-                                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
                                       Text(
                                         'Available Amount: ${constructionMachine.quantity.toString()}',
-                                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                             ),

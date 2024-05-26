@@ -2,6 +2,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/recent_bids.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
@@ -25,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: CustomAppBar(),
         body: IndexedStack(
           index: _currentIndex,
@@ -42,13 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       child: SearchInput()),
                   ),
-                  SizedBox(height: 5.h,),
+                  
                   CategoriesWidget(),
                           
                     Container(
                       height: 300.h,
                       child: RecommendedHouse()),
                   // RecentBidsWidget()
+                  RecentBidsColumn()
                 ],
               ),
             ),
@@ -74,6 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Create Bid',
               onTap: () {
                 // Handle create bid action
+                 Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuickBidPage()),
+    );
               },
             ),
           ],

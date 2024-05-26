@@ -1,17 +1,15 @@
 class BookingModel {
-  final String? equipmentId;
-  final String? name;
-  final String? email;
-  final String? startDate;
-  final String? endDate;
-  final String? location;
-  final int? quantity;
-  final String? signature;
-  final bool? termsAndConditions;
+  final String equipmentId;
+  final String email;
+  final String startDate;
+  final String endDate;
+  final String location;
+  final int quantity;
+  final String signature;
+  final bool termsAndConditions;
 
   BookingModel({
     required this.equipmentId,
-    required this.name,
     required this.email,
     required this.startDate,
     required this.endDate,
@@ -21,17 +19,29 @@ class BookingModel {
     required this.termsAndConditions,
   });
 
+  factory BookingModel.fromJson(Map<String, dynamic> json) {
+    return BookingModel(
+      equipmentId: json['equipmentId'],
+      email: json['email'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
+      location: json['location'],
+      quantity: json['quantity'],
+      signature: json['signature'],
+      termsAndConditions: json['termsAndConditions'],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
-      'equipmentId': equipmentId ?? '',
-      'name': name ?? '',
-      'email': email ?? '',
-      'startDate': startDate ?? '',
-      'endDate': endDate ?? '',
-      'location': location ?? '',
-      'quantity': quantity ?? 0,
-      'signature': signature ?? '',
-      'termsAndConditions': termsAndConditions ?? false,
+      'equipmentId': equipmentId,
+      'email': email,
+      'startDate': startDate,
+      'endDate': endDate,
+      'location': location,
+      'quantity': quantity,
+      'signature': signature,
+      'termsAndConditions': termsAndConditions,
     };
   }
 }
