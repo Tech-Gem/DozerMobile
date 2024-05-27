@@ -55,7 +55,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.signUp,
-      page: () => ResetPasswordPage(),
+      page: () => SignUpPage(),
     ),
 
     GetPage(

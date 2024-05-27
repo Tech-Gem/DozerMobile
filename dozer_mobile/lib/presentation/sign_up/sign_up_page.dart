@@ -1,10 +1,12 @@
 import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
+import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
+import 'package:dozer_mobile/presentation/login_screen/login_screen.dart';
 import 'package:dozer_mobile/presentation/sign_up/controllers/sign_up_controller.dart';
 import 'package:dozer_mobile/presentation/sign_up/screen_widgets/password_text_field.dart';
 import 'package:dozer_mobile/core/utils/widgets/text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
-
 
 class SignUpPage extends StatelessWidget {
   final SignUpController signUpController = Get.put(SignUpController());
@@ -84,7 +86,8 @@ class SignUpPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Obx(
                       () => CustomTextField(
-                        controller: signUpController.phoneNumberController.value,
+                        controller:
+                            signUpController.phoneNumberController.value,
                         errorText: signUpController.phoneNumberError.value,
                         labelText: 'Phone Number',
                       ),
@@ -112,7 +115,6 @@ class SignUpPage extends StatelessWidget {
                       child: Obx(() => signUpController.status.value ==
                               Status.loading
                           ? CircularProgressIndicator(
-                            
                               color: AppColors.white,
                             ) // Show circular progress indicator when loading
                           : const Text(
@@ -120,6 +122,23 @@ class SignUpPage extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             )),
                     ),
+                    SizedBox(height: 10.h,),
+                    RichText(
+                        text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                            children: <TextSpan>[
+                          TextSpan(
+                            text: 'Login',
+                            style:
+                                 TextStyle(color: AppColors.primaryColor, fontSize: 12.sp),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                // Navigate to the login screen
+                                Get.toNamed(RoutesName.login);
+                              },
+                          ),
+                        ])),
                   ],
                 ),
               ),
