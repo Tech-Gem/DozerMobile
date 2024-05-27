@@ -47,9 +47,9 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     try {
-      print('1111111111');
+      // print('1111111111');
       if (!isLoginEnabled) return;
-      print('222222222222222');
+      // print('222222222222222');
       status(Status.loading);
       print(phoneNumberController.text.trim());
       print(passwordController.text.trim());
@@ -59,7 +59,7 @@ class LoginController extends GetxController {
         passwordController.text.trim(),
       );
       print(response);
-      print('333333333');
+      // print('333333333');
       if (response) {
         Get.toNamed(RoutesName.home);
       } else {
