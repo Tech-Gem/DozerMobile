@@ -22,8 +22,7 @@ class VerifyOtpController extends GetxController {
         print('OTP verified successfully $isVerified');
         registerUser();
       } else {
-        print('Failed to verify OTP');
-        Get.snackbar('Error', 'Failed to verify OTP');
+        Get.snackbar('Error', 'Failed to verify OTPp');
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to verify OTP: $e');
@@ -46,14 +45,11 @@ class VerifyOtpController extends GetxController {
       if (registered) {
         verificationStatus(Status.completed);
         Get.offNamed(RoutesName.home);
-      } else {
-        verificationStatus(Status.error);
-        Get.snackbar('Error', 'Failed to register user');
       }
     } catch (error) {
       verificationStatus(Status.error);
-      Get.snackbar('Error', 'Failed to register user: $error');
-      print('Error registering user: $error');
+      // debugPrint('Error: $error');
+      Get.snackbar('Error', '$error');
     }
   }
 
