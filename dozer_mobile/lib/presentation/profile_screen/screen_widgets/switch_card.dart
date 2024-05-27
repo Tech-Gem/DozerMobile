@@ -1,0 +1,37 @@
+
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'package:dozer_mobile/dozer_exports.dart';
+class SwitchCard extends StatefulWidget {
+  const SwitchCard();
+
+  @override
+  State<SwitchCard> createState() => _SwitchCardState();
+}
+
+class _SwitchCardState extends State<SwitchCard> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 100.0.w,
+      height: 20.0.h,
+      child: Card(
+        color: Colors.white,
+        elevation: 0.5,
+        child: Padding(
+          padding: EdgeInsets.all(1.0.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
