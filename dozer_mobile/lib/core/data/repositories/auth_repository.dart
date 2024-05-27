@@ -66,7 +66,7 @@ class AuthenticationRepository {
     try {
       String url = ApiEndPoints.baseUrl + ApiEndPoints.registerUser;
 
-      final dynamic response = await http.post(
+      final response = await http.post(
         Uri.parse(url),
         body: {
           'phoneNumber': phoneNumber,
@@ -77,8 +77,8 @@ class AuthenticationRepository {
         },
       );
 
-      final dynamic responseBody =
-          response is String ? jsonDecode(response) : response;
+      final responseBody = json.decode(response.body);
+      // print('response: ${responseBody['error']}');
 
       if (response.statusCode == 201) {
         // Parse the JSON response
@@ -93,12 +93,25 @@ class AuthenticationRepository {
         await GetStorageHelper.addValue("userName", userName);
 
         return true;
-      } else {
+      } 
+      else {
         throw Exception(
-            'Failed to register user. Status: ${responseBody['status']}');
+            '${responseBody['error']}');
       }
-    } catch (error) {
-      throw Exception('Failed to register user $error');
+    } on SocketException catch (e) {
+      throw const NoInternetException(
+          message:
+              'No Internet Connection. Please check your Internet connection and try again');
+    } on TimeoutException catch (e) {
+      throw const ConnectionTimeoutException(message: 'Connection Timeout');
+    } on FormatException catch (e) {
+      throw const UnknownException(
+          message: 'Invalid format response exception occurred!');
+    } on http.ClientException catch (e) {
+      throw const UnknownException(
+          message: 'The server refused to connect while trying to register user');
+    } on CacheException {
+      throw const CacheException(message: "Failed to cache token");
     }
   }
 
