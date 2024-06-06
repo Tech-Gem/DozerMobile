@@ -11,7 +11,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorageHelper.addValue('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0');
+  // await GetStorageHelper.addValue('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0');
   // await GetStorageHelper.clearAll();
   // // // await Firebase.initializeApp();
   runApp(const MyApp());
