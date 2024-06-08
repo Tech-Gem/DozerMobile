@@ -63,8 +63,8 @@ class _OnBoardingLayoutView extends State<OnBoardingLayoutView> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: 25.0,
-                        top: MediaQuery.of(context).size.width * 0.12),
+                        left: 25.w,
+                        top: 10.h),
                     child: Text(
                       inFinalPage() ? "" : Constants.SKIP,
                       style: TextStyle(

@@ -71,7 +71,7 @@ class EquipmentController extends GetxController {
         specifications: specificationsController.text.split(','), // Assuming comma-separated specifications
         transportation: transportationController.value,
       );
-
+      print(equipment.toJson());
       bool success = await _equipmentRepository.createEquipment(equipment);
 
       if (success) {

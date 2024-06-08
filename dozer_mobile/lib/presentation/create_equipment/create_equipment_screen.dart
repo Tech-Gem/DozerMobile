@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 class CreateEquipmentScreen extends StatelessWidget {
   final EquipmentController equipmentController = Get.find();
 
+   CreateEquipmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Equipment'),
+        title: const Text('Create Equipment'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -19,79 +21,79 @@ class CreateEquipmentScreen extends StatelessWidget {
             children: [
               TextField(
                 controller: equipmentController.nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.quantityController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Quantity',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.pricePerHourController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Price Per Hour',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.locationController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Location',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.descriptionController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Description',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.categoryController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Category',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.capacityController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Capacity',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.modelController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Model',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: equipmentController.specificationsController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Specifications (comma-separated)',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Obx(() {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,31 +104,31 @@ class CreateEquipmentScreen extends StatelessWidget {
                         height: 200,
                         width: 200,
                       ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () async {
                         await equipmentController.pickImage();
                       },
-                      child: Text('Pick Image'),
+                      child: const Text('Pick Image'),
                     ),
                   ],
                 );
               }),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Obx(() => SwitchListTile(
-                title: Text('Transportation'),
+                title: const Text('Transportation'),
                 value: equipmentController.transportationController.value,
                 onChanged: (value) {
                   equipmentController.transportationController.value = value;
                 },
               )),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
                     await equipmentController.createEquipment();
                   },
-                  child: Text('Create Equipment'),
+                  child: const Text('Create Equipment'),
                 ),
               ),
             ],

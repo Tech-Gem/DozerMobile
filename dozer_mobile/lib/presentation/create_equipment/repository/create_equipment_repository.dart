@@ -4,7 +4,7 @@ import 'package:dozer_mobile/presentation/create_equipment/models/equipment_mode
 import 'package:http/http.dart' as http;
 
 class EquipmentRepository {
-  final String apiUrl =  ApiEndPoints.baseUrl + ApiEndPoints.createEquipment;
+  final String apiUrl = ApiEndPoints.baseUrl + ApiEndPoints.createEquipment;
 
   Future<bool> createEquipment(Equipment equipment) async {
     try {
@@ -13,11 +13,15 @@ class EquipmentRepository {
         body: jsonEncode(equipment.toJson()),
       );
 
+      print(response.body);
+      print(response.statusCode);
+
       if (response == null) {
         throw Exception('Null response received.');
       }
 
-      final dynamic responseBody = response is String ? jsonDecode(response) : response;
+      final dynamic responseBody =
+          response is String ? jsonDecode(response) : response;
 
       if (responseBody == null) {
         throw Exception('Invalid JSON format.');
@@ -26,7 +30,8 @@ class EquipmentRepository {
       if (responseBody['status'] == 'success') {
         return true; // Assuming 'createEquipment' returns a boolean indicating success
       } else {
-        throw Exception('Failed to create equipment. Status: ${responseBody['status']}');
+        throw Exception(
+            'Failed to create equipment. Status: ${responseBody['status']}');
       }
     } catch (error) {
       print('Error creating equipment: $error');
