@@ -93,10 +93,8 @@ class AuthenticationRepository {
         await GetStorageHelper.addValue("userName", userName);
 
         return true;
-      } 
-      else {
-        throw Exception(
-            '${responseBody['error']}');
+      } else {
+        throw Exception('${responseBody['error']}');
       }
     } on SocketException catch (e) {
       throw const NoInternetException(
@@ -109,7 +107,8 @@ class AuthenticationRepository {
           message: 'Invalid format response exception occurred!');
     } on http.ClientException catch (e) {
       throw const UnknownException(
-          message: 'The server refused to connect while trying to register user');
+          message:
+              'The server refused to connect while trying to register user');
     } on CacheException {
       throw const CacheException(message: "Failed to cache token");
     }
@@ -125,11 +124,13 @@ class AuthenticationRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         String token = jsonResponse["token"];
+        print('token in login: $token');
         if (token.isEmpty) {
           throw const UnknownException(
               message: 'An unknown error occurred while trying to verify otp!');
         } else {
           await GetStorageHelper.addValue("token", token);
+          GetStorageHelper.clearAll();
         }
 
         return true;

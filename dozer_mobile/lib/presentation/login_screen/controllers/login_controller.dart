@@ -10,8 +10,6 @@ class LoginController extends GetxController {
   LoginController({required AuthenticationRepository authRepository})
       : _authRepository = authRepository;
 
-  // final AuthenticationRepository _authRepository = AuthenticationRepository();
-
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
