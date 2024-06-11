@@ -21,29 +21,54 @@ class SignUpController extends GetxController {
   final Rx<Status> status = Status.completed.obs;
   final RxBool passwordVisibility = false.obs;
 
+  // Future<void> signUp() async {
+  //   final firstName = firstNameController.value.text.trim();
+  //    final lastName = lastNameController.value.text.trim();
+  //   final phoneNumber = phoneNumberController.value.text.trim();
+  //   final email = emailController.value.text.trim();
+  //   final password = passwordController.value.text.trim();
+
+  //   if (validateFields(firstName,lastName, phoneNumber, email, password)) {
+  //     try {
+  //       status(Status.loading);
+  //       final isOtpSent = await _repository.sendOtp(phoneNumber);
+
+  //       if (isOtpSent) {
+  //         Get.toNamed(RoutesName.otp);
+  //         status(Status.completed);
+  //       } else {
+  //         Get.snackbar('Error', 'Failed to send OTP');
+  //       }
+  //     } catch (e) {
+  //       Get.snackbar('Error', 'Failed to send OTP: $e');
+  //     }
+  //   }
+  // }
+
   Future<void> signUp() async {
-    final firstName = firstNameController.value.text.trim();
-     final lastName = firstNameController.value.text.trim();
-    final phoneNumber = phoneNumberController.value.text.trim();
-    final email = emailController.value.text.trim();
-    final password = passwordController.value.text.trim();
+  final firstName = firstNameController.value.text.trim();
+  final lastName = lastNameController.value.text.trim();
+  final phoneNumber = phoneNumberController.value.text.trim();
+  final email = emailController.value.text.trim();
+  final password = passwordController.value.text.trim();
 
-    if (validateFields(firstName,lastName, phoneNumber, email, password)) {
-      try {
-        status(Status.loading);
-        final isOtpSent = await _repository.sendOtp(phoneNumber);
+  if (validateFields(firstName, lastName, phoneNumber, email, password)) {
+    try {
+      status(Status.loading);
+      final isOtpSent = await _repository.sendOtp(phoneNumber);
 
-        if (isOtpSent) {
-          Get.toNamed(RoutesName.otp);
-          status(Status.completed);
-        } else {
-          Get.snackbar('Error', 'Failed to send OTP');
-        }
-      } catch (e) {
-        Get.snackbar('Error', 'Failed to send OTP: $e');
+      if (isOtpSent) {
+        Get.toNamed(RoutesName.otp);
+        status(Status.completed);
+      } else {
+        Get.snackbar('Error', 'Failed to send OTP');
       }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to send OTP: $e');
     }
   }
+}
+
 
   bool validateFields( String firstName,
       String lastName, String phoneNumber, String email, String password) {

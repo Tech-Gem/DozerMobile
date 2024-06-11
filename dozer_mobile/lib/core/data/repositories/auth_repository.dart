@@ -125,11 +125,13 @@ class AuthenticationRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         String token = jsonResponse["token"];
+        print('token in login: $token');
         if (token.isEmpty) {
           throw const UnknownException(
               message: 'An unknown error occurred while trying to verify otp!');
         } else {
           await GetStorageHelper.addValue("token", token);
+          GetStorageHelper.clearAll();
         }
 
         return true;

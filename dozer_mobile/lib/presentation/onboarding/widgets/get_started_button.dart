@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 class GetStartedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: 45.0,
-      width: 140.0,
+      // height: 45.0,
+      // width: 140.0,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -21,7 +21,7 @@ class GetStartedButton extends StatelessWidget {
         onPressed: () {
           Get.offNamed(RoutesName.signUp);
         },
-        child: Center(
+        child: const Center(
           child: Padding(
             padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
             child: Text(

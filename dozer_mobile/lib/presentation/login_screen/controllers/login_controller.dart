@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final AuthenticationRepository _authRepository = AuthenticationRepository();
+  final AuthenticationRepository _authRepository;
+
+  LoginController({required AuthenticationRepository authRepository})
+      : _authRepository = authRepository;
 
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -47,9 +50,10 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     try {
-      // print('1111111111');
-      if (!isLoginEnabled) return;
-      // print('222222222222222');
+      if (!isLoginEnabled) {
+        Get.snackbar('Error', 'Please enter phone number and password');
+        return;
+      }
       status(Status.loading);
       print(phoneNumberController.text.trim());
       print(passwordController.text.trim());
@@ -59,7 +63,7 @@ class LoginController extends GetxController {
         passwordController.text.trim(),
       );
       print(response);
-      // print('333333333');
+      print('333333333');
       if (response) {
         Get.toNamed(RoutesName.home);
       } else {
@@ -68,7 +72,8 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error', 'An error occurred: $e',
+        'Error',
+        'An error occurred: $e',
       );
     } finally {
       status(Status.completed);
