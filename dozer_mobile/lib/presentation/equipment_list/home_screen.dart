@@ -2,8 +2,13 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/live_page.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/recent_bids.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/Home.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/HomeUpcoming.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/liveroom/LiveRoom.dart';
+import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
@@ -38,24 +43,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   WelcomeText(),
                   Padding(
-                    padding: EdgeInsets.only(left: 5.0, right : 5.0,),
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
                     child: Container(
                       height: 50,
                       width: double.infinity,
-                      child: SearchInput()),
+                      child: SearchInput(),
+                    ),
                   ),
-                  
                   CategoriesWidget(),
-                          
-                    Container(
-                      height: 300.h,
-                      child: RecommendedHouse()),
-                  // RecentBidsWidget()
+                  Container(
+                    height: 300.h,
+                    child: RecommendedHouse(),
+                  ),
                   RecentBidsColumn()
                 ],
               ),
             ),
-            // EquipmentListPage(),
+            QuickBidPage(), // Assuming this is your bid page
+            BookingHistoryPage(), // Add your booking history page here
+            Home()
           ],
         ),
         floatingActionButton: SpeedDial(
@@ -72,15 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             SpeedDialChild(
-              child: Icon(Icons.gavel_rounded,),
+              child: Icon(Icons.gavel_rounded),
               backgroundColor: primaryColor,
               label: 'Create Bid',
               onTap: () {
                 // Handle create bid action
-                 Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuickBidPage()),
-    );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuickBidPage()),
+                );
               },
             ),
           ],
@@ -108,3 +114,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

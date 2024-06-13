@@ -1,5 +1,5 @@
 class ConstantZegoCloud {
-  static int appId = 1781407021;
+  static int appId = 303149282;
   static String appSign =
-      'e4bc4f33471c3da4449a716062ba572547bf4287ee95cf722ccf2f764ef97489';
+      '79ed3ed861ee9d901fc9d15a185eb0c184e04c58dee40b2e030803c262172607';
 }
