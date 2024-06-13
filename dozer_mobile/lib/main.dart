@@ -1,16 +1,53 @@
+import 'dart:convert';
+
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/routes/route.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await GetStorageHelper.addValue('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0');
-  // await GetStorageHelper.clearAll();
   await Firebase.initializeApp();
+
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  firebaseMessaging.getToken().then((String? token) {
+    assert(token != null);
+    print('FCM Token: $token');
+  });
+
+  // For handling notification when app is in foreground
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+    print('A new onMessageOpenedApp event was published!: $message');
+    final json_ = json.encode(message.data);
+    print('*********************message: $json_');
+    Get.toNamed(RoutesName.notification,
+        arguments: {'message': json.encode(message.data)});
+    print('*********************message: $message');
+  });
+
+  // If app is closed or terminated
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    if (message != null) {
+      print('A new onMessageOpenedApp event was published!: $message');
+      Get.toNamed(RoutesName.notification,
+          arguments: {'message': jsonEncode(message.data)});
+    }
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print(message.data);
+  print('Handling a background message $message');
 }
 
 class MyApp extends StatelessWidget {
@@ -18,13 +55,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
-    firebaseMessaging.getToken().then((String? token) {
-      assert(token != null);
-      print('FCM Token: $token');
-    });
-
     return ScreenUtilInit(
       designSize: const Size(375, 829),
       splitScreenMode: true,
@@ -46,6 +76,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: RoutesName.intial, // Set initial route
         getPages: AppPages.routes,
+        navigatorKey: navigatorKey,
       ),
     );
   }

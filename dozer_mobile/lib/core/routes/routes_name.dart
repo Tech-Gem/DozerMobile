@@ -10,5 +10,6 @@ class RoutesName {
   static const String bookingForm = '/booking-form';
   static const String createEquipment = '/create-equipment';
   static const String onboarding = '/onboarding';
+  static const String notification = '/notification';
 
   }
