@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "788025376703",
+    "project_id": "dozer-55c7c",
+    "storage_bucket": "dozer-55c7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788025376703:android:a5a841cd9e42aef3dfeb0a",
+        "android_client_info": {
+          "package_name": "com.dozer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFsjw_c5TiMAqbh3pnKcrFeCpgq2JlL_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

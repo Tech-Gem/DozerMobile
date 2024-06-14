@@ -11,6 +11,7 @@ import 'package:dozer_mobile/presentation/forgot_password/forgot_password_page.d
 import 'package:dozer_mobile/presentation/invoice_generator_screen/invoice_generator.dart';
 
 import 'package:dozer_mobile/presentation/login_screen/login_screen.dart';
+import 'package:dozer_mobile/presentation/notification/notification_screen.dart';
 import 'package:dozer_mobile/presentation/onboarding/screens/landing_page.dart';
 import 'package:dozer_mobile/presentation/sign_up/sign_up_page.dart';
 import 'package:dozer_mobile/presentation/verify_otp/bindings/verify_otp_bindings.dart';
@@ -76,6 +77,11 @@ class AppPages {
     GetPage(
       name: RoutesName.onboarding,
       page: () => LandingPage(),
+    ),
+
+    GetPage(
+      name: RoutesName.notification,
+      page: () =>  NotificationScreen(),
     ),
   ];
 }
