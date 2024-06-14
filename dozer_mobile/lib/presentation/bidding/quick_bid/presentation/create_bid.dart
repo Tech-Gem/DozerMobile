@@ -1,7 +1,10 @@
 import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/controllers/bid_controller.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/models/bidding_response.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/live_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class QuickBidPage extends StatefulWidget {
   const QuickBidPage({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class _QuickBidPageState extends State<QuickBidPage> {
   final minBudgetController = TextEditingController();
   final maxBudgetController = TextEditingController();
   final descriptionController = TextEditingController();
+  final BidController _bidController = Get.put(BidController());
 
   bool isHost = false;
   String category = 'Category 1';
@@ -163,36 +167,55 @@ class _QuickBidPageState extends State<QuickBidPage> {
               const SizedBox(
                 height: 16,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return LivePage(
-                        roomID: '', // Adjust based on your implementation
-                        isHost: isHost,
-                        userName: '', // Adjust based on your implementation
-                        userId: '', // Adjust based on your implementation
-                      );
-                    }),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Add rounded border to button
-                  ),
-                  backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
-                  fixedSize: const Size(400, 50),
-                ),
-                child: Text(
-                  'Create Room', // Change text based on isHost value
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+ElevatedButton(
+  onPressed: () async {
+    try {
+      print(titleController.text);
+      print(descriptionController.text);
+      print(int.parse(minBudgetController.text));
+      
+      _bidController.createBid(
+        titleController.text,
+        descriptionController.text,
+        int.parse(minBudgetController.text),
+        int.parse(maxBudgetController.text),
+      ).then((BidResponse bidResponse) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return LivePage(
+              roomID: bidResponse.roomId,  
+              isHost: true,
+              userName: bidResponse.userName, // Adjust based on your implementation
+              userId: bidResponse.userId, title: bidResponse.title, description: bidResponse.description, // Adjust based on your implementation
+            );
+          }),
+        );
+      }).catchError((error) {
+        // Handle error if any
+        print('Error: $error');
+      });
+    } catch (e) {
+      print('Error creating bid: $e');
+    }
+  },
+  style: ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0), // Add rounded border to button
+    ),
+    backgroundColor: primaryColor,
+    foregroundColor: Colors.white,
+    fixedSize: const Size(400, 50),
+  ),
+  child: Text(
+    'Create Room', // Change text based on isHost value
+    style: const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    ),
+  ),
+),
+
             ],
           ),
         ),

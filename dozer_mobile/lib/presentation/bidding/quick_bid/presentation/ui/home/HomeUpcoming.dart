@@ -1,62 +1,102 @@
+import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/core/utils/dynamic_colors.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/liveroom/LiveRoom.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/screen_widgets.dart/squircle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeUpcoming extends StatelessWidget {
-  final String time;
+class HomeRoomItem extends StatelessWidget {
   final String title;
-  const HomeUpcoming({
+  final String description;
+  final int participantsCount;
+  const HomeRoomItem({
     Key? key,
-    required this.time,
     required this.title,
+    required this.description,
+    required this.participantsCount, required String hostName,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.fromLTRB(20, 34, 24, 34),
-      decoration: BoxDecoration(
-        color: theme.primaryColor,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              width: 3,
-              color: Color(0xFFf69677),
-            ),
+    ThemeData theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => LiveRoom(),
           ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(24),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(width: 15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "$time",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: primaryColor,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 14,
+                color: DynamicColor.withBrightness(
+                  context: context,
+                  color: primaryColor,
+                  darkColor: Colors.grey.shade300,
                 ),
-                SizedBox(height: 5),
-                Text(
-                  "$title",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Squircle(),
+                SizedBox(width: 5),
+                Squircle(),
+                SizedBox(width: 5),
+                Squircle(),
+                Spacer(),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: DynamicColor.withBrightness(
+                      context: context,
+                      color: Color(0xFFeff0f5),
+                      darkColor: Color(0xFF404182),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.person_fill,
+                        size: 18,
+                      ),
+                      SizedBox(width: 3),
+                      Text("$participantsCount"),
+                      SizedBox(width: 10),
+                      Icon(
+                        CupertinoIcons.mic_fill,
+                        size: 18,
+                      ),
+                      SizedBox(width: 3),
+                      Text("$participantsCount"),
+                    ],
                   ),
                 ),
               ],
-            ),
-            Spacer(),
-            Icon(
-              CupertinoIcons.chevron_down,
-              color: Colors.white,
             )
           ],
         ),
