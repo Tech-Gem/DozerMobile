@@ -1,7 +1,8 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/presentation/add_profile_photo/profile_photo_page.dart';
-import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
+import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/create_equipment/bindings/create_equipment_binding.dart';
 import 'package:dozer_mobile/presentation/create_equipment/create_equipment_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
@@ -31,13 +32,16 @@ class AppPages {
 
     GetPage(
       name: RoutesName.intial,
-      page: () => LandingPage(),
+      page: () => HomeScreen(),
     ),
     GetPage(
       name: RoutesName.bookingForm,
       page: BookingForm.new,
     ),
-
+ GetPage(
+      name: RoutesName.bookingHistory,
+      page: BookingHistoryPage.new,
+    ),
     GetPage(
       name: RoutesName.otp,
       page: () => VerifyOtpPage(),

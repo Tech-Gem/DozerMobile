@@ -4,7 +4,7 @@ class AppStringsEnglish{
   static const String endDateLabel = 'End Date';
   static const String subCityLabel = 'SubCity';
   static const String amountLabel = 'Amount';
-  static const String notifyOwnerButtonText = 'Notify Owner';
+  static const String notifyOwnerButtonText = 'Book now';
 
 }
 class AppStringsAmharic{
@@ -12,7 +12,7 @@ class AppStringsAmharic{
   static const String endDateLabel = 'የመጨረሻ ቀን';
   static const String subCityLabel = 'ክፍለ ከተማ';
   static const String amountLabel = 'መጠን';
-  static const String notifyOwnerButtonText = 'ለባለቤቱ አሳውቅ';
+  static const String notifyOwnerButtonText = 'አሁን ያስይዙ';
 
 
 }

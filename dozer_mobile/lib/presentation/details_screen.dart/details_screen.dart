@@ -2,17 +2,17 @@ import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
-
 import 'package:flutter/material.dart';
 import 'package:dozer_mobile/presentation/equipment_list/models/construction_machine.dart';
 import 'package:get/get.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatelessWidget {
   final ConstructionMachineModel constructionMachine;
 
   DetailScreen({required this.constructionMachine});
-final controller = Get.put(BookingController());
+  final controller = Get.put(BookingController());
+
   // Function to show reviews popup
   void _showReviewsPopup(BuildContext context) {
     showDialog(
@@ -23,12 +23,9 @@ final controller = Get.put(BookingController());
           content: SingleChildScrollView(
             child: Column(
               children: [
-                // Display comments from different renters here
-                // You can fetch this data from your backend or use a predefined list
                 Text('Comment 1'),
                 Text('Comment 2'),
                 Text('Comment 3'),
-                // Add more comments as needed
               ],
             ),
           ),
@@ -43,6 +40,15 @@ final controller = Get.put(BookingController());
         );
       },
     );
+  }
+
+  // Function to make a call
+  void _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
   }
 
   @override
@@ -123,7 +129,6 @@ final controller = Get.put(BookingController());
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    // Call function to show reviews popup
                                     _showReviewsPopup(context);
                                   },
                                   child: Row(
@@ -140,18 +145,16 @@ final controller = Get.put(BookingController());
                                 SizedBox(width: 4),
                                 TextButton(
                                   onPressed: () {
-                                    // Call function to show reviews popup
                                     _showReviewsPopup(context);
                                   },
-                                  child: Text('4 Reviews >',style: TextStyle(color: Colors.black),),
+                                  child: Text('4 Reviews >', style: TextStyle(color: Colors.black)),
                                 ),
                               ],
                             ),
                           ],
                         ),
                         SizedBox(height: 2.h),
-                        // ... rest of the code remains the same
-                    Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -159,7 +162,7 @@ final controller = Get.put(BookingController());
                                 Container(
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                   color: Colors.grey[200],
+                                    color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Text(
@@ -167,7 +170,7 @@ final controller = Get.put(BookingController());
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[600],
-                                      fontWeight: FontWeight.w600
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
@@ -184,31 +187,30 @@ final controller = Get.put(BookingController());
                               ],
                             ),
                             SizedBox(height: 2.h),
-                             SizedBox(height: 2.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                            SizedBox(height: 2.w),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  margin: EdgeInsets.only(bottom: 8),
-                                  decoration: BoxDecoration(
-                                     color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    'Specifications:',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[600],
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      margin: EdgeInsets.only(bottom: 8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        'Specifications:',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                ...constructionMachine.specifications
-                                    .map(
+                                    ...constructionMachine.specifications.map(
                                       (specification) => Container(
                                         margin: EdgeInsets.only(bottom: 4),
                                         child: Text(
@@ -218,13 +220,12 @@ final controller = Get.put(BookingController());
                                           ),
                                         ),
                                       ),
-                                    )
-                                    .toList(),
+                                    ).toList(),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 1.h,),
+                            SizedBox(height: 1.h),
                             Row(
                               children: [
                                 Container(
@@ -338,7 +339,6 @@ final controller = Get.put(BookingController());
                             ),
                           ],
                         ),
-                       
                         SizedBox(height: 2.h),
                         if (constructionMachine.transportation != null)
                           Row(
@@ -376,27 +376,53 @@ final controller = Get.put(BookingController());
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // Handle booking 
-              Get.to(BookingForm(equipmentId:constructionMachine.id,availability:constructionMachine.quantity,equipmentName: constructionMachine.name,imageUrl: constructionMachine.image[0],));
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              minimumSize: Size(70.w, 50),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Book',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    _makePhoneCall('0925898533');
+                  },
+                  icon: Icon(Icons.call),
+                  label: Text('Call'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: Size(30.w, 50),
+                  ),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.to(BookingForm(
+                      equipmentId: constructionMachine.id,
+                      availability: constructionMachine.quantity,
+                      equipmentName: constructionMachine.name,
+                      imageUrl: constructionMachine.image[0],
+                    ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: Size(30.w, 50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Book',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 16),

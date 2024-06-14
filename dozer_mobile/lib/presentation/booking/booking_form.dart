@@ -1,5 +1,6 @@
 import 'package:dozer_mobile/core/language/language_controller.dart';
 import 'package:dozer_mobile/core/utils/app_strings.dart';
+import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
 import 'package:dozer_mobile/presentation/booking/screen_widgets/notify_owner_button.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
@@ -9,15 +10,15 @@ import 'package:get/get.dart';
 class BookingForm extends StatefulWidget {
   final String? equipmentId;
   final int? availability;
-  final String?imageUrl;
+  final String? imageUrl;
   final String? equipmentName;
 
   const BookingForm({
     Key? key,
-    this .equipmentId,
-     this.availability,
-this.imageUrl,
-   this.equipmentName,
+    this.equipmentId,
+    this.availability,
+    this.imageUrl,
+    this.equipmentName,
   }) : super(key: key);
 
   @override
@@ -25,28 +26,31 @@ this.imageUrl,
 }
 
 class _BookingFormState extends State<BookingForm> {
-
   late String _selectedSubCity;
-  late DateTime _startDate; // Initialize with current date
-  late DateTime _endDate; // Initialize with current date
-  List<String> _subCities = ['SubCity A', 'SubCity B', 'SubCity C'];
+  late DateTime _startDate;
+  late DateTime _endDate;
+  List<String> _subCities = [
+    "Addis Ketema",
+    "Akaky Kaliti",
+    "Arada",
+    "Bole",
+    "Gullele",
+    "Kirkos",
+    "Kolfe Keranio",
+    "Lideta",
+    "Lemi Kura",
+    "Nifas Silk-Lafto",
+    "Yeka"
+  ];
   final LanguageController _languageController = Get.put(LanguageController());
   BookingController controller = Get.find();
 
   @override
   void initState() {
     super.initState();
-    
     _selectedSubCity = _subCities.first;
-    _startDate = DateTime.now(); // Initialize with current date
-    _endDate = DateTime.now(); // Initialize with current date
-
-  }
-
-  @override
-  void dispose() {
-
-    super.dispose();
+    _startDate = DateTime.now();
+    _endDate = DateTime.now();
   }
 
   @override
@@ -64,7 +68,7 @@ class _BookingFormState extends State<BookingForm> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -72,7 +76,6 @@ class _BookingFormState extends State<BookingForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Equipment Picture and Name
                   Column(
                     children: [
                       ClipRRect(
@@ -94,9 +97,7 @@ class _BookingFormState extends State<BookingForm> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20), // Spacing
-
-                  // InkWell for Start Date
+                  SizedBox(height: 20),
                   SizedBox(height: 10.0),
                   GestureDetector(
                     onTap: () => _selectStartDate(context),
@@ -113,8 +114,6 @@ class _BookingFormState extends State<BookingForm> {
                       ),
                     ),
                   ),
-
-                  // InkWell for End Date
                   SizedBox(height: 10.0),
                   GestureDetector(
                     onTap: () => _selectEndDate(context),
@@ -131,8 +130,6 @@ class _BookingFormState extends State<BookingForm> {
                       ),
                     ),
                   ),
-
-                  // DropdownButtonFormField for SubCity
                   SizedBox(height: 10.0),
                   DropdownButtonFormField<String>(
                     value: _selectedSubCity,
@@ -154,45 +151,39 @@ class _BookingFormState extends State<BookingForm> {
                       ),
                     ),
                   ),
-
-                 // TextFormField for Amount
-SizedBox(height: 10.0),
-Row(
-  children: [
-    Expanded(
-      child: TextFormField(
-        controller: controller.quantityController.value, // Update controller here
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: _getCurrentLanguageString(AppStringsEnglish.amountLabel, AppStringsAmharic.amountLabel),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        readOnly: true,
-      ),
-    ),
-    IconButton(
-      icon: Icon(Icons.arrow_drop_up),
-      onPressed: () {
-        _incrementAmount();
-      },
-    ),
-    IconButton(
-      icon: Icon(Icons.arrow_drop_down),
-      onPressed: () {
-        _decrementAmount();
-      },
-    ),
-  ],
-),
-
-                  // NotifyOwnerButton
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.quantityController.value,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: _getCurrentLanguageString(AppStringsEnglish.amountLabel, AppStringsAmharic.amountLabel),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          readOnly: true,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.arrow_drop_up),
+                        onPressed: _incrementAmount,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.arrow_drop_down),
+                        onPressed: _decrementAmount,
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 10),
                   NotifyOwnerButton(
                     text: _getCurrentLanguageString(AppStringsEnglish.notifyOwnerButtonText, AppStringsAmharic.notifyOwnerButtonText),
                     onPressed: () {
-                      controller.confirmBooking(widget.equipmentId!);
+                      controller.confirmBooking(widget.equipmentId!).then((_) {
+                        _showRenterNotifiedPopup(context);
+                      });
                     },
                   ),
                   SizedBox(height: 10),
@@ -203,17 +194,55 @@ Row(
         ));
   }
 
+  void _showRenterNotifiedPopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 30.0,
+                backgroundColor: Colors.green,
+                child: Icon(Icons.check, color: Colors.white, size: 30.0),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Renter Notified',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to booking history page
+                  controller.loadBookingHistory();
+                  Get.back(); // Close the dialog
+                  Get.to(() => BookingHistoryPage());
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(
       context: context,
       initialDate: _startDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)), // Limit selection to one year from today
+      lastDate: DateTime.now().add(Duration(days: 365)),
     );
 
     if (pickedStartDate != null && pickedStartDate != _startDate) {
       if (_endDate.isBefore(pickedStartDate)) {
-        // If end date is before the picked start date, reset end date to start date
         _endDate = pickedStartDate;
         setState(() {
           controller.endDateController.value.text = '${_endDate.day}/${_endDate.month}/${_endDate.year}';
@@ -231,7 +260,7 @@ Row(
       context: context,
       initialDate: _endDate,
       firstDate: _startDate,
-      lastDate: _startDate.add(Duration(days: 365)), // Limit selection to one year from the start date
+      lastDate: _startDate.add(Duration(days: 365)),
     );
 
     if (pickedEndDate != null && pickedEndDate != _endDate) {
@@ -242,7 +271,6 @@ Row(
     }
   }
 
-  // Method to get the appropriate string based on the current language
   String _getCurrentLanguageString(String englishString, String amharicString) {
     if (_languageController.currentLanguage == Language.amharic) {
       return amharicString;
@@ -250,17 +278,15 @@ Row(
       return englishString;
     }
   }
-// Method to increment the amount
-void _incrementAmount() {
-  setState(() {
-    final currentAmount = int.tryParse(controller.quantityController.value.text) ?? 0;
-    final newAmount = (currentAmount < widget.availability!) ? currentAmount + 1 : currentAmount;
-    controller.quantityController.value.text = newAmount.toString();
-  });
-}
 
+  void _incrementAmount() {
+    setState(() {
+      final currentAmount = int.tryParse(controller.quantityController.value.text) ?? 0;
+      final newAmount = (currentAmount < widget.availability!) ? currentAmount + 1 : currentAmount;
+      controller.quantityController.value.text = newAmount.toString();
+    });
+  }
 
-  // Method to decrement the amount
   void _decrementAmount() {
     setState(() {
       final currentAmount = int.tryParse(controller.quantityController.value.text) ?? 0;
