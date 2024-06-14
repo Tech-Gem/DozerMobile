@@ -131,7 +131,7 @@ class AuthenticationRepository {
               message: 'An unknown error occurred while trying to verify otp!');
         } else {
           await GetStorageHelper.addValue("token", token);
-          GetStorageHelper.clearAll();
+          // GetStorageHelper.clearAll();
         }
 
         return true;

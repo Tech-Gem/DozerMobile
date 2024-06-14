@@ -10,6 +10,7 @@ class ProfileRepository {
   Future<Profile> getProfile(String id) async {
     try {
       final dynamic response = await _apiService.getResponse('$apiUrl/$id');
+      print('Response: $response');
 
       if (response == null) {
         throw Exception('Null response received.');

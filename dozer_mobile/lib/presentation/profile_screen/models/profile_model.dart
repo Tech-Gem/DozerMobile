@@ -1,4 +1,5 @@
 class Profile {
+  final String? id;
   final String? firstName;
   final String? middleName;
   final String? lastName;
@@ -9,6 +10,7 @@ class Profile {
   final bool? phoneNumberVerified;
 
   Profile({
+    this.id,
     this.firstName,
     this.middleName,
     this.lastName,
@@ -31,6 +33,7 @@ class Profile {
       email: formattedProfile['email'],
       phoneNumber: formattedProfile['phoneNumber'],
       phoneNumberVerified: formattedProfile['phoneNumberVerified'],
+      id: formattedProfile['id'],
     );
   }
 }

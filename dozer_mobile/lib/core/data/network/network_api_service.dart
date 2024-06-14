@@ -12,8 +12,8 @@ class NetworkApiService extends BaseApiService {
   Future<dynamic> getResponse(String url) async {
     dynamic responseJson;
     try {
-      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
-      print(GetStorageHelper.getValue("token"));
+      // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
+      // print(GetStorageHelper.getValue("token"));
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -41,7 +41,7 @@ class NetworkApiService extends BaseApiService {
   ) async {
     dynamic responseJson;
     try {
-      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0");
+      // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0");
       final response = await http.post(
         Uri.parse(url),
         body: jsonEncode(jsonBody),
