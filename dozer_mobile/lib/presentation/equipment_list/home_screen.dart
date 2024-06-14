@@ -27,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  bool _isFabOpen = false;  // To track the FAB state
 
   @override
   Widget build(BuildContext context) {
@@ -34,59 +35,91 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: CustomAppBar(),
-        body: IndexedStack(
-          index: _currentIndex,
+        body: Stack(
           children: [
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  WelcomeText(),
-                  Padding(
-                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      child: SearchInput(),
-                    ),
+            IndexedStack(
+              index: _currentIndex,
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WelcomeText(),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          child: SearchInput(),
+                        ),
+                      ),
+                      CategoriesWidget(),
+                      Container(
+                        height: 300,
+                        child: RecommendedHouse(),
+                      ),
+                      RecentBidsColumn(),
+                    ],
                   ),
-                  CategoriesWidget(),
-                  Container(
-                    height: 300.h,
-                    child: RecommendedHouse(),
-                  ),
-                  RecentBidsColumn()
-                ],
-              ),
+                ),
+                QuickBidPage(), // Assuming this is your bid page
+                BookingHistoryPage(), // Add your booking history page here
+                Home()
+              ],
             ),
-            QuickBidPage(), // Assuming this is your bid page
-            BookingHistoryPage(), // Add your booking history page here
-            Home()
+            if (_isFabOpen)
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isFabOpen = false;
+                  });
+                },
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
           ],
         ),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.add_event,
           backgroundColor: primaryColor,
           overlayColor: Colors.transparent,
+          onOpen: () {
+            setState(() {
+              _isFabOpen = true;
+            });
+          },
+          onClose: () {
+            setState(() {
+              _isFabOpen = false;
+            });
+          },
           children: [
             SpeedDialChild(
-              child: Icon(Icons.garage_outlined),
+              child: Icon(Icons.garage_outlined,color: Colors.white,),
               backgroundColor: primaryColor,
               label: 'Add Equipment',
               onTap: () {
                 Get.offNamed(RoutesName.createEquipment);
+                setState(() {
+                  _isFabOpen = false;
+                });
               },
             ),
             SpeedDialChild(
-              child: Icon(Icons.gavel_rounded),
+              child: Icon(Icons.gavel_rounded,color: Colors.white,),
               backgroundColor: primaryColor,
               label: 'Create Bid',
               onTap: () {
-                // Handle create bid action
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => QuickBidPage()),
                 );
+                setState(() {
+                  _isFabOpen = false;
+                });
               },
             ),
           ],
@@ -98,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
           activeColor: primaryColor, // Customize the active color
           color: Colors.grey, // Customize the inactive color
           items: [
-            TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.home, title: 'Home',),
             TabItem(icon: Icons.garage_outlined, title: 'All Equipment'),
             TabItem(icon: Icons.book, title: 'Bookings'),
             TabItem(icon: Icons.gavel, title: 'Bid'),
@@ -114,5 +147,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-

@@ -1,4 +1,5 @@
 import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,8 +19,25 @@ class FilterController extends GetxController {
 class SearchInput extends StatelessWidget {
   final FilterController filterController = Get.put(FilterController());
 
-  final List<String> filterOptions = List.generate(20, (index) => 'Option $index');
-  final List<String> locationOptions = List.generate(20, (index) => 'Location $index');
+  final List<String> filterOptions = [
+    "CompactEquipment",
+    "HeavyEarthmoving",
+    "LiftAerialWorkPlatform",
+    "RollersCompaction"
+  ];
+  final List<String> locationOptions = [
+    "Addis Ketema",
+    "Akaky Kaliti",
+    "Arada",
+    "Bole",
+    "Gullele",
+    "Kirkos",
+    "Kolfe Keranio",
+    "Lideta",
+    "Lemi Kura",
+    "Nifas Silk-Lafto",
+    "Yeka"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,58 +67,79 @@ class SearchInput extends StatelessWidget {
                 ),
                 IconButton(
                   icon: SvgPicture.asset(
-  'assets/icons/filter_icon.svg',
-  width: 24,
-  height: 24,
-  color: Colors.black, // Change color if needed
-),
+                    'assets/icons/filter_icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: Colors.black,
+                  ),
                   onPressed: () {
-                    showDialog(
+                    showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        ),
+                      ),
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Select Filters'),
-                          content: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildFilterSection('Categories', filterOptions),
-                                  SizedBox(height: 16.0),
-                                  _buildFilterSection('Locations', locationOptions),
-                                ],
-                              ),
+                        return Container(
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                              topRight: Radius.circular(20.0),
                             ),
                           ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(color: Colors.black),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Select Filters',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ), backgroundColor: primaryColor,
+                              SizedBox(height: 16.0),
+                              _buildFilterSection('Categories', filterOptions),
+                              SizedBox(height: 16.0),
+                              _buildFilterSection('Locations', locationOptions),
+                              SizedBox(height: 16.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                      ),
+                                      backgroundColor: primaryColor,
+                                    ),
+                                    child: Text(
+                                      'Apply',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      print(filterController.selectedFilters);
+                                    },
+                                  ),
+                                ],
                               ),
-                              child: Text(
-                                'Apply',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              onPressed: () {
-                                // Apply selected filters here
-                                Navigator.of(context).pop();
-                                print(filterController.selectedFilters);
-                              },
-                            ),
-                          ],
+                            ],
+                          ),
                         );
                       },
                     );
@@ -130,6 +169,7 @@ class SearchInput extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 16.sp,
             ),
           ),
           SizedBox(height: 8.0),
