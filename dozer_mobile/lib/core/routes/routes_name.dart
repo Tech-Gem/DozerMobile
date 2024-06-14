@@ -12,4 +12,5 @@ class RoutesName {
   static const String onboarding = '/onboarding';
   static const String notification = '/notification';
   static const String bookingHistory = '/booking-history';
+  static const String profile = '/profile';
   }

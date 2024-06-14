@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/routes/route.dart';
 import 'package:dozer_mobile/dozer_exports.dart';

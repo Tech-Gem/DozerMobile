@@ -11,7 +11,7 @@ import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/live
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
-import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
+import 'package:dozer_mobile/presentation/home/widgets/custom_appbar.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recent_bids.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recommended_house.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';

@@ -8,4 +8,5 @@ class ApiEndPoints {
   static const String login = "/userAuth/login-user";
   static const String resetPassword = "/register/reserPassword";
   static const String createEquipment = "/equipments";
+  static const String profile = "/userProfile";
 }

@@ -39,7 +39,7 @@ class ProfileCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      profile.fullName ?? '',
+                      profile.firstName ?? '',
                       style: TextStyle(
                         fontSize: 16.0.sp,
                         fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class ProfileCard extends StatelessWidget {
                 onTap: () {
                   // Handle edit icon tap
                   // You can use profile.id, profile.fullName, etc. as needed
-                  print('Edit tapped for ${profile.fullName}');
+                  print('Edit tapped for ${profile.firstName}');
                 },
                 child: SvgPicture.asset(
                   'assets/icons/edit_icon.svg',
