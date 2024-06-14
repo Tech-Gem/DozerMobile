@@ -1,5 +1,5 @@
 import 'package:dozer_mobile/core/utils/colors.dart';
-import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
 import 'package:flutter/material.dart';
 
 class RecentBidsColumn extends StatelessWidget {
