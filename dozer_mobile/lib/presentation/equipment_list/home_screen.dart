@@ -3,7 +3,7 @@ import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/live_page.dart';
-import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/recent_bids.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/Home.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/HomeUpcoming.dart';

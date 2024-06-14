@@ -1,6 +1,6 @@
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/presentation/add_profile_photo/profile_photo_page.dart';
-import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/login_page.dart';
+import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/create_equipment/bindings/create_equipment_binding.dart';
