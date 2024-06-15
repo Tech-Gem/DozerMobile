@@ -20,14 +20,15 @@ class NetworkApiService extends BaseApiService {
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':
-              "Bearer ${GetStorageHelper.getValue("token") ?? ""}",
-          
+          'Authorization': "Bearer ${GetStorageHelper.getValue("token") ?? ""}",
         },
       );
       Logger.log('STATUS CODE: ${response.statusCode}');
       Logger.log('RESPONSE BODY: ${response.body}');
-      responseJson = returnResponse(response);
+      // print('RESPONSE BODY: ${response.body}');
+      responseJson = jsonDecode(response.body);
+      print('**********************************');
+      print(responseJson);
     } on SocketException {
       throw FetchDataException('');
     } on RequestTimeoutException {
@@ -191,6 +192,6 @@ class NetworkApiService extends BaseApiService {
         );
     }
   }
-  
+
   jsonEncode(Map<String, dynamic> jsonBody) {}
 }

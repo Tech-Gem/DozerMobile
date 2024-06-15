@@ -5,7 +5,7 @@ import 'package:dozer_mobile/presentation/create_equipment/models/equipment_mode
 import 'package:http/http.dart' as http;
 
 class EquipmentRepository {
-  final String apiUrl = ApiEndPoints.baseUrl + ApiEndPoints.createEquipment;
+  final String apiUrl = ApiEndPoints.baseUrl + ApiEndPoints.equipment;
 
   Future<bool> createEquipment(Equipment equipment) async {
     try {

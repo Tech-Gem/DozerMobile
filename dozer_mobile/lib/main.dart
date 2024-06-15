@@ -5,11 +5,13 @@ import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
+  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

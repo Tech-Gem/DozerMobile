@@ -93,10 +93,8 @@ class AuthenticationRepository {
         await GetStorageHelper.addValue("userName", userName);
 
         return true;
-      } 
-      else {
-        throw Exception(
-            '${responseBody['error']}');
+      } else {
+        throw Exception('${responseBody['error']}');
       }
     } on SocketException catch (e) {
       throw const NoInternetException(
@@ -109,7 +107,8 @@ class AuthenticationRepository {
           message: 'Invalid format response exception occurred!');
     } on http.ClientException catch (e) {
       throw const UnknownException(
-          message: 'The server refused to connect while trying to register user');
+          message:
+              'The server refused to connect while trying to register user');
     } on CacheException {
       throw const CacheException(message: "Failed to cache token");
     }
@@ -125,14 +124,23 @@ class AuthenticationRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         String token = jsonResponse["token"];
+        String profileId = jsonResponse["userProfile"]["id"];
         print('token in login: $token');
+        print('profileId in login: $profileId');
         if (token.isEmpty) {
-          throw const UnknownException(
-              message: 'No user!');
+          throw const UnknownException(message: 'No user!');
         } else {
           await GetStorageHelper.addValue("token", token);
-          GetStorageHelper.clearAll();
         }
+
+        if (profileId.isNotEmpty) {
+          await GetStorageHelper.addValue("profileId", profileId);
+        } else {
+          throw const UnknownException(message: 'No profile!');
+        }
+        print('*********************************');
+        print(GetStorageHelper.getValue("profileId"));
+        // GetStorageHelper.clearAll();
 
         return true;
       } else if (response.statusCode == 404) {
