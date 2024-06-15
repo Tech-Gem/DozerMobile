@@ -78,4 +78,48 @@ class ProfileRepository {
       throw Exception('Failed to create profile');
     }
   }
+
+  Future<Profile> updateProfile(
+    String id, {
+    required String firstName,
+    required String middleName,
+    required String lastName,
+    required String jobTitle,
+    required String image,
+  }) async {
+    try {
+      final Map<String, dynamic> profileData = {
+        'firstName': firstName,
+        'middleName': middleName,
+        'lastName': lastName,
+        'jobTitle': jobTitle,
+        'image': image,
+      };
+
+      final dynamic response =
+          await _apiService.putResponse('$apiUrl/$id', profileData);
+
+      if (response == null) {
+        throw Exception('Null response received.');
+      }
+
+      final dynamic responseBody =
+          response is String ? jsonDecode(response) : response;
+
+      if (responseBody == null) {
+        throw Exception('Invalid JSON format.');
+      }
+
+      if (responseBody['status'] == 'success') {
+        final Map<String, dynamic> json = responseBody['data'];
+        return Profile.fromJson(json);
+      } else {
+        throw Exception(
+            'Failed to update profile. Status: ${responseBody['status']}');
+      }
+    } catch (error) {
+      print('Error updating profile: $error');
+      throw Exception('Failed to update profile');
+    }
+  }
 }

@@ -8,7 +8,7 @@ class ProfileController extends GetxController {
   final ProfileRepository _repository = ProfileRepository();
   Rx<Profile?> profile = Rx<Profile?>(null);
   Rx<Status> status = Status.loading.obs;
-  final String id = "8a5bce3f-4667-498c-ac54-dfe40193378a";
+  final String id = "9c613077-4b41-4a10-8199-7e49193a1a23";
 
   @override
   void onInit() {
@@ -50,6 +50,32 @@ class ProfileController extends GetxController {
       status(Status.success);
     } catch (error) {
       print('Error creating profile: $error');
+      status(Status.error);
+    }
+  }
+
+  void updateProfile({
+    required String firstName,
+    required String middleName,
+    required String lastName,
+    required String jobTitle,
+    required String image,
+  }) async {
+    try {
+      status(Status.loading);
+      final result = await _repository.updateProfile(
+        id,
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        jobTitle: jobTitle,
+        image: image,
+      );
+      profile(result);
+      print("Profile updated: ${result.firstName} ${result.lastName}");
+      status(Status.success);
+    } catch (error) {
+      print('Error updating profile: $error');
       status(Status.error);
     }
   }
