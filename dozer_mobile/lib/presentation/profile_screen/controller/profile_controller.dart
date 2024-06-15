@@ -1,3 +1,4 @@
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/profile_screen/models/profile_model.dart';
 import 'package:dozer_mobile/presentation/profile_screen/repository/profile_repository.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,10 @@ class ProfileController extends GetxController {
   final ProfileRepository _repository = ProfileRepository();
   Rx<Profile?> profile = Rx<Profile?>(null);
   Rx<Status> status = Status.loading.obs;
-  final String id = "bbde3538-5ba2-4b5c-9034-aa07ba83c9a4";
+  // final String id = "bbde3538-5ba2-4b5c-9034-aa07ba83c9a4";
+  final String profileId = GetStorageHelper.getValue("profileId") ?? "";
+  final String userId = GetStorageHelper.getValue("userId") ?? "";
+  final String tokenn = GetStorageHelper.getValue("token") ?? "";
 
   @override
   void onInit() {
@@ -17,9 +21,12 @@ class ProfileController extends GetxController {
   }
 
   void fetchProfile() async {
+    print("############# user token${tokenn}");
+    print("############# user id${userId}");
+    print("############# user profile id${profileId}");
     try {
       status(Status.loading);
-      final result = await _repository.getProfile(id);
+      final result = await _repository.getProfile(profileId);
       print("#############${result.email}");
       profile(result);
       print("#############${result.email}");
@@ -65,7 +72,7 @@ class ProfileController extends GetxController {
     try {
       status(Status.loading);
       final result = await _repository.updateProfile(
-        id,
+        userId,
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,

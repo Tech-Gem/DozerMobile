@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dozer_mobile/core/data/apis/api_end_points.dart';
 import 'package:dozer_mobile/core/data/network/network_api_service.dart';
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/profile_screen/models/profile_model.dart';
 
 class ProfileRepository {
@@ -9,6 +10,8 @@ class ProfileRepository {
 
   Future<Profile> getProfile(String id) async {
     try {
+      final String profileId = GetStorageHelper.getValue("profileId") ?? "";
+      print('Profile ID: $profileId');
       print('Fetching profile... $apiUrl/$id');
       final dynamic response = await _apiService.getResponse('$apiUrl/$id');
       print('Response in profile: $response');
