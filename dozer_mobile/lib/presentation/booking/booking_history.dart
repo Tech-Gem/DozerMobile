@@ -42,42 +42,46 @@ class BookingHistoryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0.w),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: 'Search...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        borderSide: BorderSide.none,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                          _bookingController.searchBookings('');
-                        },
-                      ),
+                  padding: EdgeInsets.all(8.0.w),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {
-                      _bookingController.searchBookings(value);
-                    },
-                  ),
-                ),
-              ),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 14.h, horizontal: 20.w),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            _searchController.clear();
+                            _bookingController.searchBookings('');
+                          },
+                        ),
+                      ),
+                      onChanged: (value) {
+                        _bookingController.searchBookings(value);
+                      },
+                    ),
+                  )),
               Expanded(
                 child: Obx(
                   () {
@@ -111,13 +115,13 @@ class BookingHistoryPage extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _bookingController.loadBookingHistory();
-            },
-            child: Icon(Icons.refresh),
-            backgroundColor: AppColors.primaryColor,
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     _bookingController.loadBookingHistory();
+          //   },
+          //   child: Icon(Icons.refresh),
+          //   backgroundColor: AppColors.primaryColor,
+          // ),
         ),
       ),
     );

@@ -91,6 +91,7 @@ class NetworkApiService extends BaseApiService {
           throw TimeoutException('Please Try Again..');
         },
       );
+      print(response.body);
       Logger.log('STATUS CODE: ${response.statusCode}');
       Logger.log('RESPONSE BODY: ${response.body}');
       responseJson = returnResponse(response);

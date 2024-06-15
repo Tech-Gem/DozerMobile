@@ -41,13 +41,24 @@ class ProfileScreen extends StatelessWidget {
                   Center(
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                            controller.profile.value!.image ??
-                                'https://via.placeholder.com/150',
-                          ),
+                        GestureDetector(
+                          onTap: () async {
+                            await controller.pickImage();
+                            await controller.uploadImage();
+                          },
+                          child: Obx(() {
+                            return CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 50,
+                              backgroundImage:
+                                  controller.imageUrl.value.isNotEmpty
+                                      ? NetworkImage(controller.imageUrl.value)
+                                      : NetworkImage(
+                                          controller.profile.value!.image ??
+                                              'https://via.placeholder.com/150',
+                                        ),
+                            );
+                          }),
                         ),
                         SizedBox(height: 10),
                         Text(
@@ -59,8 +70,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          controller.profile.value!.jobTitle ??
-                              'No job title', // Provide a default value when jobTitle is null
+                          controller.profile.value!.jobTitle ?? 'No job title',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.grey,

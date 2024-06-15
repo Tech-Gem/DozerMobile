@@ -14,6 +14,7 @@ import 'package:dozer_mobile/presentation/notification/notification_screen.dart'
 import 'package:dozer_mobile/presentation/onboarding/screens/landing_page.dart';
 import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
 import 'package:dozer_mobile/presentation/sign_up/sign_up_page.dart';
+import 'package:dozer_mobile/presentation/subscription/subscription_screen.dart';
 import 'package:dozer_mobile/presentation/verify_otp/bindings/verify_otp_bindings.dart';
 import 'package:dozer_mobile/presentation/verify_otp/verify_otp_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -38,7 +39,7 @@ class AppPages {
       name: RoutesName.bookingForm,
       page: BookingForm.new,
     ),
- GetPage(
+    GetPage(
       name: RoutesName.bookingHistory,
       page: BookingHistoryPage.new,
     ),
@@ -81,12 +82,17 @@ class AppPages {
 
     GetPage(
       name: RoutesName.notification,
-      page: () =>  const NotificationScreen(),
+      page: () => const NotificationScreen(),
     ),
 
     GetPage(
-      name: RoutesName.notification,
+      name: RoutesName.profile,
       page: () => ProfileScreen(),
+    ),
+
+    GetPage(
+      name: RoutesName.subscription,
+      page: () => SubscriptionPage(),
     ),
   ];
 }

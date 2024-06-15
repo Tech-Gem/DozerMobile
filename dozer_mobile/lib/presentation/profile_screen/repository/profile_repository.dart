@@ -88,7 +88,7 @@ class ProfileRepository {
   }
 
   Future<Profile> updateProfile(
-    String id, {
+    String profileId, {
     required String firstName,
     required String middleName,
     required String lastName,
@@ -105,7 +105,7 @@ class ProfileRepository {
       };
 
       final dynamic response =
-          await _apiService.putResponse('$apiUrl/$id', profileData);
+          await _apiService.putResponse('$apiUrl/$profileId', profileData);
 
       if (response == null) {
         throw Exception('Null response received.');
