@@ -22,7 +22,8 @@ class Profile {
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
-    final formattedProfile = json['formattedProfile'] ?? {};
+    final formattedProfile = json;
+    // print('formattedProfile: $formattedProfile');
 
     return Profile(
       firstName: formattedProfile['firstName'],

@@ -128,10 +128,10 @@ class AuthenticationRepository {
         print('token in login: $token');
         if (token.isEmpty) {
           throw const UnknownException(
-              message: 'An unknown error occurred while trying to verify otp!');
+              message: 'No user!');
         } else {
           await GetStorageHelper.addValue("token", token);
-          // GetStorageHelper.clearAll();
+          GetStorageHelper.clearAll();
         }
 
         return true;

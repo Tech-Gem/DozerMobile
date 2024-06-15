@@ -8,7 +8,7 @@ class ProfileController extends GetxController {
   final ProfileRepository _repository = ProfileRepository();
   Rx<Profile?> profile = Rx<Profile?>(null);
   Rx<Status> status = Status.loading.obs;
-  final String id = "9c613077-4b41-4a10-8199-7e49193a1a23";
+  final String id = "bbde3538-5ba2-4b5c-9034-aa07ba83c9a4";
 
   @override
   void onInit() {
@@ -20,6 +20,7 @@ class ProfileController extends GetxController {
     try {
       status(Status.loading);
       final result = await _repository.getProfile(id);
+      print("#############${result.email}");
       profile(result);
       print("#############${result.email}");
       status(Status.success);

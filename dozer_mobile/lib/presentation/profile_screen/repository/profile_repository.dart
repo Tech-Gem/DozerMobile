@@ -8,11 +8,10 @@ class ProfileRepository {
   final NetworkApiService _apiService = NetworkApiService();
 
   Future<Profile> getProfile(String id) async {
-    print(apiUrl);
     try {
+      print('Fetching profile... $apiUrl/$id');
       final dynamic response = await _apiService.getResponse('$apiUrl/$id');
-      print('Response: $response');
-      print(response.body);
+      print('Response in profile: $response');
 
       if (response == null) {
         throw Exception('Null response received.');
@@ -20,13 +19,17 @@ class ProfileRepository {
 
       final dynamic responseBody =
           response is String ? jsonDecode(response) : response;
+      print('Response body in profile: $responseBody');
 
       if (responseBody == null) {
         throw Exception('Invalid JSON format.');
       }
 
       if (responseBody['status'] == 'success') {
-        final Map<String, dynamic> json = responseBody;
+        final Map<String, dynamic> json = responseBody['formattedProfile'];
+        print('Json in profile: $json');
+        print('***************************');
+        print(Profile.fromJson(json).email);
         return Profile.fromJson(json);
       } else {
         throw Exception(

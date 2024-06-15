@@ -16,6 +16,14 @@ class ProfileScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Profile'),
           backgroundColor: AppColors.primaryColor,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                controller.fetchProfile(); // Call the fetchProfile method
+              },
+            ),
+          ],
         ),
         body: Obx(() {
           if (controller.status.value == Status.loading) {
@@ -34,9 +42,11 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         CircleAvatar(
+                          backgroundColor: Colors.grey,
                           radius: 50,
                           backgroundImage: NetworkImage(
-                            controller.profile.value!.image!,
+                            controller.profile.value!.image ??
+                                'https://via.placeholder.com/150',
                           ),
                         ),
                         SizedBox(height: 10),
