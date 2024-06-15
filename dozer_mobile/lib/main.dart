@@ -12,42 +12,42 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  // FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-  firebaseMessaging.getToken().then((String? token) {
-    assert(token != null);
-    print('FCM Token: $token');
-  });
+  // firebaseMessaging.getToken().then((String? token) {
+  //   assert(token != null);
+  //   print('FCM Token: $token');
+  // });
 
   // For handling notification when app is in foreground
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-    print('A new onMessageOpenedApp event was published!: $message');
-    final json_ = json.encode(message.data);
-    print('*********************message: $json_');
-    Get.toNamed(RoutesName.notification,
-        arguments: {'message': json.encode(message.data)});
-    print('*********************message: $message');
-  });
+  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+  //   print('A new onMessageOpenedApp event was published!: $message');
+  //   final json_ = json.encode(message.data);
+  //   print('*********************message: $json_');
+  //   Get.toNamed(RoutesName.notification,
+  //       arguments: {'message': json.encode(message.data)});
+  //   print('*********************message: $message');
+  // });
 
   // If app is closed or terminated
-  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
-    if (message != null) {
-      print('A new onMessageOpenedApp event was published!: $message');
-      Get.toNamed(RoutesName.notification,
-          arguments: {'message': jsonEncode(message.data)});
-    }
-  });
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+//   FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+//     if (message != null) {
+//       print('A new onMessageOpenedApp event was published!: $message');
+//       Get.toNamed(RoutesName.notification,
+//           arguments: {'message': jsonEncode(message.data)});
+//     }
+//   });
+//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  runApp(const MyApp());
-}
+//   runApp(const MyApp());
+// }
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print(message.data);
-  print('Handling a background message $message');
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   print(message.data);
+//   print('Handling a background message $message');
 }
 
 class MyApp extends StatelessWidget {
