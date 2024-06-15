@@ -13,7 +13,9 @@ class NetworkApiService extends BaseApiService {
     dynamic responseJson;
     try {
       // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
-      // print(GetStorageHelper.getValue("token"));
+      final token = GetStorageHelper.getValue("token");
+      print("TOKEN in get response: $token");
+
       final response = await http.get(
         Uri.parse(url),
         headers: {

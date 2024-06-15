@@ -13,6 +13,7 @@ class EquipmentRepository {
       print(jsonEncode(equipment.toJson()));
 
       final String? userToken = GetStorageHelper.getValue('token');
+      print('User token: $userToken');
       if (userToken == null) {
         throw Exception('You are not logged in. Please log in to continue.');
       }

@@ -49,7 +49,8 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          controller.profile.value!.jobTitle ?? 'No job title', // Provide a default value when jobTitle is null
+                          controller.profile.value!.jobTitle ??
+                              'No job title', // Provide a default value when jobTitle is null
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.grey,
@@ -75,23 +76,27 @@ class ProfileScreen extends StatelessWidget {
                   InfoCard(
                     icon: Icons.person,
                     label: 'First Name',
-                    value: controller.profile.value!.firstName ?? 'No first name',
+                    value:
+                        controller.profile.value!.firstName ?? 'No first name',
                   ),
                   InfoCard(
                     icon: Icons.person,
                     label: 'Middle Name',
-                    value: controller.profile.value!.middleName ?? 'No middle name',
+                    value: controller.profile.value!.middleName ??
+                        'No middle name',
                   ),
                   InfoCard(
                     icon: Icons.person,
                     label: 'Last Name',
-                    value: controller.profile.value!.lastName   ?? 'No last name',
+                    value: controller.profile.value!.lastName ?? 'No last name',
                   ),
                 ],
               ),
             );
           } else {
-            return Center(child: Text('No profile data available.'));
+            return const Center(
+              child: Text('No profile data available.'),
+            );
           }
         }),
       ),
