@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/constant_zego.dart';
 import 'package:flutter/material.dart';
-import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart'; // Changed to video streaming package
+import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
+
 
 class LivePage extends StatelessWidget {
   final String roomID;
@@ -24,15 +25,17 @@ class LivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ZegoUIKitPrebuiltLiveStreaming(
-        appID: ConstantZegoCloud.appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
-        appSign: ConstantZegoCloud.appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
-        userID: userId,
-        userName: userName,
-        liveID: roomID, // Changed to liveID for video streaming
-        config: (isHost
-            ? ZegoUIKitPrebuiltLiveStreamingConfig.host()
-            : ZegoUIKitPrebuiltLiveStreamingConfig.audience())));
+      child:  ZegoUIKitPrebuiltVideoConference(
+  appID: ConstantZegoCloud.appId,
+  appSign: ConstantZegoCloud.appSign,
+  userID: userId,
+  userName: userName,
+  conferenceID: roomID,
+  config: ZegoUIKitPrebuiltVideoConferenceConfig()
+
+));
+
+
       
          
     
