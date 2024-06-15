@@ -187,7 +187,9 @@ ElevatedButton(
               roomID: bidResponse.roomId,  
               isHost: true,
               userName: bidResponse.userName, // Adjust based on your implementation
-              userId: bidResponse.userId, title: bidResponse.title, description: bidResponse.description, // Adjust based on your implementation
+            
+              userId: bidResponse.userId,
+              // title: bidResponse.title, description: bidResponse.description, // Adjust based on your implementation
             );
           }),
         );

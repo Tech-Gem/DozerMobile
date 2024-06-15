@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/constant_zego.dart';
 import 'package:flutter/material.dart';
-import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
+import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 
 
 class LivePage extends StatelessWidget {
@@ -9,8 +9,6 @@ class LivePage extends StatelessWidget {
   final bool isHost;
   final String userName;
   final String userId;
-  final String title; // Added title field
-  final String description; // Added description field
 
   const LivePage({
     Key? key,
@@ -18,27 +16,25 @@ class LivePage extends StatelessWidget {
     required this.isHost,
     required this.userName,
     required this.userId,
-    required this.title, // Required title in the constructor
-    required this.description, // Required description in the constructor
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child:  ZegoUIKitPrebuiltVideoConference(
-  appID: ConstantZegoCloud.appId,
-  appSign: ConstantZegoCloud.appSign,
-  userID: userId,
-  userName: userName,
-  conferenceID: roomID,
-  config: ZegoUIKitPrebuiltVideoConferenceConfig()
-
-));
-
-
-      
-         
-    
+      child: ZegoUIKitPrebuiltLiveAudioRoom(
+          appID: ConstantZegoCloud
+              .appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
+          appSign: ConstantZegoCloud
+              .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+          userID: userId,
+          userName: userName,
+          roomID: roomID,
+          config: (isHost
+              ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
+              : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience())
+            ..background = background()
+            ..userAvatarUrl = 'https://robohash.org/$userId.png'),
+    );
   }
 
   Widget avatarBuilder(
@@ -48,43 +44,32 @@ class LivePage extends StatelessWidget {
     Map<String, dynamic> extraInfo,
   ) {
     return CircleAvatar(
-      maxRadius: size.width,
-      // backgroundImage: Image.asset(
-      //         "assets/avatars/avatar_${((int.tryParse(user?.id ?? "") ?? 0) % 6).toString()}.png")
-      //     .image,
-    );
+      maxRadius: size.width);
+     
   }
 
   Widget background() {
     /// how to replace background view
     return Stack(
       children: [
-        // Container(
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       fit: BoxFit.fill,
-        //       image: Image.asset('assets/images/bg.jpeg').image,
-        //     ),
-        //   ),
-        // ),
-        Positioned(
-          top: 10,
-          left: 10,
-          child: Text(
-            title, // Displaying the title
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Color(0xff1B1B1B),
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
+
+        const Positioned(
+            top: 10,
+            left: 10,
+            child: Text(
+              'Live Audio Room',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Color(0xff1B1B1B),
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+              ),
+            )),
         Positioned(
           top: 10 + 20,
           left: 10,
           child: Text(
-            description, // Displaying the description instead of room ID
+            'ID: $roomID',
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff606060),
@@ -92,7 +77,7 @@ class LivePage extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-        ),
+        )
       ],
     );
   }

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class BidRepository {
   final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1/';
-  final String bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhhNWJjZTNmLTQ2NjctNDk4Yy1hYzU0LWRmZTQwMTkzMzc4YSIsImlhdCI6MTcxODM5Mzc1MiwiZXhwIjoxNzI2MTY5NzUyfQ.W0BxI-iaJBPDurg6Nqw3oKBFFRmJfojMdtcebQ5DAuE";
+  final String bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhkZWU3N2U0LTNkZDktNGY5Ni1iN2E4LWNjY2YwYTM4ODNkZCIsImlhdCI6MTcxODQzNjc1MiwiZXhwIjoxNzI2MjEyNzUyfQ.nJ41ayHPEbYxfYlulBikAIyKiBMfnFO37be6fq7Yz5k";
 
   
    Future<BidResponse> createBid(BidModel bid) async {
