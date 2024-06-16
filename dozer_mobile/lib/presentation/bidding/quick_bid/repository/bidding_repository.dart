@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:dozer_mobile/core/data/network/api_exceptions.dart';
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/models/bidding_model.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/models/bidding_response.dart';
 import 'package:http/http.dart' as http;
 
 class BidRepository {
   final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1/';
-  final String bearerToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwZTI2ZWNhLTQ4ZDktNDc5Ny1iNjEzLWVkNDBmNzM5NzFmMSIsImlhdCI6MTcxODUzNjE5OCwiZXhwIjoxNzI2MzEyMTk4fQ.YeCciz33URIJmTb4mKLh3YihZN-u5WBWhUXmXZMb1hI";
+  final String bearerToken = GetStorageHelper.getValue('token');
 
   Future<BidResponse> createBid(BidModel bid) async {
     try {
