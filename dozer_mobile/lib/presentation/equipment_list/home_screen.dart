@@ -155,6 +155,7 @@ import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/recent_bids.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/Home.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
+import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/FinanacialReportScreen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
@@ -244,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                QuickBidPage(), // Assuming this is your bid page
+                EquipmentListPage(), // Assuming this is your bid page
                 BookingHistoryPage(), // Add your booking history page here
                 Home() // Add your booking history page here
               ],
