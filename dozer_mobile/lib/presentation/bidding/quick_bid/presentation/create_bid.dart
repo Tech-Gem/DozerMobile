@@ -184,11 +184,11 @@ ElevatedButton(
           context,
           MaterialPageRoute(builder: (context) {
             return LivePage(
-              roomID: '1234',  
+              roomID: bidResponse.roomId,  
               isHost: true,
-              userName: 'username', // Adjust based on your implementation
+              userName: bidResponse.userName, // Adjust based on your implementation
             
-              userId: 'ud',
+              userId: 'ud', title: bidResponse.title, description: bidResponse.description,
               // title: bidResponse.title, description: bidResponse.description, // Adjust based on your implementation
             );
           }),
