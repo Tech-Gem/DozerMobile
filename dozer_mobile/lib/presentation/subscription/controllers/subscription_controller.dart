@@ -76,10 +76,10 @@ class SubscriptionController extends GetxController {
   void _launchPaymentUrl(String url) async {
     final Uri _url = Uri.parse(url);
     print('Launching payment URL: $url');
-    if (!await launchUrl(_url, mode: LaunchMode.inAppWebView)) {
+    if (!await launchUrl(_url)) {
       Get.snackbar('Error', 'Could not launch payment URL.');
     } else {
-      
+
       // Listen for when the user returns to the app
       _checkSubscriptionAfterReturn();
     }
