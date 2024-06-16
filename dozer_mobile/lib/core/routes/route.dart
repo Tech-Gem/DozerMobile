@@ -13,6 +13,7 @@ import 'package:dozer_mobile/presentation/login_screen/login_screen.dart';
 import 'package:dozer_mobile/presentation/notification/notification_screen.dart';
 import 'package:dozer_mobile/presentation/onboarding/screens/landing_page.dart';
 import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
+import 'package:dozer_mobile/presentation/rental_agreement/rental_agreement.dart';
 import 'package:dozer_mobile/presentation/sign_up/sign_up_page.dart';
 import 'package:dozer_mobile/presentation/subscription/subscription_screen.dart';
 import 'package:dozer_mobile/presentation/verify_otp/bindings/verify_otp_bindings.dart';
@@ -34,6 +35,10 @@ class AppPages {
     GetPage(
       name: RoutesName.intial,
       page: () => LoginPage(),
+    ),
+      GetPage(
+      name: RoutesName.agreementForm,
+      page: () => RentalAgreementForm(),
     ),
     GetPage(
       name: RoutesName.bookingForm,

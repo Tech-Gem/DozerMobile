@@ -1,4 +1,5 @@
 import 'package:dozer_mobile/core/language/language_controller.dart';
+import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/app_strings.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
@@ -221,7 +222,8 @@ class _BookingFormState extends State<BookingForm> {
                   // Navigate to booking history page
                   controller.loadBookingHistory();
                   Get.back(); // Close the dialog
-                  Get.to(() => BookingHistoryPage());
+                  // Get.to(() => BookingHistoryPage());
+                  Get.toNamed(RoutesName.agreementForm);
                 },
                 child: Text('OK'),
               ),

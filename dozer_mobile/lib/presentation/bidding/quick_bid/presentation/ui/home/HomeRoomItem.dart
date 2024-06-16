@@ -137,7 +137,7 @@ class HomeRoomItem extends StatelessWidget {
               isHost: false,
               userName: 'Joiner', // Adjust based on your implementation
               userId: '123',
-              //  title: title, description: description, // Adjust based on your implementation
+           title: title, description: description,
             );
           }),
         );

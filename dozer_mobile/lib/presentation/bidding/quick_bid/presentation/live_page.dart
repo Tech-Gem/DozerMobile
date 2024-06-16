@@ -8,8 +8,8 @@ class LivePage extends StatelessWidget {
   final bool isHost;
   final String userName;
   final String userId;
-  final String ? title;
-  final String ? description;
+  final String title;
+  final String description;
 
   const LivePage({
     Key? key,
@@ -17,8 +17,8 @@ class LivePage extends StatelessWidget {
     required this.isHost,
     required this.userName,
     required this.userId,
-     this.title,
-     this.description,
+     required this.title,
+     required this.description,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class LivePage extends StatelessWidget {
               ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
               : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience())
             ..background = background()
-            ..userAvatarUrl = 'https://robohash.org/$userId.png'),
+            ..userAvatarUrl =  'https://www.profitdig.com/wp-content/w3-webp/uploads/2023/02/Bid-vs-Estimates.jpgw3.webp'),
     );
   }
 
@@ -54,7 +54,7 @@ class LivePage extends StatelessWidget {
           top: 10,
           left: 10,
           child: Text(
-            title!,
+            title,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff1B1B1B),
@@ -67,7 +67,7 @@ class LivePage extends StatelessWidget {
           top: 40,
           left: 10,
           child: Text(
-            description!,
+            description,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff606060),
