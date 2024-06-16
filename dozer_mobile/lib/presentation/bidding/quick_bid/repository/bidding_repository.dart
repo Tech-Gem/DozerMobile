@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 
 class BidRepository {
   final String apiUrl = 'https://dozer-backend-tech-gem.onrender.com/api/v1/';
-  final String bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3Y2E1MTBmLTU4ODgtNGQ0MC1iYmZiLTFkYzIxNTMzZDdkNSIsImlhdCI6MTcxODUwNTk1MCwiZXhwIjoxNzI2MjgxOTUwfQ.k244ZDUdxbBjZ3rD4WvZtHRIBzz6HkHdGX3mdG0Crv4";
+  final String bearerToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwZTI2ZWNhLTQ4ZDktNDc5Ny1iNjEzLWVkNDBmNzM5NzFmMSIsImlhdCI6MTcxODUzNjE5OCwiZXhwIjoxNzI2MzEyMTk4fQ.YeCciz33URIJmTb4mKLh3YihZN-u5WBWhUXmXZMb1hI";
 
-  
-   Future<BidResponse> createBid(BidModel bid) async {
+  Future<BidResponse> createBid(BidModel bid) async {
     try {
       final Map<String, dynamic> bidJson = bid.toJson();
 
@@ -21,7 +21,7 @@ class BidRepository {
           'Authorization': 'Bearer $bearerToken',
         },
       );
-
+      print('***********************');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
@@ -41,6 +41,7 @@ class BidRepository {
       throw ApiException('Error during API request: $error');
     }
   }
+
   Future<List<BidResponse>> getBids() async {
     try {
       final http.Response response = await http.get(
@@ -49,13 +50,12 @@ class BidRepository {
           'Authorization': 'Bearer $bearerToken',
         },
       );
-print(response.body);
+      print(response.body);
       if (response.statusCode == 200) {
         final List<dynamic> bidsData = jsonDecode(response.body)['bidSpaces'];
 
-        final List<BidResponse> bids = bidsData
-            .map((bidJson) => BidResponse.fromJson(bidJson))
-            .toList();
+        final List<BidResponse> bids =
+            bidsData.map((bidJson) => BidResponse.fromJson(bidJson)).toList();
 
         return bids;
       } else {

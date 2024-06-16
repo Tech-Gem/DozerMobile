@@ -32,7 +32,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.intial,
-      page: () => HomeScreen(),
+      page: () => LoginPage(),
     ),
     GetPage(
       name: RoutesName.bookingForm,

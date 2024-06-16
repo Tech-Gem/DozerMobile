@@ -43,7 +43,7 @@ class NetworkApiService extends BaseApiService {
     try {
       print("hello");
       print(jsonBody);
-      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwODIxZTVjLTg5NWYtNDAzZi04M2E1LTc3NTgzNjU0NDdlOSIsImlhdCI6MTcxODM4OTg4MCwiZXhwIjoxNzI2MTY1ODgwfQ.-TO3QRX1qQIlMcRN7lsrwaRC7wiuL87q9gNXx6VOfDs");
+      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkwZTI2ZWNhLTQ4ZDktNDc5Ny1iNjEzLWVkNDBmNzM5NzFmMSIsImlhdCI6MTcxODUzNjE5OCwiZXhwIjoxNzI2MzEyMTk4fQ.YeCciz33URIJmTb4mKLh3YihZN-u5WBWhUXmXZMb1hI");
       final response = await http.post(
         Uri.parse(url),
         body: jsonEncode(jsonBody),
