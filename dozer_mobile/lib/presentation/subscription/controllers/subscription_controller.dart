@@ -1,4 +1,7 @@
+import 'package:dozer_mobile/core/routes/routes_name.dart';
+import 'package:dozer_mobile/core/theme/colors.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
+import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/subscription/repositories/subscription_repository.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,6 +48,8 @@ class SubscriptionController extends GetxController {
         // Get.snackbar('Subscription', msg);
 
         Get.defaultDialog(
+          buttonColor: AppColors.primaryColor,
+          contentPadding: const EdgeInsets.all(20),
           title: 'Subscription Confirmation',
           middleText:
               'You have selected the ${selectedPlan.value} plan for ${selectedDuration.value} days.',
@@ -71,8 +76,31 @@ class SubscriptionController extends GetxController {
   void _launchPaymentUrl(String url) async {
     final Uri _url = Uri.parse(url);
     print('Launching payment URL: $url');
-    if (!await launchUrl(_url)) {
+    if (!await launchUrl(_url, mode: LaunchMode.inAppWebView)) {
       Get.snackbar('Error', 'Could not launch payment URL.');
+    } else {
+      
+      // Listen for when the user returns to the app
+      _checkSubscriptionAfterReturn();
+    }
+  }
+
+  void _checkSubscriptionAfterReturn() async {
+    // Delay to allow the user to return from payment
+    await Future.delayed(Duration(seconds: 5));
+    try {
+      final isSubscribed =
+          await _subscriptionRepository.checkSubscriptionStatus();
+      if (isSubscribed) {
+        Get.snackbar('Subscription', 'Successfully subscribed.');
+        Get.offAllNamed(RoutesName.home); // Navigate to the home screen
+      } else {
+        Get.snackbar('Error', 'Subscription was not successful.');
+        Get.offAllNamed(RoutesName.home); // Navigate to the home screen
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to check subscription status.');
+      Get.offAllNamed(RoutesName.home); // Navigate to the home screen
     }
   }
 }

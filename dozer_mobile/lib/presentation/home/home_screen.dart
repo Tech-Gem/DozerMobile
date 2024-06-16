@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             SpeedDialChild(
-              child: Icon(
+              child: const Icon(
                 Icons.gavel_rounded,
                 color: Colors.white,
               ),

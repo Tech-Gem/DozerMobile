@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class BookingHistoryPage extends StatelessWidget {
   final BookingController _bookingController = Get.put(BookingController());
@@ -145,6 +146,12 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime startDate = DateTime.parse(booking.startDate);
+    DateTime endDate = DateTime.parse(booking.endDate);
+
+    String formattedStartDate = DateFormat.yMMMMd().format(startDate);
+    String formattedEndDate = DateFormat.yMMMMd().format(endDate);
+
     return Card(
       color: const Color.fromARGB(245, 255, 255, 255),
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -168,11 +175,11 @@ class BookingCard extends StatelessWidget {
             ),
             SizedBox(height: 8.h),
             Text(
-              'Start Date: ${booking.startDate}',
+              'Start Date: $formattedStartDate',
               style: TextStyle(fontSize: 14.sp, color: Colors.grey),
             ),
             Text(
-              'End Date: ${booking.endDate}',
+              'End Date: $formattedEndDate',
               style: TextStyle(fontSize: 14.sp, color: Colors.grey),
             ),
           ],
