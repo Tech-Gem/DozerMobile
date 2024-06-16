@@ -12,7 +12,6 @@ class NetworkApiService extends BaseApiService {
   Future<dynamic> getResponse(String url) async {
     dynamic responseJson;
     try {
-      // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
       final token = GetStorageHelper.getValue("token");
       print("TOKEN in get response: $token");
 

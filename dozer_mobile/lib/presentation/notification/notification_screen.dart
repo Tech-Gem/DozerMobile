@@ -21,8 +21,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
       Map? pushArguments = arguments as Map;
 
       setState(() {
-        message = pushArguments["message"]["content"] ?? "";
-        print('*********************message: $message');
+        // Ensure pushArguments is not null and has the expected structure
+        if (pushArguments.containsKey("message") &&
+            pushArguments["message"] is Map &&
+            (pushArguments["message"] as Map).containsKey("content")) {
+          message = pushArguments["message"]["content"] ?? "";
+          print('*********************message: $message');
+        } else {
+          print('Invalid pushArguments structure: $pushArguments');
+        }
       });
     }
   }

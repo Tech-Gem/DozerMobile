@@ -33,7 +33,7 @@ class LivePage extends StatelessWidget {
               ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
               : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience())
             ..background = background()
-            ..userAvatarUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtg0fsc8U82izHKaP7L_Q116v1bGOstGXhgY13TEtn2pqYgGRsTWdN6B2-mE_xWuF8LYc&usqp=CAU'),
+            ..userAvatarUrl = 'https://robohash.org/$userId.png'),
     );
   }
 
@@ -44,31 +44,20 @@ class LivePage extends StatelessWidget {
     Map<String, dynamic> extraInfo,
   ) {
     return CircleAvatar(
-      maxRadius: size.width,
-    //   backgroundImage: Image.asset(
-    //           "assets/avatars/avatar_${((int.tryParse(user?.id ?? "") ?? 0) % 6).toString()}.png")
-    //       .image,
-    // );
-    );
+      maxRadius: size.width);
+     
   }
 
   Widget background() {
     /// how to replace background view
     return Stack(
       children: [
-        // Container(
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       fit: BoxFit.fill,
-        //       image: Image.asset('assets/images/bg.jpeg').image,
-        //     ),
-        //   ),
-        // ),
+
         const Positioned(
             top: 10,
             left: 10,
             child: Text(
-              'Live Audio Bidding Room',
+              'Live Audio Room',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Color(0xff1B1B1B),
