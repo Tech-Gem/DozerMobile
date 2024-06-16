@@ -1,15 +1,13 @@
-import 'package:dozer_mobile/core/utils/colors.dart';
-import 'package:dozer_mobile/presentation/profile_screen/controller/profile_controller.dart';
-import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/custom_card.dart';
-import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/logout_card.dart';
-import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/profile_card.dart';
+import 'package:dozer_mobile/core/theme/colors.dart';
+import 'package:dozer_mobile/presentation/profile_screen/screen_widgets/infor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dozer_mobile/presentation/profile_screen/controller/profile_controller.dart';
 
-import 'package:dozer_mobile/dozer_exports.dart';
-class ProfileScreen extends GetView<ProfileController> {
-  ProfileScreen();
-  final controller = Get.put(ProfileController());
+class ProfileScreen extends StatelessWidget {
+  final ProfileController controller = Get.put(ProfileController());
+
+  ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,125 +15,108 @@ class ProfileScreen extends GetView<ProfileController> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
-          backgroundColor: primaryColor,
+          backgroundColor: AppColors.primaryColor,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                controller.fetchProfile(); // Call the fetchProfile method
+              },
+            ),
+          ],
         ),
         body: Obx(() {
           if (controller.status.value == Status.loading) {
             return Center(child: CircularProgressIndicator());
           } else if (controller.status.value == Status.error) {
-            return Center(child: Text('Error loading profile. Please try again.'));
+            return Center(
+                child: Text('Error loading profile. Please try again.'));
           } else if (controller.profile.value != null) {
             return SingleChildScrollView(
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ProfileCard(profile: controller.profile.value!),
-                  SizedBox(height: 2.5.h),
-    
-                  // Email and Phone Number Information
-                  CustomCard(
-                    iconPath: 'assets/icons/info.svg',
-                    labelText: 'Account Information',
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 1.h),
-                    padding: EdgeInsets.all(2.0.h),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
+                  // Profile image and name
+                  Center(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-    
+                        GestureDetector(
+                          onTap: () async {
+                            await controller.pickImage();
+                            await controller.uploadImage();
+                          },
+                          child: Obx(() {
+                            return CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 50,
+                              backgroundImage:
+                                  controller.imageUrl.value.isNotEmpty
+                                      ? NetworkImage(controller.imageUrl.value)
+                                      : NetworkImage(
+                                          controller.profile.value!.image ??
+                                              'https://via.placeholder.com/150',
+                                        ),
+                            );
+                          }),
+                        ),
+                        SizedBox(height: 10),
                         Text(
-                          'Email: ${controller.profile.value!.email ?? "Not Available"}',
+                          '${controller.profile.value!.firstName} ${controller.profile.value!.middleName} ${controller.profile.value!.lastName}',
                           style: TextStyle(
-                            fontSize: 14.0.sp,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 1.0.h),
+                        SizedBox(height: 5),
                         Text(
-                          'Phone Number: ${controller.profile.value!.phoneNumber ?? "Not Verified"}',
+                          controller.profile.value!.jobTitle ?? 'No job title',
                           style: TextStyle(
-                            fontSize: 14.0.sp,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.grey,
                           ),
                         ),
                       ],
                     ),
                   ),
-    
-                  SizedBox(height: 2.5.h),
-    
-                  // Additional content in the profile screen
-                  InkWell(
-                    onTap: () {
-                      // Add functionality to navigate to settings screen
-                      print("Settings tapped");
-                    },
-                    child: CustomCard(
-                      iconPath: 'assets/icons/settings.svg',
-                      labelText: 'Settings',
-                    ),
+                  SizedBox(height: 30),
+
+                  // Information Cards
+                  InfoCard(
+                    icon: Icons.email,
+                    label: 'Email',
+                    value: controller.profile.value!.email ?? 'No email',
                   ),
-    
-                  InkWell(
-                    onTap: () {
-                      // Add functionality to report bugs/issues
-                      print("Report Bugs/Issues tapped");
-                    },
-                    child: CustomCard(
-                      iconPath: 'assets/icons/message-report.svg',
-                      labelText: 'Report Bugs/Issues',
-                    ),
+                  InfoCard(
+                    icon: Icons.phone,
+                    label: 'Phone Number',
+                    value: controller.profile.value!.phoneNumber ??
+                        'No phone number',
                   ),
-    
-                  InkWell(
-                    onTap: () {
-                      // Add functionality to navigate to history screen
-                      print("History tapped");
-                    },
-                    child: CustomCard(
-                      iconPath: 'assets/icons/history.svg',
-                      labelText: 'History',
-                    ),
+                  InfoCard(
+                    icon: Icons.person,
+                    label: 'First Name',
+                    value:
+                        controller.profile.value!.firstName ?? 'No first name',
                   ),
-    
-                  SizedBox(height: 2.5.h),
-    
-                  // Logout Card
-                  const LogoutCard(),
-    
-                  Container(
-                    margin: EdgeInsets.only(left: 30.w, right: 2.w, top: 7.h),
-                    child: Row(
-                      children: [
-                        Text('Rate us'),
-                        Container(
-                          width: 0.2.w,
-                          height: 2.0.h,
-                          color: primaryColor,
-                          margin: EdgeInsets.symmetric(horizontal: 2.0.w),
-                        ),
-                        Text('Version: 1.0'),
-                      ],
-                    ),
+                  InfoCard(
+                    icon: Icons.person,
+                    label: 'Middle Name',
+                    value: controller.profile.value!.middleName ??
+                        'No middle name',
+                  ),
+                  InfoCard(
+                    icon: Icons.person,
+                    label: 'Last Name',
+                    value: controller.profile.value!.lastName ?? 'No last name',
                   ),
                 ],
               ),
             );
           } else {
-            return Center(child: Text('No profile data available.'));
+            return const Center(
+              child: Text('No profile data available.'),
+            );
           }
         }),
       ),

@@ -12,20 +12,23 @@ class NetworkApiService extends BaseApiService {
   Future<dynamic> getResponse(String url) async {
     dynamic responseJson;
     try {
-      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
-      print(GetStorageHelper.getValue("token"));
+      // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDJiZjg3LTYzNzMtNGY0ZS05MGYwLTQzMzAyODAxMGFkYSIsImlhdCI6MTcxODI3MjM3MCwiZXhwIjoxNzI2MDQ4MzcwfQ.GzW1RdWeJbQJ7XQXX8AMtqEMJTs7SXUSVIs1MAPxcx8");
+      final token = GetStorageHelper.getValue("token");
+      print("TOKEN in get response: $token");
+
       final response = await http.get(
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':
-              "Bearer ${GetStorageHelper.getValue("token") ?? ""}",
-          
+          'Authorization': "Bearer ${GetStorageHelper.getValue("token") ?? ""}",
         },
       );
       Logger.log('STATUS CODE: ${response.statusCode}');
       Logger.log('RESPONSE BODY: ${response.body}');
-      responseJson = returnResponse(response);
+      // print('RESPONSE BODY: ${response.body}');
+      responseJson = jsonDecode(response.body);
+      print('**********************************');
+      print(responseJson);
     } on SocketException {
       throw FetchDataException('');
     } on RequestTimeoutException {
@@ -41,7 +44,6 @@ class NetworkApiService extends BaseApiService {
   ) async {
     dynamic responseJson;
     try {
-      GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0");
       final response = await http.post(
         Uri.parse(url),
         body: jsonEncode(jsonBody),
@@ -88,6 +90,7 @@ class NetworkApiService extends BaseApiService {
           throw TimeoutException('Please Try Again..');
         },
       );
+      print(response.body);
       Logger.log('STATUS CODE: ${response.statusCode}');
       Logger.log('RESPONSE BODY: ${response.body}');
       responseJson = returnResponse(response);
@@ -189,6 +192,5 @@ class NetworkApiService extends BaseApiService {
         );
     }
   }
-  
-  jsonEncode(Map<String, dynamic> jsonBody) {}
+
 }

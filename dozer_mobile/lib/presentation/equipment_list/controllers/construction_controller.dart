@@ -20,7 +20,7 @@ class ConstructionMachineController extends GetxController {
   try {
     status(Status.loading); // Set loading status
     final machines = await _repository.getRecommendedMachines();
-    print(machines);
+    print('machines: $machines');
 
     if (machines.isNotEmpty) {
       recommendedList.assignAll(machines);

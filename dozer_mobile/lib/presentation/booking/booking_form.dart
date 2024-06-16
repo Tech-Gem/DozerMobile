@@ -3,7 +3,7 @@ import 'package:dozer_mobile/core/utils/app_strings.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
 import 'package:dozer_mobile/presentation/booking/screen_widgets/notify_owner_button.dart';
-import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
+import 'package:dozer_mobile/presentation/home/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

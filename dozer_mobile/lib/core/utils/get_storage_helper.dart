@@ -1,10 +1,11 @@
-
 import 'package:get_storage/get_storage.dart';
 
 class GetStorageKeys {
   static const String keyToken = 'token';
   static const String userData = 'User';
   static const String keyUserRole = 'keyUserRole';
+  static const String profileId = 'profileId';
+  static const String userId = 'userId';
 }
 
 class GetStorageHelper {

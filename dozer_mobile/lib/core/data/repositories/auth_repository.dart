@@ -87,16 +87,16 @@ class AuthenticationRepository {
         String token = jsonResponse["token"];
         String userEmail = jsonResponse["user"]["email"];
         String userName = jsonResponse["userProfile"]["firstName"];
+        String isSubscribed = jsonResponse["userProfile"]["isSubscribed"];
         // Store the token using GetStorageHelper or perform any other operations
         await GetStorageHelper.addValue("token", token);
         await GetStorageHelper.addValue("email", userEmail);
         await GetStorageHelper.addValue("userName", userName);
+        await GetStorageHelper.addValue("isSubscribed", isSubscribed);
 
         return true;
-      } 
-      else {
-        throw Exception(
-            '${responseBody['error']}');
+      } else {
+        throw Exception('${responseBody['error']}');
       }
     } on SocketException catch (e) {
       throw const NoInternetException(
@@ -109,7 +109,8 @@ class AuthenticationRepository {
           message: 'Invalid format response exception occurred!');
     } on http.ClientException catch (e) {
       throw const UnknownException(
-          message: 'The server refused to connect while trying to register user');
+          message:
+              'The server refused to connect while trying to register user');
     } on CacheException {
       throw const CacheException(message: "Failed to cache token");
     }
@@ -122,17 +123,31 @@ class AuthenticationRepository {
         Uri.parse(url),
         body: {'phoneNumber': phoneNumber, 'password': password},
       );
+
+      print('login response: ${response.body}');
+      print('login response status code: ${response.statusCode}');
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         String token = jsonResponse["token"];
+        String profileId = jsonResponse["userProfile"]["id"];
+        bool isSubscribed = jsonResponse["user"]["isSubscribed"];
         print('token in login: $token');
+        print('profileId in login: $profileId');
         if (token.isEmpty) {
-          throw const UnknownException(
-              message: 'An unknown error occurred while trying to verify otp!');
+          throw const UnknownException(message: 'No user!');
         } else {
           await GetStorageHelper.addValue("token", token);
-          GetStorageHelper.clearAll();
         }
+
+        if (profileId.isNotEmpty) {
+          await GetStorageHelper.addValue("profileId", profileId);
+        } else {
+          throw const UnknownException(message: 'No profile!');
+        }
+        await GetStorageHelper.addValue("isSubscribed", isSubscribed);
+        print('*********************************');
+        print(GetStorageHelper.getValue("profileId"));
+        // GetStorageHelper.clearAll();
 
         return true;
       } else if (response.statusCode == 404) {
