@@ -33,7 +33,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.intial,
-      page: () => LoginPage(),
+      page: () => LandingPage(),
     ),
     GetPage(
       name: RoutesName.bookingForm,

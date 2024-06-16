@@ -66,6 +66,8 @@ dependencies:
   zego_uikit_prebuilt_live_audio_room: ^3.6.7
   webview_flutter: ^4.8.0
   chapasdk: ^0.0.6
+  animate_do: ^3.3.4
+  carousel_slider: ^4.2.1
   
 dev_dependencies:
   flutter_lints: ^2.0.0
