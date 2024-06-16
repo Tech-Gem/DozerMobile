@@ -3,6 +3,9 @@
         android:label="dozer_mobile"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+
+      
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"

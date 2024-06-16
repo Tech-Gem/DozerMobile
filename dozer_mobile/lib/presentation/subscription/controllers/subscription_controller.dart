@@ -1,4 +1,7 @@
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
+import 'package:dozer_mobile/presentation/subscription/repositories/subscription_repository.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum Status { loading, success, error }
 
@@ -6,6 +9,8 @@ class SubscriptionController extends GetxController {
   RxString selectedPlan = ''.obs;
   RxInt selectedDuration = 30.obs; // Default duration is 30 days
   Rx<Status> status = Status.loading.obs;
+  final SubscriptionRepository _subscriptionRepository =
+      SubscriptionRepository();
 
   void selectPlan(String plan) {
     selectedPlan(plan);
@@ -15,27 +20,59 @@ class SubscriptionController extends GetxController {
     selectedDuration(duration);
   }
 
-  void confirmSubscription() {
+  Future<void> confirmSubscription() async {
     if (selectedPlan.isNotEmpty) {
-      // Handle subscription confirmation logic
+      status(Status.loading);
+
       print(
-          'Subscription confirmed for $selectedPlan with $selectedDuration days');
-      Get.snackbar('Subscription',
-          'You have selected the $selectedPlan plan for $selectedDuration days.');
+        selectedPlan.value,
+      );
+      print(
+        selectedDuration.value,
+      );
+      try {
+        final response = await _subscriptionRepository.createSubscription(
+          selectedPlan.value,
+          selectedDuration.value,
+        );
 
-      // Simulate a backend request
-      Map<String, dynamic> subscriptionData = {
-        "subscriptionType": selectedPlan.value,
-        "subscriptionDuration": selectedDuration.value,
-      };
+        status(Status.success);
 
-      // For now, just print the data to the console
-      print(subscriptionData);
+        // Assuming response is a map containing "msg" and "paymentUrl"
+        // final msg = response['msg'];
+        final paymentUrl = response['paymentUrl'];
 
-      // Here, you can call your backend service to create the subscription
-      // e.g., BackendService.createSubscription(subscriptionData);
+        // Get.snackbar('Subscription', msg);
+
+        Get.defaultDialog(
+          title: 'Subscription Confirmation',
+          middleText:
+              'You have selected the ${selectedPlan.value} plan for ${selectedDuration.value} days.',
+          textConfirm: 'OK',
+          onConfirm: () {
+            Get.back(); // Close the dialog
+            _launchPaymentUrl(paymentUrl);
+          },
+          textCancel: 'Cancel',
+          onCancel: () {
+            Get.back(); // Close the dialog
+          },
+        );
+      } catch (e) {
+        status(Status.error);
+        Get.snackbar(
+            'Error', 'Failed to create subscription. Please try again.');
+      }
     } else {
       Get.snackbar('Error', 'Please select a plan.');
+    }
+  }
+
+  void _launchPaymentUrl(String url) async {
+    final Uri _url = Uri.parse(url);
+    print('Launching payment URL: $url');
+    if (!await launchUrl(_url)) {
+      Get.snackbar('Error', 'Could not launch payment URL.');
     }
   }
 }

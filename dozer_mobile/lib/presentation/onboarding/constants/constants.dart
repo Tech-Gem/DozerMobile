@@ -5,7 +5,7 @@ class Constants{
   static const int DOT_ACTIVE_SIZE = 8;
   static const double DOT_NOT_SIZE = 5.0;
   static const String GET_STARTED = "GET STARTED";
-  static const String SLIDER_HEADING_1 = "FIND Equipment";
+  static const String SLIDER_HEADING_1 = "WELCOME TO DOZER";
   static const String SLIDER_HEADING_2 = "Pick The Equipment of your Interest";
   static const String SLIDER_HEADING_3 = "Book the Equipment";
   static const String SLIDER_HEADING_4 = "Create Auction";

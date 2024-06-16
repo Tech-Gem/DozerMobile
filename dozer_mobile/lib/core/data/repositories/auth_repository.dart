@@ -87,10 +87,12 @@ class AuthenticationRepository {
         String token = jsonResponse["token"];
         String userEmail = jsonResponse["user"]["email"];
         String userName = jsonResponse["userProfile"]["firstName"];
+        String isSubscribed = jsonResponse["userProfile"]["isSubscribed"];
         // Store the token using GetStorageHelper or perform any other operations
         await GetStorageHelper.addValue("token", token);
         await GetStorageHelper.addValue("email", userEmail);
         await GetStorageHelper.addValue("userName", userName);
+        await GetStorageHelper.addValue("isSubscribed", isSubscribed);
 
         return true;
       } else {
@@ -121,10 +123,14 @@ class AuthenticationRepository {
         Uri.parse(url),
         body: {'phoneNumber': phoneNumber, 'password': password},
       );
+
+      print('login response: ${response.body}');
+      print('login response status code: ${response.statusCode}');
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = json.decode(response.body);
         String token = jsonResponse["token"];
         String profileId = jsonResponse["userProfile"]["id"];
+        bool isSubscribed = jsonResponse["user"]["isSubscribed"];
         print('token in login: $token');
         print('profileId in login: $profileId');
         if (token.isEmpty) {
@@ -138,6 +144,7 @@ class AuthenticationRepository {
         } else {
           throw const UnknownException(message: 'No profile!');
         }
+        await GetStorageHelper.addValue("isSubscribed", isSubscribed);
         print('*********************************');
         print(GetStorageHelper.getValue("profileId"));
         // GetStorageHelper.clearAll();

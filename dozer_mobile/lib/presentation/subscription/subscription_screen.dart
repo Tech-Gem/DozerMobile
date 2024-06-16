@@ -14,7 +14,8 @@ class SubscriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose Your Plan'),
+        title:
+            Text('Choose Your Plan', style: TextStyle(color: AppColors.white)),
         backgroundColor: AppColors.primaryColor,
       ),
       body: Padding(
@@ -49,7 +50,7 @@ class SubscriptionPage extends StatelessWidget {
                   ),
                   SubscriptionOption(
                     title: 'Premium',
-                    price: 3000,
+                    price: 1500,
                     isSelected: controller.selectedPlan.value == 'Premium',
                     onTap: () => controller.selectPlan('Premium'),
                   ),
@@ -102,10 +103,7 @@ class SubscriptionPage extends StatelessWidget {
               ),
               child: Text(
                 'Confirm',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.white
-                ),
+                style: TextStyle(fontSize: 16.sp, color: AppColors.white),
               ),
             ),
           ],

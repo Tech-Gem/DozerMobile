@@ -44,7 +44,6 @@ class NetworkApiService extends BaseApiService {
   ) async {
     dynamic responseJson;
     try {
-      // GetStorageHelper.addValue("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmQ1ZTIxLTk0MmUtNDFlOS1iMTMxLWEwYjAxYzgzOWVjNyIsImlhdCI6MTcxMzkzNTE5MCwiZXhwIjoxNzIxNzExMTkwfQ.dl5FC_V-bZhhukfuz-HW2-4qrgOzR4ccWmHH4H49Hs0");
       final response = await http.post(
         Uri.parse(url),
         body: jsonEncode(jsonBody),
@@ -194,5 +193,4 @@ class NetworkApiService extends BaseApiService {
     }
   }
 
-  jsonEncode(Map<String, dynamic> jsonBody) {}
 }

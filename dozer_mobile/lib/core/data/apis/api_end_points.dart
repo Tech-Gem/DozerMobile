@@ -10,4 +10,5 @@ class ApiEndPoints {
   static const String equipment = "/equipments";
   static const String profile = "/userProfile";
   static const String subscription = "/subscription";
+  static const String subscriptionStatus = "subscription/isSubscribed";
 }
