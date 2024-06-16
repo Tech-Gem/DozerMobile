@@ -1,6 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/live_page.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
@@ -11,7 +12,7 @@ import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/live
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
-import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/custom_appbar.dart';
+import 'package:dozer_mobile/presentation/home/widgets/custom_appbar.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recent_bids.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recommended_house.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
@@ -27,7 +28,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  bool _isFabOpen = false;  // To track the FAB state
+  bool _isFabOpen = false; // To track the FAB state
+  bool isSubscribed = GetStorageHelper.getValue('isSubscribed');
+  // print('')
 
   @override
   Widget build(BuildContext context) {
@@ -98,25 +101,41 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           children: [
             SpeedDialChild(
-              child: Icon(Icons.garage_outlined,color: Colors.white,),
+              child: Icon(
+                Icons.garage_outlined,
+                color: Colors.white,
+              ),
               backgroundColor: primaryColor,
               label: 'Add Equipment',
               onTap: () {
-                Get.offNamed(RoutesName.createEquipment);
+                if (isSubscribed) {
+                  Get.offNamed(RoutesName.createEquipment);
+                } else {
+                  Get.toNamed(
+                      RoutesName.subscription); // Redirect to subscription page
+                }
                 setState(() {
                   _isFabOpen = false;
                 });
               },
             ),
             SpeedDialChild(
-              child: Icon(Icons.gavel_rounded,color: Colors.white,),
+              child: const Icon(
+                Icons.gavel_rounded,
+                color: Colors.white,
+              ),
               backgroundColor: primaryColor,
               label: 'Create Bid',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuickBidPage()),
-                );
+                if (isSubscribed) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => QuickBidPage()),
+                  );
+                } else {
+                  Get.toNamed(
+                      RoutesName.subscription); // Redirect to subscription page
+                }
                 setState(() {
                   _isFabOpen = false;
                 });
@@ -131,7 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
           activeColor: primaryColor, // Customize the active color
           color: Colors.grey, // Customize the inactive color
           items: [
-            TabItem(icon: Icons.home, title: 'Home',),
+            TabItem(
+              icon: Icons.home,
+              title: 'Home',
+            ),
             TabItem(icon: Icons.garage_outlined, title: 'All Equipment'),
             TabItem(icon: Icons.book, title: 'Bookings'),
             TabItem(icon: Icons.gavel, title: 'Bid'),

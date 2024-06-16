@@ -2,6 +2,7 @@ import 'package:dozer_mobile/core/language/language_controller.dart';
 import 'package:dozer_mobile/presentation/announcement_screen/announcement_screen.dart';
 import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -41,46 +42,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  // Handle notification icon press
-                  // Navigate to the announcement page
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        // Replace 'AnnouncementScreen' with your actual announcement screen widget
-                        return AnnouncementScreen();
-                      },
-                    ),
-                  );
-                },
-                icon: SvgPicture.asset(
-                  'assets/icons/notification.svg',
+          IconButton(
+            onPressed: () {
+              // Handle notification icon press
+              // Navigate to the announcement page
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ProfileScreen();
+                  },
                 ),
-              ),
-              Positioned(
-                right: 0,
-                top: 0,
-                child: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red,
-                  ),
-                  child: Text(
-                    '1', // Replace with your notification count
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
+            icon: SvgPicture.asset(
+              'assets/icons/profile.svg',
+              width: 30.w,
+              height: 30.h,
+            ),
           ),
-         
         ],
       ),
     );
