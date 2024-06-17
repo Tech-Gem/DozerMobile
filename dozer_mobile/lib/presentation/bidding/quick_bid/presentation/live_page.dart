@@ -3,12 +3,13 @@ import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/constan
 import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 
-
 class LivePage extends StatelessWidget {
   final String roomID;
   final bool isHost;
   final String userName;
   final String userId;
+  final String title;
+  final String description;
 
   const LivePage({
     Key? key,
@@ -16,16 +17,16 @@ class LivePage extends StatelessWidget {
     required this.isHost,
     required this.userName,
     required this.userId,
+     required this.title,
+     required this.description,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ZegoUIKitPrebuiltLiveAudioRoom(
-          appID: ConstantZegoCloud
-              .appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
-          appSign: ConstantZegoCloud
-              .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+          appID: ConstantZegoCloud.appId,
+          appSign: ConstantZegoCloud.appSign,
           userID: userId,
           userName: userName,
           roomID: roomID,
@@ -33,7 +34,7 @@ class LivePage extends StatelessWidget {
               ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
               : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience())
             ..background = background()
-            ..userAvatarUrl = 'https://robohash.org/$userId.png'),
+            ..userAvatarUrl =  'https://www.profitdig.com/wp-content/w3-webp/uploads/2023/02/Bid-vs-Estimates.jpgw3.webp'),
     );
   }
 
@@ -43,33 +44,30 @@ class LivePage extends StatelessWidget {
     ZegoUIKitUser? user,
     Map<String, dynamic> extraInfo,
   ) {
-    return CircleAvatar(
-      maxRadius: size.width);
-     
+    return CircleAvatar(maxRadius: size.width);
   }
 
   Widget background() {
-    /// how to replace background view
     return Stack(
       children: [
-
-        const Positioned(
-            top: 10,
-            left: 10,
-            child: Text(
-              'Live Audio Room',
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Color(0xff1B1B1B),
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-              ),
-            )),
         Positioned(
-          top: 10 + 20,
+          top: 10,
           left: 10,
           child: Text(
-            'ID: $roomID',
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Color(0xff1B1B1B),
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 40,
+          left: 10,
+          child: Text(
+            description,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff606060),
@@ -77,7 +75,7 @@ class LivePage extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-        )
+        ),
       ],
     );
   }

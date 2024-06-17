@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/details_screen.dart/details_screen.dart';
@@ -6,126 +7,157 @@ import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/circle_i
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class RecommendedHouse extends StatelessWidget {
-  final ConstructionMachineController controller = Get.put(ConstructionMachineController());
+  final ConstructionMachineController controller =
+      Get.put(ConstructionMachineController());
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40.h, // Set a fixed height based on the screen size
-      child: Obx(
-        () {
-          if (controller.status.value == Status.loading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (controller.status.value == Status.error) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(child: Text('Error loading machines. Please try again.')),
-              ],
-            );
-          } else {
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return DetailScreen(constructionMachine: controller.recommendedList[index],);
-                      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Recommended:',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Obx(
+          () {
+            if (controller.status.value == Status.loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (controller.status.value == Status.error) {
+              return Center(
+                  child: Text('Error loading machines. Please try again.'));
+            } else {
+              return CarouselSlider.builder(
+                options: CarouselOptions(
+                  height: 300, // Set a fixed height based on the screen size
+                  enlargeCenterPage: true,
+                  disableCenter: true,
+                  viewportFraction: 0.8,
+                ),
+                itemCount: controller.recommendedList.length,
+                itemBuilder: (BuildContext context, int index, int realIndex) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return DetailScreen(
+                                constructionMachine:
+                                    controller.recommendedList[index]);
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 350, // Adjust the height of the Container
+                      margin: EdgeInsets.fromLTRB(
+                          0, 0, 0, 5), // Add margin for spacing between items
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 0.5,
+                            blurRadius: 1,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              controller.recommendedList[index].image.isNotEmpty
+                                  ? controller.recommendedList[index].image[0]
+                                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg",
+                              width: double.infinity,
+                              height: 180, // Increased image height
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Positioned(
+                            right: 20,
+                            top: 165, // Adjusted position
+                            child: CircleIconButton(
+                              iconUrl: 'assets/icons/mark.svg',
+                              color: primaryColor,
+                            ),
+                          ),
+                          Positioned(
+                            left: 15,
+                            top: 190, // Adjusted position
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.recommendedList[index].name,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.place_outlined,
+                                      color: Colors.black,
+                                      size: 13,
+                                    ),
+                                    const SizedBox(width: 3),
+                                    Text(
+                                      controller
+                                          .recommendedList[index].location,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Renters Name: ${controller.recommendedList[index].owner}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Available Amount: ${controller.recommendedList[index].quantity}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
-                child: Container(
-                  width: 200,
-                  height: 1000, // Adjust the height of the Container
-                  margin: EdgeInsets.symmetric(horizontal: 3.w ,vertical: 10.h), // Add margin for spacing between items
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              controller.recommendedList[index].image.isNotEmpty
-                                  ?                               controller.recommendedList[index].image[0]
-                                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/CatD9T.jpg/330px-CatD9T.jpg",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 10,
-                        top: 10,
-                        child: CircleIconButton(
-                          iconUrl: 'assets/icons/mark.svg',
-                          color: primaryColor,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          color: Colors.white54,
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.recommendedList[index].name,
-                                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.recommendedList[index].location,
-                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Renters Name: ${controller.recommendedList[index].name}',
-                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Available Amount: ${controller.recommendedList[index].quantity.toString()}',
-                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              itemCount: controller.recommendedList.length,
-              separatorBuilder: (BuildContext context, int index) => SizedBox(width: 10), // Adjust the width of the separator
-            );
-          }
-        },
-      ),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

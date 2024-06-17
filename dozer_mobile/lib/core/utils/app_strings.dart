@@ -5,6 +5,7 @@ class AppStringsEnglish{
   static const String subCityLabel = 'SubCity';
   static const String amountLabel = 'Amount';
   static const String notifyOwnerButtonText = 'Book now';
+  
 
 }
 class AppStringsAmharic{

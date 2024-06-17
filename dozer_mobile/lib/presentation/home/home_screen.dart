@@ -3,16 +3,14 @@ import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
-// import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/quick_bid_page.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/recent_bids.dart';
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home/Home.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/FinanacialReportScreen.dart';
-import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/categories_widget.dart';
+import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/category_filter_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recommended_house.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
-import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/welcome_text.dart';
 import 'package:dozer_mobile/presentation/home/widgets/custom_appbar.dart';
 import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool _isFabOpen = false; // To track the FAB state
   bool isSubscribed = GetStorageHelper.getValue('isSubscribed');
-  // print('')
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Color(0xFFFAFAFA), // Set background to white
         appBar: CustomAppBar(),
         drawer: Drawer(
           child: ListView(
@@ -43,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               DrawerHeader(
                 child: Image.asset('assets/images/logo.png'),
                 decoration: BoxDecoration(
-                  color:Colors.white, // Replace with your app's primary color
+                  color: Colors.white, // Replace with your app's primary color
                 ),
               ),
               ListTile(
@@ -64,63 +61,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(context); // Close the drawer
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FinancialReportScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => FinancialReportScreen()),
                   );
                 },
               ),
             ],
           ),
         ),
-        body: Stack(
+        body: IndexedStack(
+          index: _currentIndex,
           children: [
-            IndexedStack(
-              index: _currentIndex,
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WelcomeText(),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                        child: Container(
-                          height: 50,
-                          width: double.infinity,
-                          child: SearchInput(),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchInput(),
+                    CategoryFilterWidget(
+
+// Default selected category
                         ),
-                      ),
-                      CategoriesWidget(),
-                      Container(
-                        height: 300,
-                        child: RecommendedHouse(),
-                      ),
-                      RecentBidsColumn(),
-                    ],
-                  ),
-                ),
-                EquipmentListPage(), // Assuming this is your bid page
-                BookingHistoryPage(), // Add your booking history page here
-                Home() // Add your booking history page here
-              ],
-            ),
-            if (_isFabOpen)
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isFabOpen = false;
-                  });
-                },
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  width: double.infinity,
-                  height: double.infinity,
+                    RecommendedHouse(),
+                    RecentBidsColumn(),
+                  ],
                 ),
               ),
+            ),
+            EquipmentListPage(), // Assuming this is your equipment list page
+            BookingHistoryPage(), // Add your booking history page here
+            Home(), // Add your home page here
           ],
         ),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.add_event,
-          backgroundColor: primaryColor,
+          backgroundColor: primaryColor, // Set primary color for FAB
           overlayColor: Colors.transparent,
           onOpen: () {
             setState(() {
@@ -170,10 +146,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.endFloat, // Move FAB to the right side
         bottomNavigationBar: ConvexAppBar(
           style: TabStyle.react,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white, // Set background color to white
           activeColor: primaryColor, // Customize the active color
           color: Colors.grey, // Customize the inactive color
           items: [

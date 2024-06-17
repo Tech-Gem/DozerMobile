@@ -17,6 +17,6 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Widget onBordingBody() => Container(
-        child: OnBoardingLayoutView(),
+        child: IntroScreen(),
       );
 }

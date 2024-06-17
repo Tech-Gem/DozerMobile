@@ -38,7 +38,7 @@ class ConstructionMachineRepository {
       String category) async {
     try {
       final response =
-          await _apiService.getResponse('${apiUrl}by-category/$category');
+          await _apiService.getResponse('${apiUrl}/by-category/$category');
 
       if (response != null && response['status'] == 'success') {
         final List<dynamic> machinesData = response['equipments'];
