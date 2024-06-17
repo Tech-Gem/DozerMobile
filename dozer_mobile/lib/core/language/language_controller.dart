@@ -15,6 +15,7 @@ class LanguageController extends GetxController {
   void setCurrentLanguage(Language language) {
     _currentLanguage.value = language;
   }
+  
 
   // Method to toggle between languages
   void toggleLanguage() {
