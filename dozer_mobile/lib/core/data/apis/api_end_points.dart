@@ -11,4 +11,5 @@ class ApiEndPoints {
   static const String profile = "/userProfile";
   static const String subscription = "/subscription";
   static const String subscriptionStatus = "subscription/isSubscribed";
+  static const String confirmBooking = "/bookings/confirm-or-reject";
 }

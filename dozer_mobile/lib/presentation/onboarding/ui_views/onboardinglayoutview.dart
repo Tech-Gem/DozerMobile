@@ -68,6 +68,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+  print('***************************************************************************************');
     return Scaffold(
       body: Stack(
         children: [
