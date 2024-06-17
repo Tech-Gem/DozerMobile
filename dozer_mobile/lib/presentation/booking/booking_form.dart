@@ -1,5 +1,6 @@
 import 'package:dozer_mobile/core/language/language_controller.dart';
 import 'package:dozer_mobile/core/utils/app_strings.dart';
+import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
 import 'package:dozer_mobile/presentation/booking/screen_widgets/notify_owner_button.dart';
@@ -57,7 +58,7 @@ class _BookingFormState extends State<BookingForm> {
   Widget build(BuildContext context) {
     return Obx(() => SafeArea(
           child: Scaffold(
-            appBar: CustomAppBar(),
+            appBar: CustomAppBar(userName: GetStorageHelper.getValue('userName'),profileImageUrl: GetStorageHelper.getValue('profileImage'),),
             body: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 40),
               decoration: BoxDecoration(

@@ -24,7 +24,10 @@ class SubscriptionRepository {
       throw e;
     }
   }
-
+Future<bool> fetchSubscriptionStatus() async {
+    final response = await _apiService.getResponse( ApiEndPoints.baseUrl + '/subscription/isSubscribed');
+    return response['isSubscribed'] as bool;
+  }
   Future<bool> checkSubscriptionStatus() async {
     // Replace with your actual API endpoint to check subscription status
     const String url = ApiEndPoints.baseUrl + ApiEndPoints.subscriptionStatus;

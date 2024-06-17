@@ -4,16 +4,22 @@ import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/dozer_exports.dart';
 import 'package:dozer_mobile/presentation/subscription/repositories/subscription_repository.dart';
 import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum Status { loading, success, error }
 
 class SubscriptionController extends GetxController {
   RxString selectedPlan = ''.obs;
+  RxBool isSubscribed = false.obs;
   RxInt selectedDuration = 30.obs; // Default duration is 30 days
   Rx<Status> status = Status.loading.obs;
   final SubscriptionRepository _subscriptionRepository =
       SubscriptionRepository();
+  void onInit() {
+    super.onInit();
+    fetchSubscriptionStatus();
+  }
 
   void selectPlan(String plan) {
     selectedPlan(plan);
@@ -21,6 +27,17 @@ class SubscriptionController extends GetxController {
 
   void selectDuration(int duration) {
     selectedDuration(duration);
+  }
+
+  Future<bool> fetchSubscriptionStatus() async {
+    try {
+      isSubscribed.value =
+          await _subscriptionRepository.fetchSubscriptionStatus();
+      return isSubscribed.value;
+    } catch (e) {
+      print('Error fetching subscription status: $e');
+      return false; // Add a return statement to handle the error case
+    }
   }
 
   Future<void> confirmSubscription() async {
@@ -79,7 +96,6 @@ class SubscriptionController extends GetxController {
     if (!await launchUrl(_url)) {
       Get.snackbar('Error', 'Could not launch payment URL.');
     } else {
-
       // Listen for when the user returns to the app
       _checkSubscriptionAfterReturn();
     }

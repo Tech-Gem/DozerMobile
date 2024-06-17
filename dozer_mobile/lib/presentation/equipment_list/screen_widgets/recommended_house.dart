@@ -19,11 +19,11 @@ class RecommendedHouse extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Recommended:',
+            'Popular:',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: AppColors.textColor,
             ),
           ),
         ),
