@@ -13,97 +13,167 @@ class SubscriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:
-            Text('Choose Your Plan', style: TextStyle(color: AppColors.white)),
-        backgroundColor: AppColors.primaryColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding:
+              EdgeInsets.all(16.w), // Using ScreenUtil for responsive padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Back Button with circle shadow
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+              SizedBox(height: 16.h),
+              // Title centered
+              Center(
+                child: Text(
+                  'Select a Subscription Plan',
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+              // Subscription Options
+              Obx(() {
+                return Column(
+                  children: [
+                    SubscriptionOption(
+                      title: 'Basic',
+                      price: 500,
+                      description:
+                          'Access to unlimited equipment posts and up to 10 bidding posts per month.',
+                      isSelected: controller.selectedPlan.value == 'Basic',
+                      onTap: () => controller.selectPlan('Basic'),
+                    ),
+                    SubscriptionOption(
+                      title: 'Standard',
+                      price: 1000,
+                      description:
+                          'Access to unlimited equipment posts and up to 50 bidding posts per month.',
+                      isSelected: controller.selectedPlan.value == 'Standard',
+                      onTap: () => controller.selectPlan('Standard'),
+                    ),
+                    SubscriptionOption(
+                      title: 'Premium',
+                      price: 1500,
+                      description:
+                          'Access to unlimited equipment posts and unlimited bidding posts.',
+                      isSelected: controller.selectedPlan.value == 'Premium',
+                      onTap: () => controller.selectPlan('Premium'),
+                    ),
+                  ],
+                );
+              }),
+              SizedBox(height: 20.h),
+              // Confirm Button
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle subscription confirmation
+                    controller.confirmSubscription();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 36.w),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(fontSize: 16.sp, color: AppColors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      body: Padding(
-        padding:
-            EdgeInsets.all(16.w), // Using ScreenUtil for responsive padding
+    );
+  }
+}
+
+class SubscriptionOption extends StatelessWidget {
+  final String title;
+  final int price;
+  final String description;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const SubscriptionOption({
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16.w),
+        margin: EdgeInsets.symmetric(vertical: 10.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primaryColor.withOpacity(0.1)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(15.r),
+          border: Border.all(
+            color: isSelected
+                ? AppColors.primaryColor
+                : Colors.grey.withOpacity(0.3),
+            width: 2.w,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             Text(
-              'Select a Subscription Plan',
+              title,
               style: TextStyle(
-                fontSize: 20.sp,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
                 color: AppColors.primaryColor,
               ),
             ),
-            SizedBox(height: 20.h),
-            // Subscription Options
-            Obx(() {
-              return Column(
-                children: [
-                  SubscriptionOption(
-                    title: 'Basic',
-                    price: 500,
-                    isSelected: controller.selectedPlan.value == 'Basic',
-                    onTap: () => controller.selectPlan('Basic'),
-                  ),
-                  SubscriptionOption(
-                    title: 'Standard',
-                    price: 1000,
-                    isSelected: controller.selectedPlan.value == 'Standard',
-                    onTap: () => controller.selectPlan('Standard'),
-                  ),
-                  SubscriptionOption(
-                    title: 'Premium',
-                    price: 1500,
-                    isSelected: controller.selectedPlan.value == 'Premium',
-                    onTap: () => controller.selectPlan('Premium'),
-                  ),
-                ],
-              );
-            }),
-            SizedBox(height: 20.h),
-            // Duration Selector
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Duration: ',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-                Obx(() {
-                  return DropdownButton<int>(
-                    value: controller.selectedDuration.value,
-                    items: [30, 60, 90].map((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text('$value days'),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      if (newValue != null) {
-                        controller.selectDuration(newValue);
-                      }
-                    },
-                  );
-                }),
-              ],
-            ),
-            SizedBox(height: 20.h),
-            // Confirm Button
-            ElevatedButton(
-              onPressed: () {
-                // Handle subscription confirmation
-                controller.confirmSubscription();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 36.w),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
+            SizedBox(height: 5.h),
+            Text(
+              '\$$price/month',
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: AppColors.primaryColor,
               ),
-              child: Text(
-                'Confirm',
-                style: TextStyle(fontSize: 16.sp, color: AppColors.white),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.black54,
               ),
             ),
           ],

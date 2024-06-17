@@ -9,6 +9,7 @@ class ConstructionMachineController extends GetxController {
   RxList<ConstructionMachineModel> categoryList = <ConstructionMachineModel>[].obs;
   Rx<Status> status = Status.loading.obs; // Add status
   Rx<Status> statusCategory = Status.loading.obs;
+  RxString selectedCategory = 'CompactEquipment'.obs;
 
   @override
   void onInit() {
@@ -40,7 +41,7 @@ void loadRecommendedMachinesbyCategory(String category) async {
     final machines = await _repository.getMachinesByCategory(category);
 
     if (machines.isNotEmpty) {
-      categoryList.assignAll(machines);
+      recommendedList.assignAll(machines);
       status(Status.success); // Set success status
     } else {
       statusCategory(Status.error); // Set error status

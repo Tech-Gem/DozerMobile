@@ -12,6 +12,7 @@ class ConstructionMachineModel {
   final List<String> specifications;
   final bool transportation;
   final String renterProfileId;
+  final String owner;
   final String createdAt;
   final String updatedAt;
 
@@ -29,6 +30,7 @@ class ConstructionMachineModel {
     required this.specifications,
     required this.transportation,
     required this.renterProfileId,
+    required this.owner,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -50,9 +52,11 @@ class ConstructionMachineModel {
       image: imageList,
       capacity: json?['capacity'] as String? ?? '',
       model: json?['model'] as String? ?? '',
-      specifications: (json?['specifications'] as List<dynamic>?)?.cast<String>() ?? [],
+      specifications:
+          (json?['specifications'] as List<dynamic>?)?.cast<String>() ?? [],
       transportation: json?['transportation'] as bool? ?? false,
       renterProfileId: json?['renterProfileId'] as String? ?? '',
+      owner: json?['owner'] as String? ?? '',
       createdAt: json?['createdAt'] as String? ?? '',
       updatedAt: json?['updatedAt'] as String? ?? '',
     );
