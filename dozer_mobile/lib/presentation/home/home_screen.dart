@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SearchInput(),
+                  
                     CategoryFilterWidget(
 
 // Default selected category

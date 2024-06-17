@@ -16,6 +16,7 @@ import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
 import 'package:dozer_mobile/presentation/rental_agreement/rental_agreement.dart';
 import 'package:dozer_mobile/presentation/sign_up/sign_up_page.dart';
 import 'package:dozer_mobile/presentation/subscription/subscription_screen.dart';
+import 'package:dozer_mobile/presentation/user_notification/user_notifcation_screen.dart';
 import 'package:dozer_mobile/presentation/verify_otp/bindings/verify_otp_bindings.dart';
 import 'package:dozer_mobile/presentation/verify_otp/verify_otp_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -87,7 +88,7 @@ class AppPages {
 
     GetPage(
       name: RoutesName.notification,
-      page: () => const NotificationScreen(),
+      page: () => NotificationsPage(),
     ),
 
     GetPage(

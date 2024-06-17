@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 
 class CategoryFilterWidget extends StatelessWidget {
   final List<Map<String, dynamic>> categories = [
-    {"icon": Icons.home, "label": "Compact", "displayName": "Compact"},
-    {"icon": Icons.construction, "label": "Heavy", "displayName": "Heavy"},
-    {"icon": Icons.agriculture, "label": "Lift", "displayName": "Lift"},
-    {"icon": Icons.engineering, "label": "Rollers", "displayName": "Rollers"},
+    {"icon": Icons.home, "label": "CompactEquipment", "displayName": "Compact"},
+    {"icon": Icons.construction, "label": "HeavyEarthmoving", "displayName": "Heavy"},
+    {"icon": Icons.agriculture, "label": "LiftAerialWorkPlatform", "displayName": "Lift"},
+    {"icon": Icons.engineering, "label": "RollersCompaction", "displayName": "Rollers"},
   ];
 
   final ConstructionMachineController controller =

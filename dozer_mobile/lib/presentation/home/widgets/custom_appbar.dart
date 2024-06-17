@@ -1,5 +1,6 @@
 import 'package:dozer_mobile/core/language/language_controller.dart';
 import 'package:dozer_mobile/presentation/announcement_screen/announcement_screen.dart';
+import 'package:dozer_mobile/presentation/user_notification/user_notifcation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return AnnouncementScreen();
+                      return NotificationsPage();
                     },
                   ),
                 );

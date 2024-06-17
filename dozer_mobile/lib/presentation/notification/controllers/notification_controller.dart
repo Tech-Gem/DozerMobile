@@ -1,15 +1,18 @@
 import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
+
 import 'package:dozer_mobile/presentation/notification/repositories/notification_repository.dart';
+import 'package:dozer_mobile/presentation/user_notification/model/notification_model.dart';
 import 'package:get/get.dart';
 
 class NotificationController extends GetxController {
   final NotificationRepository repository = NotificationRepository();
 
+  RxList<NotificationModel> notifications = <NotificationModel>[].obs; // Define notifications list
   var message = ''.obs;
   var notificationType = ''.obs;
   var bookingId = ''.obs;
-  var bookingStatus = ''.obs; // Add bookingStatus
-  Rx<Status> status = Status.completed.obs; // Add status
+  var bookingStatus = ''.obs;
+  Rx<Status> status = Status.completed.obs;
 
   @override
   void onInit() {
@@ -18,6 +21,7 @@ class NotificationController extends GetxController {
     if (arguments != null) {
       setArguments(arguments);
     }
+    loadNotifications(); // Load notifications on initialization
   }
 
   void setArguments(Map pushArguments) {
@@ -25,9 +29,8 @@ class NotificationController extends GetxController {
         pushArguments['message'] is Map) {
       final messageMap = pushArguments['message'] as Map;
       notificationType.value = messageMap['type'] ?? '';
-      bookingStatus.value = messageMap['status'] ?? ''; // Update bookingStatus
-      bookingId.value =
-          messageMap['bookingId'] ?? ''; // Ensure bookingId is set
+      bookingStatus.value = messageMap['status'] ?? '';
+      bookingId.value = messageMap['bookingId'] ?? '';
       message.value =
           getMessageForType(notificationType.value, bookingStatus.value);
     }
@@ -47,6 +50,24 @@ class NotificationController extends GetxController {
         }
       default:
         return 'You have a new notification.';
+    }
+  }
+
+  void loadNotifications() async {
+    try {
+      status(Status.loading); // Set loading status
+      final fetchedNotifications = await repository.fetchNotifications();
+
+      if (fetchedNotifications.isNotEmpty) {
+        notifications.assignAll(fetchedNotifications);
+        status(Status.completed); // Set success status
+      } else {
+        status(Status.error); // Set error status
+        print('Error loading notifications: Empty response');
+      }
+    } catch (e) {
+      status(Status.error); // Set error status
+      print('Error loading notifications: $e');
     }
   }
 
