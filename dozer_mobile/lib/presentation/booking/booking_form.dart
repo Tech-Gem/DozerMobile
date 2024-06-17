@@ -1,6 +1,8 @@
+import 'package:dozer_mobile/core/data/apis/api_response_status.dart';
 import 'package:dozer_mobile/core/language/language_controller.dart';
 import 'package:dozer_mobile/core/routes/routes_name.dart';
 import 'package:dozer_mobile/core/utils/app_strings.dart';
+import 'package:dozer_mobile/core/utils/colors.dart';
 import 'package:dozer_mobile/core/utils/get_storage_helper.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/booking/controllers/booking_controller.dart';
@@ -181,11 +183,17 @@ class _BookingFormState extends State<BookingForm> {
                   ),
                   SizedBox(height: 10),
                   NotifyOwnerButton(
-                    text: _getCurrentLanguageString(AppStringsEnglish.notifyOwnerButtonText, AppStringsAmharic.notifyOwnerButtonText),
+                    text: controller.status.value == Status.loading 
+                        ? 'Processing...'
+                        : _getCurrentLanguageString(AppStringsEnglish.notifyOwnerButtonText, AppStringsAmharic.notifyOwnerButtonText),
                     onPressed: () {
-                      controller.confirmBooking(widget.equipmentId!).then((_) {
-                        _showRenterNotifiedPopup(context);
-                      });
+                      if (controller.status.value != Status.loading) {
+                        controller.confirmBooking(widget.equipmentId!).then((_) {
+                          if (controller.status.value == Status.completed) {
+                            _showRenterNotifiedPopup(context);
+                          }
+                        });
+                      }
                     },
                   ),
                   SizedBox(height: 10),
@@ -196,7 +204,7 @@ class _BookingFormState extends State<BookingForm> {
         ));
   }
 
-  void _showRenterNotifiedPopup(BuildContext context) {
+void _showRenterNotifiedPopup(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -226,7 +234,20 @@ class _BookingFormState extends State<BookingForm> {
                   // Get.to(() => BookingHistoryPage());
                   Get.toNamed(RoutesName.agreementForm);
                 },
-                child: Text('OK'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                  foregroundColor: Colors.white, // Set button color to green
+                  backgroundColor: primaryColor
+                ),
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ],
           ),
@@ -235,6 +256,7 @@ class _BookingFormState extends State<BookingForm> {
     },
   );
 }
+
 
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? pickedStartDate = await showDatePicker(

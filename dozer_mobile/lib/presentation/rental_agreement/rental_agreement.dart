@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -26,6 +27,8 @@ class _RentalAgreementFormState extends State<RentalAgreementForm> {
   TextEditingController _ownerNameController = TextEditingController();
   TextEditingController _renterNameController = TextEditingController();
   TextEditingController _rentalItemController = TextEditingController();
+
+  late String _filePath;
 
   @override
   Widget build(BuildContext context) {
@@ -259,11 +262,15 @@ class _RentalAgreementFormState extends State<RentalAgreementForm> {
       final file = File("${output.path}/rental_agreement.pdf");
       await file.writeAsBytes(await pdf.save());
 
+      setState(() {
+        _filePath = file.path;
+      });
+
       // Navigate to the PDF preview page
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PdfPreviewPage(filePath: file.path),
+          builder: (context) => PdfPreviewPage(filePath: _filePath),
         ),
       );
     }
@@ -280,10 +287,49 @@ class PdfPreviewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('PDF Preview'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.download),
+            onPressed: () {
+              // Trigger file download
+              _downloadFile(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.print),
+            onPressed: () {
+              // Trigger file printing
+              _printFile(context);
+            },
+          ),
+        ],
       ),
       body: PDFView(
         filePath: filePath,
       ),
+    );
+  }
+
+
+Future<void> _downloadFile(BuildContext context) async {
+  final pdfFile = File(filePath);
+  final bytes = await pdfFile.readAsBytes();
+  final dir = await getExternalStorageDirectory();
+  final file = File('${dir!.path}/rental_agreement.pdf');
+  await file.writeAsBytes(bytes);
+  
+  // Open the downloaded file
+  OpenFile.open(file.path);
+  
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('PDF downloaded successfully')),
+  );
+}
+
+  Future<void> _printFile(BuildContext context) async {
+    final pdfFile = File(filePath);
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdfFile.readAsBytes(),
     );
   }
 }

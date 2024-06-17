@@ -22,11 +22,12 @@ class BookingRepository {
         body: jsonEncode(booking.toJson()),
       );
 
-      final responseBody = jsonDecode(response.body);
-      print(responseBody);
-      if (response.statusCode == 200 && responseBody['status'] == 'success') {
+      
+      
+      if (response.statusCode == 200 ) {
         return true;
       } else {
+      final responseBody = jsonDecode(response.body);
         throw ApiException(
             'Failed to confirm booking. Status: ${responseBody['status']}');
       }

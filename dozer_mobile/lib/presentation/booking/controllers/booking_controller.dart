@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
-import 'package:intl/intl.dart'; // Add this import
+import 'package:intl/intl.dart';
 
 class BookingController extends GetxController {
   final NetworkApiService _apiService = NetworkApiService();
@@ -19,7 +19,7 @@ class BookingController extends GetxController {
   final Rx<TextEditingController> locationController = TextEditingController().obs;
   final Rx<TextEditingController> quantityController = TextEditingController().obs;
   final Rx<SignatureController> signBoardSignatureController = Rx<SignatureController>(SignatureController());
-   final BookingRepository _repository = BookingRepository();
+  final BookingRepository _repository = BookingRepository();
   RxList<BookingModel> recommendedList = <BookingModel>[].obs;
   
   Rx<Status> status = Status.loading.obs; // Add status
@@ -90,9 +90,12 @@ class BookingController extends GetxController {
       locationController.value.text = selectedLocation;
     }
   }
- 
+
   Future<void> confirmBooking(String equipmentId) async {
     try {
+      status(Status.loading); // Set loading status
+      
+
       // Format the dates
       DateTime startDate = DateFormat('dd/MM/yyyy').parse(startDateController.value.text);
       DateTime endDate = DateFormat('dd/MM/yyyy').parse(endDateController.value.text);
@@ -110,22 +113,18 @@ class BookingController extends GetxController {
         termsAndConditions: true,
       );
 
-      print(booking.startDate);
-      print(booking.endDate);
-      print(booking.location);
-      print(booking.email);
-      print(booking.signature);
-      print(booking.location);
-      print(booking.quantity);
-      print(booking.termsAndConditions);
-      print(booking.equipmentId);
+      await _bookingRepository.confirmBooking(booking);
+      status(Status.completed); // Set success status
 
-      _bookingRepository.confirmBooking(booking);
+    
     } catch (error) {
+      status(Status.error); // Set error status
+    
       print('Error confirming booking: $error');
     }
   }
-    RxBool isOngoing = true.obs; // Observable to track ongoing or ended bookings
+
+  RxBool isOngoing = true.obs; // Observable to track ongoing or ended bookings
 
   RxList<BookingModel> _allBookings = <BookingModel>[].obs;
   RxList<BookingModel> filteredBookings = <BookingModel>[].obs;
@@ -135,28 +134,29 @@ class BookingController extends GetxController {
     super.onInit();
     loadBookingHistory();
   }
-Future<List<BookingModel>> loadBookingHistory() async {
-  try {
-    status(Status.loading); // Set loading status
-    final machines = await _repository.getBookings();
-    print(machines);
 
-    if (machines.isNotEmpty) {
-      _allBookings.assignAll(machines);
-      filteredBookings.assignAll(_allBookings);
-      status(Status.completed); // Set success status
-      return _allBookings; // Return list of bookings
-    } else {
+  Future<List<BookingModel>> loadBookingHistory() async {
+    try {
+      status(Status.loading); // Set loading status
+      final machines = await _repository.getBookings();
+      print(machines);
+
+      if (machines.isNotEmpty) {
+        _allBookings.assignAll(machines);
+        filteredBookings.assignAll(_allBookings);
+        status(Status.completed); // Set success status
+        return _allBookings; // Return list of bookings
+      } else {
+        status(Status.error); // Set error status
+        print('Error loading recommended machines: Empty response');
+        return []; // Return an empty list if no bookings found
+      }
+    } catch (e) {
       status(Status.error); // Set error status
-      print('Error loading recommended machines: Empty response');
-      return []; // Return an empty list if no bookings found
+      print('Error loading recommended machines: $e');
+      return []; // Return an empty list in case of error
     }
-  } catch (e) {
-    status(Status.error); // Set error status
-    print('Error loading recommended machines: $e');
-    return []; // Return an empty list in case of error
   }
-}
 
   void toggleOngoing(bool isOngoing) {
     // Toggle between ongoing and ended bookings
