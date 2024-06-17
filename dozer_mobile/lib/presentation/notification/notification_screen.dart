@@ -30,7 +30,7 @@ class NotificationScreen extends StatelessWidget {
                 padding: EdgeInsets.all(25.w),
                 child: Obx(() {
                   if (controller.status.value == Status.loading) {
-                    return CircularProgressIndicator(
+                    return const CircularProgressIndicator(
                       valueColor:
                           AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
                     );
