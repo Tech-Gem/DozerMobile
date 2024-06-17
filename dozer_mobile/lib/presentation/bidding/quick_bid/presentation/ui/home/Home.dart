@@ -4,7 +4,6 @@ import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/ui/home
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dozer_mobile/core/utils/colors.dart';
-
 import 'package:get/get.dart'; // Update the package path
 
 class Home extends StatelessWidget {
@@ -27,7 +26,8 @@ class Home extends StatelessWidget {
             : ListView.separated(
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 200),
                 separatorBuilder: (_, __) => SizedBox(height: 10),
-                itemCount: _bidController.bidsList.length + 1, // +1 for the header
+                itemCount:
+                    _bidController.bidsList.length + 1, // +1 for the header
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     // Header
@@ -38,11 +38,21 @@ class Home extends StatelessWidget {
                   } else {
                     // Bid item
                     final bid = _bidController.bidsList[index - 1];
+                    // Generate random avatars
+                    List<String> participantImages = List.generate(
+                      bid.participants.length,
+                      (i) => 'https://i.pravatar.cc/150?img=${i + 1}',
+                    );
                     return HomeRoomItem(
-                      roomId: bid.roomId,
                       title: bid.title,
                       description: bid.description,
-                      hostName: bid.userName, // Assuming userName is the host name
+                      participantsCount: bid.participants.length,
+                      hostName:
+                          bid.userName, // Assuming userName is the host name
+                      priceMin: bid.priceMin.toString(),
+                      priceMax: bid.priceMax.toString(),
+                      roomId: bid.roomId, // Add roomId parameter
+                      participantImages: participantImages,
                     );
                   }
                 },

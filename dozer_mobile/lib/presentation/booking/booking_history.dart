@@ -26,63 +26,51 @@ class BookingHistoryPage extends StatelessWidget {
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Booking History'),
-            backgroundColor: AppColors.primaryColor,
-            bottom: TabBar(
-              indicatorColor: Colors.white,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              tabs: [
-                Tab(text: 'Ongoing'),
-                Tab(text: 'Ended'),
-              ],
-            ),
-          ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                  padding: EdgeInsets.all(8.0.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Search...',
-                        hintStyle: TextStyle(color: Colors.grey[500]),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 14.h, horizontal: 20.w),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
-                          onPressed: () {
-                            _searchController.clear();
-                            _bookingController.searchBookings('');
-                          },
-                        ),
+                padding: EdgeInsets.all(8.0.w),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                      onChanged: (value) {
-                        _bookingController.searchBookings(value);
-                      },
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 14.h, horizontal: 20.w),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear, color: Colors.grey[600]),
+                        onPressed: () {
+                          _searchController.clear();
+                          _bookingController.searchBookings('');
+                        },
+                      ),
                     ),
-                  )),
+                    onChanged: (value) {
+                      _bookingController.searchBookings(value);
+                    },
+                  ),
+                ),
+              ),
               Expanded(
                 child: Obx(
                   () {
@@ -116,13 +104,6 @@ class BookingHistoryPage extends StatelessWidget {
               ),
             ],
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-          //     _bookingController.loadBookingHistory();
-          //   },
-          //   child: Icon(Icons.refresh),
-          //   backgroundColor: AppColors.primaryColor,
-          // ),
         ),
       ),
     );
@@ -151,6 +132,11 @@ class BookingCard extends StatelessWidget {
 
     String formattedStartDate = DateFormat.yMMMMd().format(startDate);
     String formattedEndDate = DateFormat.yMMMMd().format(endDate);
+
+    String status = DateTime.now().isBefore(endDate) ? "Ongoing" : "Ended";
+
+    Color statusColor =
+        DateTime.now().isBefore(endDate) ? Colors.green : Colors.red;
 
     return Card(
       color: const Color.fromARGB(245, 255, 255, 255),
@@ -181,6 +167,20 @@ class BookingCard extends StatelessWidget {
             Text(
               'End Date: $formattedEndDate',
               style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  status,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    color: statusColor,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
