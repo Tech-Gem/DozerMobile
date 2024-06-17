@@ -9,10 +9,12 @@ import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/FinanacialReportScreen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/category_filter_widget.dart';
+import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/list_widget.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/recommended_house.dart';
 import 'package:dozer_mobile/presentation/equipment_list/screen_widgets/search_input.dart';
 import 'package:dozer_mobile/presentation/home/widgets/custom_appbar.dart';
 import 'package:dozer_mobile/presentation/profile_screen/profile_screen.dart';
+import 'package:dozer_mobile/presentation/subscription/controllers/subscription_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
@@ -26,13 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   bool _isFabOpen = false; // To track the FAB state
   bool isSubscribed = GetStorageHelper.getValue('isSubscribed');
+  final controller = Get.put(SubscriptionController());
 
   @override
   Widget build(BuildContext context) {
+    final userName = GetStorageHelper.getValue('userName');
+    print(userName);
+    final image = GetStorageHelper.getValue('profileImage');
+    print(image);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFFAFAFA), // Set background to white
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          userName: GetStorageHelper.getValue('userName'),
+          profileImageUrl: GetStorageHelper.getValue('profileImage'),
+        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -83,8 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 // Default selected category
                         ),
+                    SizedBox(height: 5),
                     RecommendedHouse(),
-                    RecentBidsColumn(),
+                    // give sized box to create space between widgets
+                    SizedBox(height: 20),
+                    // RecentBidsColumn(),
+                    ListEquipment()
                   ],
                 ),
               ),
@@ -114,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: primaryColor,
               label: 'Add Equipment',
               onTap: () {
-                if (isSubscribed) {
+                if (controller.isSubscribed.value) {
                   Get.offNamed(RoutesName.createEquipment);
                 } else {
                   Get.toNamed(
@@ -130,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: primaryColor,
               label: 'Create Bid',
               onTap: () {
-                if (isSubscribed) {
+                if (controller.isSubscribed.value) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => QuickBidPage()),

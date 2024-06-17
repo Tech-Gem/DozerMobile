@@ -86,13 +86,22 @@ class AuthenticationRepository {
         // Access the token, email, and name from the parsed response
         String token = jsonResponse["token"];
         String userEmail = jsonResponse["user"]["email"];
-        String userName = jsonResponse["userProfile"]["firstName"];
+        String userName = jsonResponse["userProfile"]["firstName"] +
+            ' ' +
+            jsonResponse["userProfile"]["lastName"];
         String isSubscribed = jsonResponse["userProfile"]["isSubscribed"];
+
+        String image = jsonResponse["userProfile"]["image"];
+        print('token in register: $token');
+        print('email in register: $userEmail');
+        print('name in register: $userName');
+        print('image in register: $image');
         // Store the token using GetStorageHelper or perform any other operations
         await GetStorageHelper.addValue("token", token);
         await GetStorageHelper.addValue("email", userEmail);
         await GetStorageHelper.addValue("userName", userName);
         await GetStorageHelper.addValue("isSubscribed", isSubscribed);
+        await GetStorageHelper.addValue("profileImage", image);
 
         return true;
       } else {
@@ -131,6 +140,10 @@ class AuthenticationRepository {
         String token = jsonResponse["token"];
         String profileId = jsonResponse["userProfile"]["id"];
         bool isSubscribed = jsonResponse["user"]["isSubscribed"];
+        String userName = jsonResponse["userProfile"]["firstName"] +
+            ' ' +
+            jsonResponse["userProfile"]["lastName"];
+        String image = jsonResponse["userProfile"]["image"];
         print('token in login: $token');
         print('profileId in login: $profileId');
         if (token.isEmpty) {
@@ -145,6 +158,9 @@ class AuthenticationRepository {
           throw const UnknownException(message: 'No profile!');
         }
         await GetStorageHelper.addValue("isSubscribed", isSubscribed);
+        await GetStorageHelper.addValue("userName", userName);
+        await GetStorageHelper.addValue("profileImage", image);
+
         print('*********************************');
         print(GetStorageHelper.getValue("profileId"));
         // GetStorageHelper.clearAll();

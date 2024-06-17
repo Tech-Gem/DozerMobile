@@ -56,253 +56,188 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Construction Details', style: TextStyle()),
-        backgroundColor: primaryColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Container(
-                        height: 250,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(constructionMachine.image[0]),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(1.0.h),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 65, 63, 63).withOpacity(0.7),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          'Category: ${constructionMachine.category}',
-                          style: TextStyle(fontSize: 16.sp, color: Colors.white),
-                        ),
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Container(
+                  height: 250,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(constructionMachine.image[0]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(4.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.bookmark_border, color: Colors.white),
+                ),
+              ],
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              constructionMachine.name,
-                              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Price per Hour:',
-                                  style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  '${constructionMachine.pricePerHour} Br',
-                                  style: TextStyle(fontSize: 20.sp, color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 2.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _showReviewsPopup(context);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '5.0',
-                                        style: TextStyle(fontSize: 16.sp),
-                                      ),
-                                      SizedBox(width: 1.w),
-                                      Icon(Icons.star, color: Colors.amber, size: 20),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 4),
-                                TextButton(
-                                  onPressed: () {
-                                    _showReviewsPopup(context);
-                                  },
-                                  child: Text('4 Reviews >', style: TextStyle(color: Colors.black)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 2.h),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              constructionMachine.name,
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 8),
                             Row(
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    'Description: ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    '${constructionMachine.description}',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                                Icon(Icons.location_on, color: Colors.grey),
+                                SizedBox(width: 4),
+                                Text(
+                                  constructionMachine.location,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 2.h),
-                            SizedBox(height: 2.w),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          ],
+                        ),
+                        Text(
+                          '\$${constructionMachine.pricePerHour}/hr',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildFeature(Icons.bed,
+                            '${constructionMachine.quantity} Quantity'),
+                        _buildFeature(Icons.bathroom,
+                            '${constructionMachine.quantity} Rating'),
+                        _buildFeature(Icons.kitchen,
+                            '${constructionMachine.quantity} Comments'),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Description',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      constructionMachine.description,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 16),
+                    Card(
+                      elevation: 2,
+                      // shape: RoundedRectangleBorder(
+
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png'),
+                                ),
+                                SizedBox(width: 8),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      margin: EdgeInsets.only(bottom: 8),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
-                                        'Specifications:',
-                                        style: TextStyle(
+                                    Text(
+                                      'Sangvaleap',
+                                      style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    ...constructionMachine.specifications.map(
-                                      (specification) => Container(
-                                        margin: EdgeInsets.only(bottom: 4),
-                                        child: Text(
-                                          '• $specification',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ).toList(),
+                                    Text(
+                                      'Property Owner',
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.grey),
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
-                            SizedBox(height: 1.h),
+                            SizedBox(height: 16),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    'Capacity : ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.to(BookingForm(
+                                      equipmentId: constructionMachine.id,
+                                      availability:
+                                          constructionMachine.quantity,
+                                      equipmentName: constructionMachine.name,
+                                      imageUrl: constructionMachine.image[0],
+                                    ));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: primaryColor,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(color: primaryColor),
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    '${constructionMachine.capacity}',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0, vertical: 16.0),
+                                    child: Text('Book Now',
+                                        style: TextStyle(color: primaryColor)),
                                   ),
                                 ),
-                                SizedBox(width: 2.w),
-                                Container(
-                                  padding: EdgeInsets.all(2.w),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    'Model : ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    '${constructionMachine.model}',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 2.h),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    'Location: ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    '${constructionMachine.location}',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _makePhoneCall('0925898533');
+                                  },
+                                  icon: Icon(Icons.call),
+                                  label: Text('Call'),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
@@ -310,123 +245,33 @@ class DetailScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 2.h),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                'Available Amount : ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                '${constructionMachine.quantity}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 2.h),
-                        if (constructionMachine.transportation != null)
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  'Free Transportation: ',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                '${constructionMachine.transportation ? 'Yes' : 'No'}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: constructionMachine.transportation ? Colors.green : Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        SizedBox(height: 4.h),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    _makePhoneCall('0925898533');
-                  },
-                  icon: Icon(Icons.call),
-                  label: Text('Call'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(30.w, 50),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(BookingForm(
-                      equipmentId: constructionMachine.id,
-                      availability: constructionMachine.quantity,
-                      equipmentName: constructionMachine.name,
-                      imageUrl: constructionMachine.image[0],
-                    ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(30.w, 50),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Book',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeature(IconData icon, String text) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: Colors.blue),
+          SizedBox(height: 4),
+          Text(
+            text,
+            style: TextStyle(fontSize: 14, color: Colors.blue),
           ),
-          SizedBox(height: 16),
-          Icon(Icons.arrow_downward, color: Colors.grey),
         ],
       ),
     );

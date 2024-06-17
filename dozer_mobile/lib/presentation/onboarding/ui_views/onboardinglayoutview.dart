@@ -124,11 +124,11 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _indicatorsTrue() {
     final String color;
     if (_activePage == 0) {
-      color = '#ffe24e';
+      color = '#FFE8900D';
     } else if (_activePage == 1) {
-      color = '#a3e4f1';
+      color = '#FFE8900D';
     } else {
-      color = '#31b77a';
+      color = '#FFE8900D';
     }
 
     return AnimatedContainer(
