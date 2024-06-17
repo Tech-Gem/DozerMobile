@@ -1,41 +1,21 @@
-import 'package:dozer_mobile/dozer_exports.dart';
+import 'package:dozer_mobile/core/theme/colors.dart';
+import 'package:dozer_mobile/presentation/notification/controllers/notification_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
-  String message = "";
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final arguments = ModalRoute.of(context)!.settings.arguments;
-
-    if (arguments != null) {
-      Map? pushArguments = arguments as Map;
-
-      setState(() {
-        // Ensure pushArguments is not null and has the expected structure
-        if (pushArguments.containsKey("message") &&
-            pushArguments["message"] is Map &&
-            (pushArguments["message"] as Map).containsKey("content")) {
-          message = pushArguments["message"]["content"] ?? "";
-          print('*********************message: $message');
-        } else {
-          print('Invalid pushArguments structure: $pushArguments');
-        }
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final NotificationController controller = Get.find();
+
+    final arguments = Get.arguments;
+    if (arguments != null) {
+      controller.setArguments(arguments);
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -52,34 +32,84 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.w),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.notifications,
-                      color: AppColors.primaryColor,
-                      size: 50.sp,
-                    ),
-                    SizedBox(height: 20.h),
-                    Text(
-                      'Notification',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
+                child: Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  }
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.notifications,
                         color: AppColors.primaryColor,
+                        size: 50.sp,
                       ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      message,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.black,
+                      SizedBox(height: 20.h),
+                      Text(
+                        'Notification',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        controller.message.value,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      if (controller.notificationType.value ==
+                          'booking requested') ...[
+                        SizedBox(height: 20.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () =>
+                                  controller.handleBookingAction('Confirmed'),
+                              child: Text('Confirm'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 10.h),
+                                textStyle: TextStyle(fontSize: 16.sp),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () =>
+                                  controller.handleBookingAction('Rejected'),
+                              child: Text('Reject'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 10.h),
+                                textStyle: TextStyle(fontSize: 16.sp),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ] else ...[
+                        SizedBox(height: 20.h),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.offNamed('/home');
+                          },
+                          child: Text('Okay'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.w, vertical: 10.h),
+                            textStyle: TextStyle(fontSize: 16.sp),
+                          ),
+                        ),
+                      ],
+                    ],
+                  );
+                }),
               ),
             ),
           ),
