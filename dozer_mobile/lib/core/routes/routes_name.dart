@@ -16,5 +16,6 @@ class RoutesName {
   static const String subscription = '/subscription';
   static const String payment = '/payment';
   static const String agreementForm = '/agreement';
+  static const String chat = '/chat';
 
   }

@@ -3,6 +3,7 @@ import 'package:dozer_mobile/presentation/add_profile_photo/profile_photo_page.d
 import 'package:dozer_mobile/presentation/bidding/quick_bid/presentation/create_bid.dart';
 import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
+import 'package:dozer_mobile/presentation/chatbot/presentation/screens/chat_page.dart';
 import 'package:dozer_mobile/presentation/create_equipment/bindings/create_equipment_binding.dart';
 import 'package:dozer_mobile/presentation/create_equipment/create_equipment_screen.dart';
 import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
@@ -25,19 +26,16 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-    //   GetPage(
-    //     name: RoutesName.intial,
+    // GetPage(
+    //     name: RoutesName.home,
     //     // page: () => BookingForm(availability: 5,imageUrl: 'https://www.deere.co.in/assets/images/region-1/products/tractors/tractor-3d-experience-banner.jpg',equipmentName: 'Tractor',),
-    // //  page: () => HomePage(),
-    // page:() => HomeScreen()
-
-    //   ),
-
+    //     //  page: () => HomePage(),
+    //     page: () => HomeScreen()),
     GetPage(
       name: RoutesName.intial,
       page: () => LandingPage(),
     ),
-      GetPage(
+    GetPage(
       name: RoutesName.agreementForm,
       page: () => RentalAgreementForm(),
     ),
@@ -54,51 +52,46 @@ class AppPages {
       page: () => VerifyOtpPage(),
       binding: VerifyOtpBinding(),
     ),
-
     GetPage(
       name: RoutesName.login,
       page: () => LoginPage(),
     ),
-
     GetPage(
       name: RoutesName.home,
       page: () => HomeScreen(),
     ),
-
     GetPage(
       name: RoutesName.signUp,
       page: () => SignUpPage(),
     ),
-
     GetPage(
       name: RoutesName.forgotPassword,
       page: () => PickImagePage(),
     ),
-
     GetPage(
       name: RoutesName.createEquipment,
       page: () => CreateEquipmentScreen(),
       binding: CreateEquipmentBinding(),
     ),
-
     GetPage(
       name: RoutesName.onboarding,
       page: () => LandingPage(),
     ),
-
     GetPage(
       name: RoutesName.notification,
       page: () => NotificationsPage(),
     ),
-
     GetPage(
       name: RoutesName.profile,
       page: () => ProfileScreen(),
     ),
-
     GetPage(
       name: RoutesName.subscription,
       page: () => SubscriptionPage(),
+    ),
+    GetPage(
+      name: RoutesName.subscription,
+      page: () => ChatPage(),
     ),
   ];
 }

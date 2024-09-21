@@ -128,6 +128,7 @@ class AuthenticationRepository {
   Future<bool> login(String phoneNumber, String password) async {
     try {
       String url = ApiEndPoints.baseUrl + ApiEndPoints.login;
+      print('url $url');
       final response = await http.post(
         Uri.parse(url),
         body: {'phoneNumber': phoneNumber, 'password': password},

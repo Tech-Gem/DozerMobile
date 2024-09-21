@@ -50,12 +50,14 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     try {
+      print('in login controller *****************');
       if (!isLoginEnabled) {
         Get.snackbar('Error', 'Please enter phone number and password');
         return;
       }
       status(Status.loading);
       print(phoneNumberController.text.trim());
+      print('+++++++++++++++++++++++++');
       print(passwordController.text.trim());
 
       final response = await _authRepository.login(
