@@ -17,10 +17,12 @@ void main() async {
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-  firebaseMessaging.getToken().then((String? token) {
-    assert(token != null);
-    print('FCM Token: $token');
-  });
+  firebaseMessaging.getToken().then(
+    (String? token) {
+      assert(token != null);
+      print('FCM Token: $token');
+    },
+  );
 
   // For handling notification when app is in foreground
   // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
@@ -36,11 +38,9 @@ void main() async {
     print('A new onMessageOpenedApp event was published!: $message');
     final json_ = json.encode(message.data);
     print('*********************message: $json_');
-    Get.toNamed(RoutesName.notification,
-        arguments: {'message': message.data});
+    Get.toNamed(RoutesName.notification, arguments: {'message': message.data});
     print('*********************message: $message');
-});
-
+  });
 
   // If app is closed or terminated
   FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.white,
         ),
-        initialRoute: RoutesName.intial, // Set initial route
+        initialRoute: RoutesName.onboarding, // Set initial route
         getPages: AppPages.routes,
         navigatorKey: navigatorKey,
       ),
