@@ -5,7 +5,6 @@ import 'package:dozer_mobile/presentation/booking/booking_form.dart';
 import 'package:dozer_mobile/presentation/booking/booking_history.dart';
 import 'package:dozer_mobile/presentation/create_equipment/bindings/create_equipment_binding.dart';
 import 'package:dozer_mobile/presentation/create_equipment/create_equipment_screen.dart';
-import 'package:dozer_mobile/presentation/equipment_list/all_equipments_screen.dart';
 import 'package:dozer_mobile/presentation/home/home_screen.dart';
 import 'package:dozer_mobile/presentation/forgot_password/forgot_password_page.dart';
 import 'package:dozer_mobile/presentation/invoice_generator_screen/invoice_generator.dart';
